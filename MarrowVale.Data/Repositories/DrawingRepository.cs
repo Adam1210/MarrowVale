@@ -50,7 +50,15 @@ namespace MarrowVale.Data.Repositories
 
         public void PrintArt(string[] art)
         {
+            Console.WindowWidth = _globalItemsProvider.WindowWidth;
+            Console.WriteLine("\n");
+            foreach (string line in art)
+            {
+                Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
+                Console.WriteLine(line);
+            }
 
+            Console.WriteLine("\n\n");
         }
     }
 }

@@ -5,6 +5,7 @@ using MarrowVale.Common.Contracts;
 using Microsoft.Extensions.Logging;
 using MarrowVale.Data.Models;
 
+
 namespace MarrowVale.Data.Repositories
 {
     public class SoundRepository : ISoundRepository
@@ -32,6 +33,24 @@ namespace MarrowVale.Data.Repositories
             };
 
             return audio;       
+        }
+
+        public Audio GetMusicLooping(string fileName)
+        {
+            var audioFile = new AudioFileReader(_appSettingsProvider.SoundFilesLocation + $"\\{fileName}");
+            var loop = new LoopStream(audioFile);
+            var outputDevice = new WaveOutEvent();
+
+            outputDevice.Init(loop);
+            outputDevice.Play();
+
+            var audio = new Audio()
+            {
+                Reader = audioFile,
+                Output = outputDevice
+            };
+
+            return audio;
         }
 
         public void DisposeMusic(Audio audio)

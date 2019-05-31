@@ -28,7 +28,7 @@ namespace MarrowVale
 
             var soundRepo = serviceProvider.GetService<ISoundRepository>();
                      
-            var audio = soundRepo.GetMusic("Title.wav");           
+            var audio = soundRepo.GetMusicLooping("Title.wav");           
 
             var artRepo = serviceProvider.GetService<IDrawingRepository>();
             var title = artRepo.GetTitleArt();
