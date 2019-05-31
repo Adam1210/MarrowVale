@@ -1,0 +1,23 @@
+{
+  "/help": "Displays list of possible game commands",
+  "Open Bag": "Shows a list of all the items in your inventory",
+  "North": "Moves your character North",
+  "South": "Moves your character South",
+  "East": "Moves your character East",
+  "West": "Moves your character West",
+  "Northeast": "Moves your character Northeast",
+  "Northwest": "Moves your character Northwest",
+  "Southeast": "Moves your character Southeast",
+  "Southwest": "Moves your character Southwest",
+  "Climb up {structure}": "Your character tries to climb up the specified structure",
+  "Climb down {structure}": "Your character tries to climb down the specified structure",
+  "Take {item}": "Takes specified item and puts it in your inventory",
+  "Give {item} to {target}": "Gives item to target character or structure",
+  "Attack {target}": "Attacks target with currently equipped weapon",
+  "Equip {item}": "Equips item",
+  "Use {item}": "Uses item",
+  "Read {item}": "Try to read the target item",
+  "Cast {spell name} at {target}": "Casts spell at target enemy or structure",
+  "Move {structure}": "Attempts to move target structure",
+  "Health": "Displays current HP and Max HP"
+}
