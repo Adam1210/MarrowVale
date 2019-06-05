@@ -16,5 +16,10 @@ namespace MarrowVale.Common.Providers
             _logger = logger.CreateLogger<GlobalItemsProvider>();
             WindowWidth = 120;
         }
+
+        public string UpperFirstChar(string text)
+        {
+            return char.ToUpper(text[0]) + ((text.Length > 1) ? text.Substring(1).ToLower() : string.Empty);
+        }
     }
 }

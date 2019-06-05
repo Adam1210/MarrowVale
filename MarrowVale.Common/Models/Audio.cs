@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MarrowVale.Data.Models
+namespace MarrowVale.Common.Models
 {
     public class Audio
     {
