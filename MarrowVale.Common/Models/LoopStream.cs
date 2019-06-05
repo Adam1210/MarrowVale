@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MarrowVale.Data.Models
+namespace MarrowVale.Common.Models
 {
     /// <summary>
     /// This workaround for looping audio with NAudio was found at http://mark-dot-net.blogspot.com/2009/10/looped-playback-in-net-with-naudio.html

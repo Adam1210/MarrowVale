@@ -4,6 +4,7 @@ using MarrowVale.Common.Contracts;
 using MarrowVale.Common.Providers;
 using MarrowVale.Data.Contracts;
 using MarrowVale.Data.Repositories;
+using MarrowVale.Game_Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -28,14 +29,18 @@ namespace MarrowVale
 
             var soundRepo = serviceProvider.GetService<ISoundRepository>();
                      
-            var audio = soundRepo.GetMusicLooping("Title.wav");           
+            var audio = soundRepo.GetMusicLooping("Title.wav");
 
-            var artRepo = serviceProvider.GetService<IDrawingRepository>();
-            var title = artRepo.GetTitleArt();
-            artRepo.PrintArtCentered(title);
+            var gameSetup = serviceProvider.GetService<IGameSetupService>();
 
-            var commandRepo = serviceProvider.GetService<ICommandListRepository>();
-            commandRepo.PrintCommands();
+            gameSetup.Setup();
+
+            //var artRepo = serviceProvider.GetService<IDrawingRepository>();
+            //var title = artRepo.GetTitleArt();
+            //artRepo.PrintArtCentered(title);
+
+            //var commandRepo = serviceProvider.GetService<ICommandListRepository>();
+            //commandRepo.PrintCommands();
 
             //soundRepo.DisposeMusic(audio);
 
@@ -73,7 +78,9 @@ namespace MarrowVale
             services.AddLogging(configure => configure.AddConsole())
                 .AddTransient<ICombatService, CombatService>()
                 .AddTransient<ICharacterService, CharacterService>()
-                .AddTransient<IInputProcessingService, InputProcessingService>();
+                .AddTransient<IInputProcessingService, InputProcessingService>()
+                .AddTransient<IPrintService, PrintService>()
+                .AddTransient<IGameSetupService, GameSetupService>();
         }
 
         private static void ConfigureRepositories(IServiceCollection services)

@@ -1,4 +1,4 @@
-﻿using MarrowVale.Data.Models;
+﻿using MarrowVale.Common.Models;
 
 namespace MarrowVale.Data.Contracts
 {
