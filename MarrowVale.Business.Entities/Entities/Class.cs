@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Class
     {
+        public Class()
+        {
+            StartingWeapons = new List<Weapon>();
+            StartingSpells = new List<Spell>();
+            StartingAmmunition = new List<Ammunition>();
+            StartingConsumables = new List<Consumable>();
+        }
+
         public string Name { get; set; }
-        public List<Weapon> StartingWeapons { get; set; }
-        public List<Spell> StartingSpells { get; set; }
-        public List<Ammunition> StartingAmmunition { get; set; }
-        public List<Consumable> StartingConsumables { get; set; }
+        public string Description { get; set; }
+        public IList<Weapon> StartingWeapons { get; set; }
+        public IList<Spell> StartingSpells { get; set; }
+        public IList<Ammunition> StartingAmmunition { get; set; }
+        public IList<Consumable> StartingConsumables { get; set; }
     }
 }
