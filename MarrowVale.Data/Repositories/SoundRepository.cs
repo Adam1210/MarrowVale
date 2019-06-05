@@ -1,9 +1,8 @@
-﻿using MarrowVale.Data.Contracts;
-using NAudio.Wave;
-using MarrowVale.Common.Contracts;
+﻿using MarrowVale.Common.Contracts;
 using MarrowVale.Common.Models;
+using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
-
+using NAudio.Wave;
 
 namespace MarrowVale.Data.Repositories
 {
