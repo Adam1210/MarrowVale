@@ -1,8 +1,6 @@
 ﻿using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MarrowVale.Data.Repositories
 {
