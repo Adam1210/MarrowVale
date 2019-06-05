@@ -1,5 +1,4 @@
 ﻿using MarrowVale.Data.Contracts;
-using NAudio;
 using NAudio.Wave;
 using MarrowVale.Common.Contracts;
 using Microsoft.Extensions.Logging;
