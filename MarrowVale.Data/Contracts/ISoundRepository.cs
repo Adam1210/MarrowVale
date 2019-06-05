@@ -1,4 +1,8 @@
-﻿using MarrowVale.Data.Models;
+﻿using MarrowVale.Common.Models;
+using NAudio.Wave;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace MarrowVale.Data.Contracts
 {

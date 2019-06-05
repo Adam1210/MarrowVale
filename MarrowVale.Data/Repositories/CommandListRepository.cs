@@ -7,7 +7,6 @@ using System.IO;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using MarrowVale.Common.Contracts;
-using MarrowVale.Business.Contracts;
 
 namespace MarrowVale.Data.Repositories
 {
@@ -103,6 +102,10 @@ namespace MarrowVale.Data.Repositories
                 Console.SetCursorPosition((Console.WindowWidth - border.Length) / 2, Console.CursorTop);
                 Console.WriteLine($"{command.Command} : {command.Description}");
             }
+
+            Console.WriteLine();
+            Console.SetCursorPosition((Console.WindowWidth - border.Length) / 2, Console.CursorTop);
+            Console.WriteLine("Multiple commands can be used if they are separated by a ',' (comma)");
 
             Console.WriteLine();
             Console.SetCursorPosition((Console.WindowWidth - border.Length) / 2, Console.CursorTop);
