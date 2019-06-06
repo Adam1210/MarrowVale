@@ -50,6 +50,13 @@ namespace MarrowVale.Business.Services
             Console.WriteLine();
         }
 
+        public void Print(string line, int seconds)
+        {
+            Thread.Sleep(seconds * 1000);
+
+            Console.WriteLine($"\n{line}\n");
+        }
+
         public void PrintCentered(string line, int seconds)
         {
             Thread.Sleep(seconds * 1000);
