@@ -7,10 +7,21 @@ namespace MarrowVale.Business.Entities.Entities
 
         public Inventory()
         {
-            Items = new List<IInventoryItem>();
+            Items = new List<IItem>();
         }
 
         public int Size { get; set; }
-        public IList<IInventoryItem> Items { get; private set; }
+        public IList<IItem> Items { get; private set; }
+
+        public void AddItem(IItem item)
+        {
+            if(Items.Count >= Size)
+            {
+                //add some sort of notification or indication it failed
+                return;
+            }
+
+            Items.Add(item);
+        }
     }
 }
