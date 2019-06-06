@@ -56,5 +56,10 @@ namespace MarrowVale.Business.Contracts
         /// </summary>
         /// <returns>A string of the users inputer</returns>
         string ReadInput();
+
+        /// <summary>
+        /// Clears the Console window of all text
+        /// </summary>
+        void ClearConsole();
     }
 }

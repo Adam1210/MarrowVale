@@ -92,5 +92,10 @@ namespace MarrowVale.Business.Services
         {
             return Console.ReadLine();
         }
+
+        public void ClearConsole()
+        {
+            Console.Clear();
+        }
     }
 }
