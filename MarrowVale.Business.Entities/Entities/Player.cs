@@ -10,6 +10,7 @@ namespace MarrowVale.Business.Entities.Entities
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; set; }
         public Inventory Inventory { get; set; }
+                
 
         public Weapon CurrentWeapon { get; private set; }
 

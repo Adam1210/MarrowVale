@@ -7,10 +7,10 @@ namespace MarrowVale.Business.Entities.Entities
 
         public Inventory()
         {
-            Items = new List<IInventoryItem>();
+            Items = new List<IItem>();
         }
 
         public int Size { get; set; }
-        public IList<IInventoryItem> Items { get; private set; }
+        public IList<IItem> Items { get; private set; }
     }
 }
