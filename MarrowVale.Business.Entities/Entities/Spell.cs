@@ -6,7 +6,21 @@ namespace MarrowVale.Business.Entities.Entities
         public string Name { get; protected set; }
         public int Damage { get; protected set; }
 
-        // Not sure how spells going to work. Is it Mana based or some other resource?
-        public int Cost { get; protected set; }
+
+        public int NumberOfUses { get; protected set; }
+        public int AvailableNumberOfUses { get; private set; }
+
+        public int UseSpell()
+        {
+            if (AvailableNumberOfUses == 0)
+            {
+                //display some message about having no uses or something
+                return 0;
+            }
+
+            AvailableNumberOfUses--;
+
+            return Damage;
+        }
     }
 }
