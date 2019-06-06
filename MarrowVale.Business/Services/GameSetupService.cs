@@ -26,7 +26,7 @@ namespace MarrowVale.Business.Services
             _printService.TypeCentered("New Game", 8);
             _printService.TypeCentered("Continue");
 
-            var gameType = Console.ReadLine();
+            var gameType = _printService.ReadInput();
 
             var game = new GameDto();
 
@@ -72,7 +72,7 @@ namespace MarrowVale.Business.Services
             _printService.TypeCentered("New Game");
             _printService.TypeCentered("Continue");
 
-            var gameType = Console.ReadLine();
+            var gameType = _printService.ReadInput();
 
             var game = new GameDto();
 

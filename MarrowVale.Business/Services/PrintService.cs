@@ -87,5 +87,10 @@ namespace MarrowVale.Business.Services
 
             Console.WriteLine();
         }
+
+        public string ReadInput()
+        {
+            return Console.ReadLine();
+        }
     }
 }

@@ -50,5 +50,11 @@ namespace MarrowVale.Business.Contracts
         /// <param name="line">String to print to console</param>
         /// <param name="seconds">Number of seconds to wait until starting to print</param>
         void TypeCentered(string line, int seconds);
+
+        /// <summary>
+        /// Returns the users input from the console
+        /// </summary>
+        /// <returns>A string of the users inputer</returns>
+        string ReadInput();
     }
 }
