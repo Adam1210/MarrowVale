@@ -1,6 +1,6 @@
-﻿using MarrowVale.Common.Contracts;
+﻿using MarrowVale.Business.Entities.Enums;
+using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
-using System;
 
 namespace MarrowVale.Data.Repositories
 {
@@ -33,30 +33,40 @@ namespace MarrowVale.Data.Repositories
             return title;
         }
 
-        public void PrintArtCentered(string[] art)
+        public string[] GetCharacterCreationStateArt(PlayerCreationStateEnum playerCreationState)
         {
-            Console.WindowWidth = _globalItemsProvider.WindowWidth;
-            Console.WriteLine("\n");
-            foreach (string line in art)
+            switch (playerCreationState)
             {
-                Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
-                Console.WriteLine(line);
-            }
-
-            Console.WriteLine("\n\n");
-        }
-
-        public void PrintArt(string[] art)
-        {
-            Console.WindowWidth = _globalItemsProvider.WindowWidth;
-            Console.WriteLine("\n");
-            foreach (string line in art)
-            {
-                Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
-                Console.WriteLine(line);
-            }
-
-            Console.WriteLine("\n\n");
-        }
+                case PlayerCreationStateEnum.Gender:
+                    return new[]
+                    {
+                        @"--------------------------",
+                        @"Character Gender Selection",
+                        @"--------------------------"
+                    };
+                case PlayerCreationStateEnum.Race:
+                    return new[]
+                    {
+                        @"------------------------",
+                        @"Character Race Selection",
+                        @"------------------------"
+                    };
+                case PlayerCreationStateEnum.Name:
+                    return new[]
+                    {
+                        @"------------------------",
+                        @"Character Name Selection",
+                        @"------------------------"
+                    };
+                case PlayerCreationStateEnum.Class:
+                    return new[]
+                    {
+                        @"-------------------------",
+                        @"Character Class Selection",
+                        @"-------------------------"
+                    };
+                default: return null;
+            }        
+        }       
     }
 }
