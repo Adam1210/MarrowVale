@@ -5,7 +5,7 @@ namespace MarrowVale.Business.Entities.Entities
     {
         public string Name { get; set; }
         public Class Class { get; set; }
-        public string Race { get; set; }
+        public RaceEnum Race { get; set; }
         public string Gender { get; set; }
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; set; }
