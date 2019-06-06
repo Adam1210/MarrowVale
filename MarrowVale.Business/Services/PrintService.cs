@@ -1,8 +1,6 @@
 ﻿using MarrowVale.Business.Contracts;
 using MarrowVale.Common.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace MarrowVale.Business.Services
@@ -17,7 +15,7 @@ namespace MarrowVale.Business.Services
 
         public void Print(string line)
         {
-            Console.WriteLine("\n" + line);
+            Console.WriteLine($"\n{line}");
         }
 
         public void PrintCentered(string line)

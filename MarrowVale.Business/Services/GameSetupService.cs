@@ -2,8 +2,6 @@
 using MarrowVale.Business.Entities.Dtos;
 using MarrowVale.Data.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace MarrowVale.Business.Services
@@ -42,7 +40,7 @@ namespace MarrowVale.Business.Services
             }
             else
             {
-                Console.WriteLine("You must choose to start a New Game or Continue a saved game. Type your choice.");
+                _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
                 Thread.Sleep(4000);
                 runSetup(game);
             }
@@ -88,7 +86,7 @@ namespace MarrowVale.Business.Services
             }
             else
             {
-                Console.WriteLine("You must choose to start a New Game or Continue a saved game. Type your choice.");
+                _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
                 runSetup(game);
             }
 
