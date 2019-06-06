@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Player
@@ -13,5 +10,14 @@ namespace MarrowVale.Business.Entities.Entities
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; set; }
         public Inventory Inventory { get; set; }
+
+        public Weapon CurrentWeapon { get; private set; }
+
+        public void SwitchWeapon(Weapon newWeapon)
+        {
+            //needs checks added later
+            Inventory.Items.Add(CurrentWeapon);
+            CurrentWeapon = newWeapon;
+        }
     }
 }
