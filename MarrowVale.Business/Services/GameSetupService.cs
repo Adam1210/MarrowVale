@@ -2,8 +2,6 @@
 using MarrowVale.Business.Entities.Dtos;
 using MarrowVale.Data.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace MarrowVale.Business.Services
@@ -28,7 +26,7 @@ namespace MarrowVale.Business.Services
             _printService.TypeCentered("New Game", 8);
             _printService.TypeCentered("Continue");
 
-            var gameType = Console.ReadLine();
+            var gameType = _printService.ReadInput();
 
             var game = new GameDto();
 
@@ -42,7 +40,7 @@ namespace MarrowVale.Business.Services
             }
             else
             {
-                Console.WriteLine("You must choose to start a New Game or Continue a saved game. Type your choice.");
+                _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
                 Thread.Sleep(4000);
                 runSetup(game);
             }
@@ -66,7 +64,7 @@ namespace MarrowVale.Business.Services
 
         private GameDto runSetup(GameDto gameDto)
         {
-            Console.Clear();
+            _printService.ClearConsole();
 
             var title = _drawingRepository.GetTitleArt();
             _drawingRepository.PrintArtCentered(title);
@@ -74,7 +72,7 @@ namespace MarrowVale.Business.Services
             _printService.TypeCentered("New Game");
             _printService.TypeCentered("Continue");
 
-            var gameType = Console.ReadLine();
+            var gameType = _printService.ReadInput();
 
             var game = new GameDto();
 
@@ -88,7 +86,7 @@ namespace MarrowVale.Business.Services
             }
             else
             {
-                Console.WriteLine("You must choose to start a New Game or Continue a saved game. Type your choice.");
+                _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
                 runSetup(game);
             }
 
