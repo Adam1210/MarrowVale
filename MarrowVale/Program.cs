@@ -80,7 +80,8 @@ namespace MarrowVale
                 .AddTransient<ICharacterService, CharacterService>()
                 .AddTransient<IInputProcessingService, InputProcessingService>()
                 .AddTransient<IPrintService, PrintService>()
-                .AddTransient<IGameSetupService, GameSetupService>();
+                .AddTransient<IGameSetupService, GameSetupService>()
+                .AddTransient<IDrawingService, DrawingService>();
         }
 
         private static void ConfigureRepositories(IServiceCollection services)
