@@ -4,6 +4,8 @@ namespace MarrowVale.Business.Entities.Entities
 {
     public class Class
     {
+        //currently 3 types
+        // warrior, ranger, mage
         public Class()
         {
             StartingWeapons = new List<Weapon>();
