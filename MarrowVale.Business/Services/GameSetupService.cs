@@ -64,7 +64,7 @@ namespace MarrowVale.Business.Services
 
         private GameDto runSetup(GameDto gameDto)
         {
-            Console.Clear();
+            _printService.ClearConsole();
 
             var title = _drawingRepository.GetTitleArt();
             _drawingRepository.PrintArtCentered(title);
