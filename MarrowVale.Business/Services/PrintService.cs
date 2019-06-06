@@ -15,7 +15,7 @@ namespace MarrowVale.Business.Services
 
         public void Print(string line)
         {
-            Console.WriteLine($"\n{line}");
+            Console.WriteLine($"\n{line}\n");
         }
 
         public void PrintCentered(string line)

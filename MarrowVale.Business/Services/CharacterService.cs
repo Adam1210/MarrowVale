@@ -73,9 +73,6 @@ namespace MarrowVale.Business.Services
                     _printService.Print("You must type in yes or no");
                 }
             }
-
-           
-
         }
 
         private void PickRace(GameDto gameDto)
