@@ -8,6 +8,7 @@ namespace MarrowVale.Business.Entities.Entities
         public Location()
         {
             Items = new List<IItem>();
+            Npcs = new List<Npc>();
         }
         
         public IList<IItem> Items { get; private set; }
