@@ -10,7 +10,9 @@ namespace MarrowVale.Business.Entities.Entities
             Items = new List<IItem>();
         }
         
-        public IList<IItem> Items { get; set; }
+        public IList<IItem> Items { get; private set; }
+
+        public IList<Npc> Npcs { get; private set; }
 
         public void AddItem(IItem item)
         {
