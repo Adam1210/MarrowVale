@@ -1,7 +1,6 @@
 ﻿using MarrowVale.Business.Entities.Enums;
-using System;
 using System.Collections.Generic;
-using System.Text;
+
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -19,6 +18,7 @@ namespace MarrowVale.Business.Entities.Entities
         public string Description { get; set; }
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; set; }
+        public int BaseDamage { get; }
 
         public IList<Ability> Abilities { get; }
         public IList<Spell> SpellBook { get; }
