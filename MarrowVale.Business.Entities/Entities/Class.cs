@@ -11,6 +11,7 @@ namespace MarrowVale.Business.Entities.Entities
             StartingSpells = new List<Spell>();
             StartingAmmunition = new List<Ammunition>();
             StartingConsumables = new List<Consumable>();
+            StartingAbilities = new List<Ability>();
         }
 
         public ClassEnum Type { get; set; }
@@ -20,5 +21,6 @@ namespace MarrowVale.Business.Entities.Entities
         public IList<Spell> StartingSpells { get; set; }
         public IList<Ammunition> StartingAmmunition { get; set; }
         public IList<Consumable> StartingConsumables { get; set; }
+        public IList<Ability> StartingAbilities {get;set;}
     }
 }
