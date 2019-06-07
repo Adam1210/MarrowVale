@@ -13,6 +13,9 @@ namespace MarrowVale.Business.Entities.Entities
         public int Size { get; set; }
         public IList<IItem> Items { get; private set; }
 
+        public int CurrentCurrency { get; set; }
+        public int MaxCurrency { get; private set; }
+
         public void AddItem(IItem item)
         {
             if(Items.Count >= Size)
