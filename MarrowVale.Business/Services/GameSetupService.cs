@@ -11,17 +11,20 @@ namespace MarrowVale.Business.Services
         private readonly ICharacterService _characterService;
         private readonly IPrintService _printService;
         private readonly IDrawingRepository _drawingRepository;
-        public GameSetupService(ICharacterService characterService, IDrawingRepository drawingRepository, IPrintService printService)
+        private readonly IDrawingService _drawingService;
+        public GameSetupService(ICharacterService characterService, IDrawingRepository drawingRepository, IPrintService printService,
+            IDrawingService drawingService)
         {
             _characterService = characterService;
             _printService = printService;
             _drawingRepository = drawingRepository;
+            _drawingService = drawingService;
         }
 
         public GameDto Setup()
         {
             var title = _drawingRepository.GetTitleArt();
-            _drawingRepository.PrintArtCentered(title);
+            _drawingService.PrintArtCentered(title);
 
             _printService.TypeCentered("New Game", 8);
             _printService.TypeCentered("Continue");
@@ -67,7 +70,7 @@ namespace MarrowVale.Business.Services
             _printService.ClearConsole();
 
             var title = _drawingRepository.GetTitleArt();
-            _drawingRepository.PrintArtCentered(title);
+            _drawingService.PrintArtCentered(title);
 
             _printService.TypeCentered("New Game");
             _printService.TypeCentered("Continue");

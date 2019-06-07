@@ -13,6 +13,13 @@ namespace MarrowVale.Business.Contracts
         void Print(string line);
 
         /// <summary>
+        /// Prints to the console window after waiting x number of seconds.
+        /// </summary>
+        /// <param name="line">String to print to console</param>
+        /// <param name="seconds">Number of seconds to wait until starting to print.</param>
+        void Print(string line, int seconds);
+
+        /// <summary>
         /// Prints in the center of current line in the console window
         /// </summary>
         /// <param name="line">String to print to console</param>
@@ -22,7 +29,7 @@ namespace MarrowVale.Business.Contracts
         /// Prints in the center of current line in the console window
         /// </summary>
         /// <param name="line">String to print to console</param>
-        /// <param name="seconds">Number of seconds to wait until starting to print</param>
+        /// <param name="seconds">Number of seconds to wait until starting to print.</param>
         void PrintCentered(string line, int seconds);
 
         /// <summary>
@@ -35,7 +42,7 @@ namespace MarrowVale.Business.Contracts
         /// Prints to the console in the same fashion as a typewriter
         /// </summary>
         /// <param name="line">String to print to console</param>
-        /// <param name="seconds">Number of seconds to wait until starting to print</param>
+        /// <param name="seconds">Number of seconds to wait until starting to print.</param>
         void Type(string line, int seconds);
 
         /// <summary>
@@ -48,7 +55,7 @@ namespace MarrowVale.Business.Contracts
         /// Prints to the console in the same fashion as a typewriter and centered
         /// </summary>
         /// <param name="line">String to print to console</param>
-        /// <param name="seconds">Number of seconds to wait until starting to print</param>
+        /// <param name="seconds">Number of seconds to wait until starting to print.</param>
         void TypeCentered(string line, int seconds);
 
         /// <summary>
