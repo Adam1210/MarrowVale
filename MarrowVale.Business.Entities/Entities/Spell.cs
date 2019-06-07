@@ -1,11 +1,14 @@
 ﻿
+using MarrowVale.Business.Entities.Enums;
+
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Spell
     {
         public string Name { get; protected set; }
+        public string Description { get; set; }
         public int Damage { get; protected set; }
-
+        public SpellElementEnum Element { get; protected set; }
 
         public int NumberOfUses { get; protected set; }
         public int AvailableNumberOfUses { get; private set; }
