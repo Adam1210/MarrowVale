@@ -11,6 +11,8 @@ namespace MarrowVale.Business.Entities.Entities
         public Npc()
         {
             Abilities = new List<Ability>();
+            SpellBook = new List<Spell>();
+            Items = new List<IItem>();
         }
 
         public string Name { get; set; }
@@ -19,6 +21,8 @@ namespace MarrowVale.Business.Entities.Entities
         public int MaxHealth { get; set; }
 
         public IList<Ability> Abilities { get; }
+        public IList<Spell> SpellBook { get; }
+        public IList<IItem> Items { get; }
 
         public NpcTypeEnum Type { get; private set; }
     }
