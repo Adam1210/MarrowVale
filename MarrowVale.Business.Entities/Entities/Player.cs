@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Player
@@ -7,6 +9,7 @@ namespace MarrowVale.Business.Entities.Entities
         {
             Race = race;
             Gender = gender;
+            
         }
 
         public string Name { get; set; }
@@ -17,6 +20,7 @@ namespace MarrowVale.Business.Entities.Entities
         public int MaxHealth { get; set; }
         public Inventory Inventory { get; set; }
                 
+        public IList<Spell> Spellbook { get; private set; }
 
         public Weapon CurrentWeapon { get; private set; }
 
