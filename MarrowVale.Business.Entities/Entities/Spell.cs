@@ -5,6 +5,11 @@ namespace MarrowVale.Business.Entities.Entities
 {
     public class Spell
     {
+        public Spell()
+        {
+
+        }
+
         public string Name { get; protected set; }
         public string Description { get; set; }
         public int Damage { get; protected set; }
