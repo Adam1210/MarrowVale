@@ -1,4 +1,4 @@
-﻿
+﻿using MarrowVale.Business.Entities.Enums;
 using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
@@ -14,7 +14,7 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         public string Name { get; set; }
-        public Class Class { get; set; }
+        public ClassEnum Class { get; set; }
         public RaceEnum Race { get; private set; }
         public string Gender { get; private set; }
         public int CurrentHealth { get; set; }

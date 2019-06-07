@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using MarrowVale.Business.Entities.Enums;
+using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Class
     {
-        //currently 3 types
-        // warrior, ranger, mage
         public Class()
         {
             StartingWeapons = new List<Weapon>();
@@ -14,6 +13,7 @@ namespace MarrowVale.Business.Entities.Entities
             StartingConsumables = new List<Consumable>();
         }
 
+        public ClassEnum Type { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public IList<Weapon> StartingWeapons { get; set; }

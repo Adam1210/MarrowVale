@@ -1,5 +1,5 @@
 ﻿
-namespace MarrowVale.Business.Entities
+namespace MarrowVale.Business.Entities.Enums
 {
     public enum RaceEnum
     {
