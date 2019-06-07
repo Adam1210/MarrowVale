@@ -14,16 +14,16 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         public string Name { get; set; }
-        public ClassEnum Class { get; set; }
-        public RaceEnum Race { get; private set; }
-        public string Gender { get; private set; }
+        public ClassEnum Class { get; }
+        public RaceEnum Race { get; }
+        public string Gender { get; }
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; set; }
         public Inventory Inventory { get; set; }
                 
-        public IList<Spell> Spellbook { get; private set; }
+        public IList<Spell> Spellbook { get; }
 
-        public IList<Ability> Abilities { get; private set; }
+        public IList<Ability> Abilities { get; }
 
         public Weapon CurrentWeapon { get; private set; }
 

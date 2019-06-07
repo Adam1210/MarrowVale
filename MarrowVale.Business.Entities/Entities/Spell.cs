@@ -10,9 +10,9 @@ namespace MarrowVale.Business.Entities.Entities
 
         }
 
-        public string Name { get; protected set; }
-        public string Description { get; set; }
-        public int Damage { get; protected set; }
+        public string Name { get; }
+        public string Description { get; }
+        public int Damage { get; private set; }
         public SpellElementEnum Element { get; protected set; }
 
         public int NumberOfUses { get; protected set; }
