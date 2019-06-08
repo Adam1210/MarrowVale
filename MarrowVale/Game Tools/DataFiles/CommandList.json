@@ -19,5 +19,6 @@
   "Read {item}": "Try to read the target item",
   "Cast {spell name} at {target}": "Casts spell at target enemy or structure",
   "Move {structure}": "Attempts to move target structure",
-  "Health": "Displays current HP and Max HP"
+  "Health": "Displays current HP and Max HP",
+  "Class Abilities": "Displays your class specific abilities"
 }

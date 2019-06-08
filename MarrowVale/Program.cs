@@ -33,7 +33,7 @@ namespace MarrowVale
 
             var gameSetup = serviceProvider.GetService<IGameSetupService>();
 
-            gameSetup.Setup();
+            var player = gameSetup.Setup();
 
             //var artRepo = serviceProvider.GetService<IDrawingRepository>();
             //var title = artRepo.GetTitleArt();
@@ -41,6 +41,9 @@ namespace MarrowVale
 
             //var commandRepo = serviceProvider.GetService<ICommandListRepository>();
             //commandRepo.PrintCommands();
+
+            //var classRepo = serviceProvider.GetService<IClassRepository>();
+            //classRepo.GetClasses();
 
             //soundRepo.DisposeMusic(audio);
 
@@ -90,7 +93,9 @@ namespace MarrowVale
             //use dbcontextscope?
             services.AddTransient<ICommandListRepository, CommandListRepository>()
                 .AddTransient<IDrawingRepository, DrawingRepository>()
-                .AddTransient<ISoundRepository, SoundRepository>();
+                .AddTransient<ISoundRepository, SoundRepository>()
+                .AddTransient<IClassRepository, ClassRepository>()
+                .AddTransient<IPlayerRepository, PlayerRepository>();
         }
 
         private static void ConfigureProviders(IServiceCollection services)
