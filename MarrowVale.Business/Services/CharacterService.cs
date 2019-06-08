@@ -139,74 +139,24 @@ namespace MarrowVale.Business.Services
 
             var race = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
 
-            if (race == Enum.GetName(typeof(RaceEnum), 0))
+            verifyRacePick(playerDto, race);
+        }
+
+        private void verifyRacePick(PlayerDto playerDto, string race)
+        {
+            if(Enum.TryParse<RaceEnum>(race, out var result))
             {
                 var choiceMade = false;
 
                 while (!choiceMade)
                 {
-                    //chose human
                     _printService.Print($"Are you sure you want to be a {race}?  yes | no");
 
                     var choice = _printService.ReadInput();
 
                     if (choice.ToUpper() == "YES")
                     {
-                        playerDto.Race = RaceEnum.Human;
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        pickRace(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else if (race == Enum.GetName(typeof(RaceEnum), 1))
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    //chose elf
-                    _printService.Print($"Are you sure you want to be a {race}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Race = RaceEnum.Elf;
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        pickRace(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else if (race == Enum.GetName(typeof(RaceEnum), 2))
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    //chose dwarf
-                    _printService.Print($"Are you sure you want to be a {race}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Race = RaceEnum.Dwarf;
+                        playerDto.Race = result;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
@@ -225,6 +175,52 @@ namespace MarrowVale.Business.Services
                 _printService.Print("You must type Human, Elf, or Dwarf.");
                 Thread.Sleep(3);
                 pickRace(playerDto);
+            }
+        }
+
+        private void pickGender(PlayerDto playerDto)
+        {
+            var characterGender = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Gender);
+
+            _printService.ClearConsole();
+
+            _drawingService.PrintArtCentered(characterGender);
+
+            _printService.Print("Do you want your character to be a male or a female?");
+
+            var gender = _printService.ReadInput();
+
+            if (gender.ToUpper() == "MALE" || gender.ToUpper() == "FEMALE")
+            {
+                var choiceMade = false;
+
+                while (!choiceMade)
+                {
+                    _printService.Print($"Are you sure you want your character to be {gender}?  yes | no");
+
+                    var decision = _printService.ReadInput();
+
+                    if (decision.ToUpper() == "NO")
+                    {
+                        pickGender(playerDto);
+                        choiceMade = true;
+                    }
+                    else if (decision.ToUpper() == "YES")
+                    {
+                        playerDto.Gender = _globalItemsProvider.UpperFirstChar(gender);
+                        choiceMade = true;
+                    }
+                    else
+                    {
+                        _printService.Print("You must type in yes or no");
+                    }
+                }
+            }
+            else
+            {
+                _printService.Print("You must type in male or female.");
+                Thread.Sleep(3);
+                pickGender(playerDto);
             }
         }
 
@@ -282,53 +278,7 @@ namespace MarrowVale.Business.Services
             }
 
         }
-
-        private void pickGender(PlayerDto playerDto)
-        {
-            var characterGender = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Gender);
-
-            _printService.ClearConsole();
-
-            _drawingService.PrintArtCentered(characterGender);
-
-            _printService.Print("Do you want your character to be a male or a female?");
-
-            var gender = _printService.ReadInput();
-
-            if (gender.ToUpper() == "MALE" || gender.ToUpper() == "FEMALE")
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    _printService.Print($"Are you sure you want your character to be {gender}?  yes | no");
-
-                    var decision = _printService.ReadInput();
-
-                    if (decision.ToUpper() == "NO")
-                    {
-                        pickGender(playerDto);
-                        choiceMade = true;
-                    }
-                    else if (decision.ToUpper() == "YES")
-                    {
-                        playerDto.Gender = _globalItemsProvider.UpperFirstChar(gender);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type in yes or no");
-                    }
-                }
-            }
-            else
-            {
-                _printService.Print("You must type in male or female.");
-                Thread.Sleep(3);
-                pickGender(playerDto);
-            }
-        }
-        
+                
         private void verifyClassPick(PlayerDto playerDto, string charClass, ClassEnum pickedClass)
         {
             var choiceMade = false;
