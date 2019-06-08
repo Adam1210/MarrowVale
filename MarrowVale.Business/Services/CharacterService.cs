@@ -1,5 +1,4 @@
 ﻿using MarrowVale.Business.Contracts;
-using MarrowVale.Business.Entities;
 using MarrowVale.Business.Entities.Dtos;
 using MarrowVale.Business.Entities.Entities;
 using MarrowVale.Business.Entities.Enums;
@@ -7,7 +6,6 @@ using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using System.Threading;
 
 namespace MarrowVale.Business.Services
