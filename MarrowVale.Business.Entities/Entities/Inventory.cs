@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -8,6 +12,9 @@ namespace MarrowVale.Business.Entities.Entities
         public Inventory()
         {
             Items = new List<IItem>();
+            Size = 15;
+            CurrentCurrency = 0;
+            MaxCurrency = 50;
         }
 
         public int Size { get; set; }

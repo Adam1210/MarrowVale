@@ -15,7 +15,7 @@ namespace MarrowVale.Business.Services
 
         public void Print(string line)
         {
-            Console.WriteLine($"\n{line}\n");
+            Console.WriteLine($"{Environment.NewLine}{line}{Environment.NewLine}");
         }
 
         public void PrintCentered(string line)
@@ -27,6 +27,8 @@ namespace MarrowVale.Business.Services
 
         public void Type(string line)
         {
+            Console.WriteLine();
+
             foreach (var letter in line)
             {
                 Console.Write(letter);
@@ -54,7 +56,7 @@ namespace MarrowVale.Business.Services
         {
             Thread.Sleep(seconds * 1000);
 
-            Console.WriteLine($"\n{line}\n");
+            Console.WriteLine($"{Environment.NewLine}{line}{Environment.NewLine}");
         }
 
         public void PrintCentered(string line, int seconds)
@@ -69,6 +71,8 @@ namespace MarrowVale.Business.Services
         public void Type(string line, int seconds)
         {
             Thread.Sleep(seconds * 1000);
+
+            Console.WriteLine();
 
             foreach (var letter in line)
             {

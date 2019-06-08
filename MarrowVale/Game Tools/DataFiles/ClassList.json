@@ -1,0 +1,157 @@
+[
+  {
+    "Name": "Warrior",
+    "Description": "Only ever knowing violence, the warrior's purpose is to protect people from ever experiencing that pain themselves.\nUnmatched with blades and axes, the warrior likes to get up close and personal during combat. They rely on their\nstrength above all else to solve their problems.",
+    "Type": "Warrior",
+    "StartingWeapons": [
+      {
+        "Name": "Shortsword",
+        "Description": "Double edged blade, cross-guard, grip, and pommel. Typically 30-50 cm in length with a sharp point.",
+        "IsBroken": "false",
+        "IsVisible": "true",
+        "BaseWorth": 10,
+        "Range": 1,
+        "Damage": 4,
+        "DamageRange": 2,
+        "Type": "Sword"
+      }
+    ],
+    "StartingAmmunition": [],
+    "StartingSpells": [],
+    "StartingConsumables": [
+      {
+        "Name": "Health Potion",
+        "Description": "Restores 5 health",
+        "IsVisible": "true",
+        "BaseWorth": 2
+      }
+    ],
+    "StartingAbilities": [
+      {
+        "Name": "Intimidate",
+        "Description": "Uses your overwhelming presence to make someone fearful and bend to your will.",
+        "Command": {
+          "Command": "Intimidate {target}",
+          "Description": "Attempt to make your target fearful"
+        }
+      },
+      {
+        "Name": "Bounding Leap",
+        "Description": "A leap of great distance.",
+        "Command": {
+          "Command": "Leap to {location} | Leap on {target}",
+          "Description": "Attempts to leap to a location or on top of a target"
+        }
+      }
+    ]
+  },
+  {
+    "Name": "Ranger",
+    "Description": "Born of the forest, a ranger is one with their surroundings. Heightened senses allow the ranger to detect changes in\ntheir environment that others may not realize. The ranger excels with a bow. The ranger's soft footsteps developed over\nyears of hunting and tracking are a great tool for getting into places undetected.",
+    "Type": "Ranger",
+    "StartingWeapons": [
+      {
+        "Name": "Shortbow",
+        "Description": "Simple bow, often used for hunting.",
+        "IsBroken": "false",
+        "IsVisible": "true",
+        "BaseWorth": 10,
+        "Range": 20,
+        "Damage": 4,
+        "DamageRange": 2,
+        "Type": "Bow"
+      }
+    ],
+    "StartingAmmunition": [
+      {
+        "Name": "Wooden Arrow",
+        "Description": "Simple arrow made from any type of wood.",
+        "Count": 20,
+        "IsVisible": "true",
+        "BaseWorth": 5
+      }
+    ],
+    "StartingSpells": [],
+    "StartingConsumables": [
+      {
+        "Name": "Health Potion",
+        "Description": "Restores 5 health",
+        "IsVisible": "true",
+        "BaseWorth": 2
+      }
+    ],
+    "StartingAbilities": [
+      {
+        "Name": "Sneak",
+        "Description": "Uses your overwhelming presence to make someone fearful and bend to your will.",
+        "Command": {
+          "Command": "Sneak",
+          "Description": "Attempts to sneak. Attacking or using an item makes you stop sneaking."
+        }
+      },
+      {
+        "Name": "Observe",
+        "Description": "Observes your surroundings for any hints or clues that normally may not be seen.",
+        "Command": {
+          "Command": "Observe {target}",
+          "Description": "Studying the target more closely than normal."
+        }
+      }
+    ]
+  },
+  {
+    "Name": "Mage",
+    "Description": "The mage is born with a connection to the Elemental Plane. Years of study and patience has resulted in an understanding\nof the magical world that others can't even begin to realize. Typically, the mage prefers non-physical means of solving\nproblems, and with their high intelligence and their knowledge of the magical arts, there are few problems that a mage\ncannot solve.",
+    "Type": "Mage",
+    "StartingWeapons": [
+      {
+        "Name": "Quarterstaff",
+        "Description": "Simple wooden staff, often used for walking.",
+        "IsBroken": "false",
+        "IsVisible": "true",
+        "BaseWorth": 3,
+        "Range": 1,
+        "Damage": 2,
+        "DamageRange": 1,
+        "Type": "Staff"
+      }
+    ],
+    "StartingAmmunition": [],
+    "StartingSpells": [
+      {
+        "Name": "Ember Throw",
+        "Description": "Summons small embers then propels them at the target.",
+        "Damage": 6,
+        "Element": "Fire",
+        "NumberOfUses": 10,
+        "AvailableNumberOfUses": 10
+      }
+    ],
+    "StartingConsumables": [
+      {
+        "Name": "Health Potion",
+        "Description": "Restores 5 health",
+        "IsVisible": "true",
+        "BaseWorth": 2
+      }
+    ],
+    "StartingAbilities": [
+      {
+        "Name": "Levitate",
+        "Description": "Magical energies lift you off the ground. Can levitate up to 30 ft high.",
+        "Command": {
+          "Command": "Levitate",
+          "Description": "Begins to levitate. If you attack or use a spell, you stop levitating."
+        }
+      },
+      {
+        "Name": "Old Sight",
+        "Description": "Observes your surroundings as seen in a glimpse of the past.",
+        "Command": {
+          "Command": "Use Old Sight",
+          "Description": "Sees a glimpse of your current surroundings from the past."
+        }
+      }
+    ]
+  }
+]

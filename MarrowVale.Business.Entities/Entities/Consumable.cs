@@ -1,4 +1,6 @@
-﻿
+﻿using Newtonsoft.Json;
+using System.ComponentModel;
+
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Consumable : IItem
@@ -11,6 +13,6 @@ namespace MarrowVale.Business.Entities.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsVisible { get; set; }
-        public int BaseWorth { get; }
+        public int BaseWorth { get; set; }
     }
 }

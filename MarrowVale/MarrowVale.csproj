@@ -26,8 +26,14 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Game Tools\DataFiles\ClassList.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Game Tools\DataFiles\CommandList.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\DataFiles\PlayerList.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Game Tools\SoundFiles\Title.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

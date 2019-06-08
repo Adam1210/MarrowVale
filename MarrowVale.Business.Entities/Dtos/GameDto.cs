@@ -7,13 +7,13 @@ namespace MarrowVale.Business.Entities.Dtos
 {
     public class GameDto
     {
-        public Player Player { get; set; }
+        public PlayerDto Player { get; set; }
         public Inventory Inventory { get; set; }
         public Location CurrentLocation { get; set; }
 
         public GameDto()
         {
-            Player = new Player();
+            Player = new PlayerDto();
             Inventory = new Inventory();
             CurrentLocation = new Location();
         }
