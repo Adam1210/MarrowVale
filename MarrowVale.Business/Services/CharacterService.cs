@@ -7,6 +7,7 @@ using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading;
 
 namespace MarrowVale.Business.Services
@@ -18,46 +19,71 @@ namespace MarrowVale.Business.Services
         private readonly IGlobalItemsProvider _globalItemsProvider;
         private readonly IDrawingRepository _drawingRepository;
         private readonly IDrawingService _drawingService;
+        private readonly IClassRepository _classRepository;
+        private readonly IPlayerRepository _playerRepository;
 
         public CharacterService(ILoggerFactory loggerFactory, IPrintService printService, IGlobalItemsProvider globalItemsProvider, 
-            IDrawingRepository drawingRepository, IDrawingService drawingService)
+            IDrawingRepository drawingRepository, IDrawingService drawingService, IClassRepository classRepository,
+            IPlayerRepository playerRepository)
         {
             _logger = loggerFactory.CreateLogger<CharacterService>();
             _printService = printService;
             _globalItemsProvider = globalItemsProvider;
             _drawingRepository = drawingRepository;
             _drawingService = drawingService;
+            _classRepository = classRepository;
+            _playerRepository = playerRepository;
         }
 
-        public void NewCharacter(GameDto gameDto)
+        public Player NewCharacter(PlayerDto playerDto)
         {
-            _printService.Print("Now we are going to create a new character for your adventure.");
+            _printService.Type("Now we are going to create a new character for your adventure.");
 
-            PickRace(gameDto);
-            PickGender(gameDto);
-            PickName(gameDto);           
-            PickClass(gameDto);
+            Thread.Sleep(2000);
 
-            //Next we get their starting items etc. Save everything to database/json.
+            pickRace(playerDto);
+            pickGender(playerDto);
+            pickName(playerDto);           
+            pickClass(playerDto);
 
-            Console.WriteLine($"\nName: {gameDto.Player.Name}");
-            Console.WriteLine($"Gender: {gameDto.Player.Gender}");
-            Console.WriteLine($"Race: {gameDto.Player.Race}");
-            Console.WriteLine($"Class: {gameDto.Player.Class.Name}");
+            var startingClass = _classRepository.GetClass(playerDto.Class);
+
+            var player = new Player(playerDto);
+
+            loadNewInventory(startingClass, player);
+
+            _playerRepository.AddPlayer(player);
+                       
+            Console.WriteLine($"\nName: {playerDto.Name}");
+            Console.WriteLine($"Gender: {playerDto.Gender}");
+            Console.WriteLine($"Race: {playerDto.Race}");
+            Console.WriteLine($"Class: {playerDto.Class}");
+
+            return player;
         }
 
-        public void LoadCharacter(GameDto gameDto)
+        public Player LoadCharacter(PlayerDto playerDto)
         {
             //gets character
             //loads inventory and location
+            _printService.ClearConsole();
+
+            var player = _playerRepository.GetPlayers();
+
+            foreach(var item in player)
+            {
+                _printService.PrintCentered($"{item.Name}: {item.Race} {item.Class}");
+            }
+
+            return new Player();
         }
 
         public Inventory GetInventory(Player player)
-        {
-            return new Inventory();
+        {            
+            return player.Inventory;
         }
 
-        private void PickName(GameDto gameDto)
+        private void pickName(PlayerDto playerDto)
         {
             var characterName = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Name);
 
@@ -65,9 +91,18 @@ namespace MarrowVale.Business.Services
 
             _drawingService.PrintArtCentered(characterName);
 
-            _printService.Print("What do you want you character's name to be?");
+            _printService.Print("What do you want your character's name to be?");
 
             var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
+
+            var newName = _playerRepository.GetPlayer(name);
+
+            if (newName != null)
+            {
+                _printService.Print("That name is already taken. Pick a new name.");
+                Thread.Sleep(2000);
+                pickName(playerDto);
+            }
 
             var choiceMade = false;
 
@@ -79,12 +114,12 @@ namespace MarrowVale.Business.Services
 
                 if (choice.ToUpper() == "YES")
                 {
-                    gameDto.Player.Name = name;
+                    playerDto.Name = name;
                     choiceMade = true;
                 }
                 else if (choice.ToUpper() == "NO")
                 {
-                    PickName(gameDto);
+                    pickName(playerDto);
                     choiceMade = true;
                 }
                 else
@@ -94,7 +129,7 @@ namespace MarrowVale.Business.Services
             }
         }
 
-        private void PickRace(GameDto gameDto)
+        private void pickRace(PlayerDto playerDto)
         {
             var characterRace = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Race);
 
@@ -119,12 +154,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Race = RaceEnum.Human;
+                        playerDto.Race = RaceEnum.Human;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        PickRace(gameDto);
+                        pickRace(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -146,12 +181,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Race = RaceEnum.Elf;
+                        playerDto.Race = RaceEnum.Elf;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        PickRace(gameDto);
+                        pickRace(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -173,12 +208,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Race = RaceEnum.Dwarf;
+                        playerDto.Race = RaceEnum.Dwarf;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        PickRace(gameDto);
+                        pickRace(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -191,11 +226,11 @@ namespace MarrowVale.Business.Services
             {
                 _printService.Print("You must type Human, Elf, or Dwarf.");
                 Thread.Sleep(3);
-                PickRace(gameDto);
+                pickRace(playerDto);
             }
         }
 
-        private void PickClass(GameDto gameDto)
+        private void pickClass(PlayerDto playerDto)
         {
             var characterClass = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Class);
 
@@ -203,18 +238,18 @@ namespace MarrowVale.Business.Services
 
             _drawingService.PrintArtCentered(characterClass);
 
-            var warriorDescription = "Only ever knowing violence, the warrior's purpose is to protect people from ever experiencing that pain themselves.\n" +
-                                     "Unmatched with blades and axes, the warrior likes to get up close and personal during combat. They rely on their\n" +
-                                     "strength above all else to solve their problems.";
+            var warriorDescription = $"Only ever knowing violence, the warrior's purpose is to protect people from ever experiencing that pain themselves.{Environment.NewLine}" +
+                                     $"Unmatched with blades and axes, the warrior likes to get up close and personal during combat. They rely on their{Environment.NewLine}" +
+                                     $"strength above all else to solve their problems.";
 
-            var rangerDescription = "Born of the forest, a ranger is one with their surroundings. Heightened senses allow the ranger to detect changes in\n" +
-                                    "their environment that others may not realize. The ranger excels with a bow. The ranger's soft footsteps developed over\n" +
-                                    "years of hunting and tracking are a great tool for getting into places undetected.";
+            var rangerDescription = $"Born of the forest, a ranger is one with their surroundings. Heightened senses allow the ranger to detect changes in{Environment.NewLine}" +
+                                    $"their environment that others may not realize. The ranger excels with a bow. The ranger's soft footsteps developed over{Environment.NewLine}" +
+                                    $"years of hunting and tracking are a great tool for getting into places undetected.";
 
-            var mageDescription = "The mage is born with a connection to the Elemental Plane. Years of study and patience has resulted in an understanding\n" +
-                                  "of the magical world that others can't even begin to realize. Typically, the mage prefers non-physical means of solving\n" +
-                                  "problems, and with their high intelligence and their knowledge of the magical arts, there are few problems that a mage\n" +
-                                  "cannot solve.";
+            var mageDescription = $"The mage is born with a connection to the Elemental Plane. Years of study and patience has resulted in an understanding{Environment.NewLine}" +
+                                  $"of the magical world that others can't even begin to realize. Typically, the mage prefers non-physical means of solving{Environment.NewLine}" +
+                                  $"problems, and with their high intelligence and their knowledge of the magical arts, there are few problems that a mage{Environment.NewLine}" +
+                                  $"cannot solve.";
 
             _printService.Print(warriorDescription);
             _printService.Print(rangerDescription, 10);
@@ -236,16 +271,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Class = new Class()
-                        {
-                            Name = "Warrior",
-                            Description = warriorDescription
-                        };
+                        playerDto.Class = ClassEnum.Warrior;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        repickClass(gameDto);
+                        repickClass(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -266,16 +297,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Class = new Class()
-                        {
-                            Name = "Ranger",
-                            Description = rangerDescription
-                        };
+                        playerDto.Class = ClassEnum.Ranger;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        repickClass(gameDto);
+                        repickClass(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -296,16 +323,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Class = new Class()
-                        {
-                            Name = "Mage",
-                            Description = mageDescription
-                        };
+                        playerDto.Class = ClassEnum.Mage;          
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        repickClass(gameDto);
+                        repickClass(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -318,12 +341,12 @@ namespace MarrowVale.Business.Services
             {
                 _printService.Print("You must type the name of the class that you wish for your character.");
                 Thread.Sleep(5000);
-                repickClass(gameDto);
+                repickClass(playerDto);
             }
 
         }
 
-        private void PickGender(GameDto gameDto)
+        private void pickGender(PlayerDto playerDto)
         {
             var characterGender = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Gender);
 
@@ -347,12 +370,12 @@ namespace MarrowVale.Business.Services
 
                     if (decision.ToUpper() == "NO")
                     {
-                        PickGender(gameDto);
+                        pickGender(playerDto);
                         choiceMade = true;
                     }
                     else if (decision.ToUpper() == "YES")
                     {
-                        gameDto.Player.Gender = _globalItemsProvider.UpperFirstChar(gender);
+                        playerDto.Gender = _globalItemsProvider.UpperFirstChar(gender);
                         choiceMade = true;
                     }
                     else
@@ -365,11 +388,11 @@ namespace MarrowVale.Business.Services
             {
                 _printService.Print("You must type in male or female.");
                 Thread.Sleep(3);
-                PickGender(gameDto);
+                pickGender(playerDto);
             }
         }
 
-        private void repickClass(GameDto gameDto)
+        private void repickClass(PlayerDto playerDto)
         {
             var characterClass = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Class);
 
@@ -410,16 +433,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Class = new Class()
-                        {
-                            Name = "Warrior",
-                            Description = warriorDescription
-                        };
+                        playerDto.Class = ClassEnum.Warrior;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        repickClass(gameDto);
+                        repickClass(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -440,16 +459,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Class = new Class()
-                        {
-                            Name = "Ranger",
-                            Description = rangerDescription
-                        };
+                        playerDto.Class = ClassEnum.Ranger;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        repickClass(gameDto);
+                        repickClass(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -470,16 +485,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        gameDto.Player.Class = new Class()
-                        {
-                            Name = "Mage",
-                            Description = mageDescription
-                        };
+                        playerDto.Class = ClassEnum.Mage;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        repickClass(gameDto);
+                        repickClass(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -492,9 +503,42 @@ namespace MarrowVale.Business.Services
             {
                 _printService.Print("You must type the name of the class that you wish for your character.");
                 Thread.Sleep(5000);
-                repickClass(gameDto);
+                repickClass(playerDto);
             }
 
+        }
+
+        private void loadNewInventory(Class startingClass, Player player)
+        {
+            //get weapons
+            foreach(var weapon in startingClass.StartingWeapons)
+            {
+                player.Inventory.AddItem(weapon);
+            }
+
+            //get consumables
+            foreach(var consumable in startingClass.StartingConsumables)
+            {
+                player.Inventory.AddItem(consumable);
+            }
+
+            //get ammunition
+            foreach (var ammoStack in startingClass.StartingAmmunition)
+            {
+                player.Inventory.AddItem(ammoStack);
+            }
+
+            //get spells
+            foreach(var spell in startingClass.StartingSpells)
+            {
+                player.AddSpellToSpellbook(spell);
+            }
+
+            //get abilities
+            foreach(var ability in startingClass.StartingAbilities)
+            {
+                player.AddAbility(ability);
+            }
         }
     }
 }

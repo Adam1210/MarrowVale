@@ -1,12 +1,9 @@
-﻿using MarrowVale.Business.Entities.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MarrowVale.Business.Entities.Entities;
 
 namespace MarrowVale.Business.Contracts
 {
     public interface IGameSetupService
     {
-        GameDto Setup();
+        Player Setup();
     }
 }

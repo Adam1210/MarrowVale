@@ -1,5 +1,6 @@
 ﻿using MarrowVale.Business.Contracts;
 using MarrowVale.Business.Entities.Dtos;
+using MarrowVale.Business.Entities.Entities;
 using MarrowVale.Data.Contracts;
 using System;
 using System.Threading;
@@ -21,7 +22,7 @@ namespace MarrowVale.Business.Services
             _drawingService = drawingService;
         }
 
-        public GameDto Setup()
+        public Player Setup()
         {
             var title = _drawingRepository.GetTitleArt();
             _drawingService.PrintArtCentered(title);
@@ -31,41 +32,43 @@ namespace MarrowVale.Business.Services
 
             var gameType = _printService.ReadInput();
 
-            var game = new GameDto();
+            var playerDto = new PlayerDto();
+            var player = new Player();
 
             if(gameType.ToUpper() == "NEW GAME")
             {
-                newGame(game);
+                player = newGame(playerDto);
             }
             else if(gameType.ToUpper() == "CONTINUE")
             {
-                continueGame(game);
+                player = continueGame(playerDto);
             }
             else
             {
                 _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
                 Thread.Sleep(4000);
-                runSetup(game);
+                player = runSetup(playerDto);
             }
 
-            return game;
+            return player;
         }
 
-        private GameDto newGame(GameDto gameDto)
+        private Player newGame(PlayerDto playerDto)
         {
-            _characterService.NewCharacter(gameDto);
-            return gameDto;
+            var player = _characterService.NewCharacter(playerDto);
+
+            return player;
         }
 
-        private GameDto continueGame(GameDto gameDto)
+        private Player continueGame(PlayerDto playerDto)
         {
             //display list of characters
             //load character chosen
-            _characterService.LoadCharacter(gameDto);
-            return gameDto;
+            var player = _characterService.LoadCharacter(playerDto);
+            return player;
         }
 
-        private GameDto runSetup(GameDto gameDto)
+        private Player runSetup(PlayerDto playerDto)
         {
             _printService.ClearConsole();
 
@@ -77,23 +80,23 @@ namespace MarrowVale.Business.Services
 
             var gameType = _printService.ReadInput();
 
-            var game = new GameDto();
+            var player = new Player();
 
             if (gameType.ToUpper() == "NEW GAME")
             {
-                newGame(game);
+                player = newGame(playerDto);
             }
             else if (gameType.ToUpper() == "CONTINUE")
             {
-                continueGame(game);
+                player = continueGame(playerDto);
             }
             else
             {
                 _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
-                runSetup(game);
+                player = runSetup(playerDto);
             }
 
-            return game;
+            return player;
         }
     }
 }

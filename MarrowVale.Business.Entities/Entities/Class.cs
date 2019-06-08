@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
 {
+
     public class Class
     {
         public Class()

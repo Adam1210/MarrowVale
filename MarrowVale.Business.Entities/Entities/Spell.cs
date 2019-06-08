@@ -1,22 +1,20 @@
-﻿
-using MarrowVale.Business.Entities.Enums;
+﻿using MarrowVale.Business.Entities.Enums;
+using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Spell
     {
-        public Spell()
-        {
-
-        }
+        public Spell(){ }
 
         public string Name { get; }
         public string Description { get; }
         public int Damage { get; private set; }
         public SpellElementEnum Element { get; protected set; }
 
-        public int NumberOfUses { get; protected set; }
-        public int AvailableNumberOfUses { get; private set; }
+        public int NumberOfUses { get; set; }
+        public int AvailableNumberOfUses { get; set; }
 
         public int UseSpell()
         {
