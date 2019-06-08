@@ -54,7 +54,7 @@ namespace MarrowVale.Business.Services
 
             _playerRepository.AddPlayer(player);
                        
-            Console.WriteLine($"\nName: {playerDto.Name}");
+            Console.WriteLine($"{Environment.NewLine}Name: {playerDto.Name}");
             Console.WriteLine($"Gender: {playerDto.Gender}");
             Console.WriteLine($"Race: {playerDto.Race}");
             Console.WriteLine($"Class: {playerDto.Class}");

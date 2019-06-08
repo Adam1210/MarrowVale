@@ -9,18 +9,19 @@ namespace MarrowVale.Business.Entities.Entities
 {
     public class Player
     {
-        public Player() { }
-        public Player(PlayerDto player)
+        public Player() {
+            Abilities = new List<Ability>();
+            Spellbook = new List<Spell>();
+            Inventory = new Inventory();
+        }
+
+        public Player(PlayerDto player) : this()
         {
             Race = player.Race;
             Gender = player.Gender;
             Class = player.Class;
             Name = player.Name;
-
-            Abilities = new List<Ability>();
-            Spellbook = new List<Spell>();
-            Inventory = new Inventory();
-
+            
             if (Class == ClassEnum.Mage)
             {               
                 MaxHealth = 15;
@@ -36,6 +37,15 @@ namespace MarrowVale.Business.Entities.Entities
                 MaxHealth = 25;
                 CurrentHealth = 25;
             }
+        }
+
+        [JsonConstructor]
+        private Player(RaceEnum Race, string Gender, ClassEnum Class, string Name)
+        {
+            this.Race = Race;
+            this.Gender = Gender;
+            this.Class = Class;
+            this.Name = Name;
         }
 
         public string Name { get; set; }

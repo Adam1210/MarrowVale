@@ -31,7 +31,8 @@ namespace MarrowVale.Data.Repositories
         {
             var settings = new JsonSerializerSettings()
             {
-                TypeNameHandling = TypeNameHandling.All
+                TypeNameHandling = TypeNameHandling.All,
+                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
             };
 
             var playerList = JsonConvert.DeserializeObject<List<Player>>(PlayerFile, settings);
