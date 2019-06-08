@@ -258,51 +258,41 @@ namespace MarrowVale.Business.Services
 
             var charClass = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
 
-            if (charClass == "Warrior")
-            {
-                verifyClassPick(playerDto, charClass, ClassEnum.Warrior);
-            }
-            else if (charClass == "Ranger")
-            {
-                verifyClassPick(playerDto, charClass, ClassEnum.Ranger);
-            }
-            else if (charClass == "Mage")
-            {
-                verifyClassPick(playerDto, charClass, ClassEnum.Mage);
+            verifyClassPick(playerDto, charClass);
+        }
+                
+        private void verifyClassPick(PlayerDto playerDto, string charClass)
+        {
+            if(Enum.TryParse<ClassEnum>(charClass, out var result)){
+                var choiceMade = false;
+
+                while (!choiceMade)
+                {
+                    _printService.Print($"Are you sure you want to be a {charClass}?  yes | no");
+
+                    var choice = _printService.ReadInput();
+
+                    if (choice.ToUpper() == "YES")
+                    {
+                        playerDto.Class = result;
+                        choiceMade = true;
+                    }
+                    else if (choice.ToUpper() == "NO")
+                    {
+                        pickClass(playerDto);
+                        choiceMade = true;
+                    }
+                    else
+                    {
+                        _printService.Print("You must type yes or no.");
+                    }
+                }
             }
             else
             {
                 _printService.Print("You must type the name of the class that you wish for your character.");
                 Thread.Sleep(5000);
                 pickClass(playerDto);
-            }
-
-        }
-                
-        private void verifyClassPick(PlayerDto playerDto, string charClass, ClassEnum pickedClass)
-        {
-            var choiceMade = false;
-
-            while (!choiceMade)
-            {
-                _printService.Print($"Are you sure you want to be a {charClass}?  yes | no");
-
-                var choice = _printService.ReadInput();
-
-                if (choice.ToUpper() == "YES")
-                {
-                    playerDto.Class = pickedClass;
-                    choiceMade = true;
-                }
-                else if (choice.ToUpper() == "NO")
-                {
-                    pickClass(playerDto);
-                    choiceMade = true;
-                }
-                else
-                {
-                    _printService.Print("You must type yes or no.");
-                }
             }
         }
 
