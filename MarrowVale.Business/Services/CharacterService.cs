@@ -1,5 +1,4 @@
 ﻿using MarrowVale.Business.Contracts;
-using MarrowVale.Business.Entities;
 using MarrowVale.Business.Entities.Dtos;
 using MarrowVale.Business.Entities.Entities;
 using MarrowVale.Business.Entities.Enums;
@@ -7,7 +6,6 @@ using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Linq;
 using System.Threading;
 
 namespace MarrowVale.Business.Services
@@ -54,7 +52,7 @@ namespace MarrowVale.Business.Services
 
             _playerRepository.AddPlayer(player);
                        
-            Console.WriteLine($"\nName: {playerDto.Name}");
+            Console.WriteLine($"{Environment.NewLine}Name: {playerDto.Name}");
             Console.WriteLine($"Gender: {playerDto.Gender}");
             Console.WriteLine($"Race: {playerDto.Race}");
             Console.WriteLine($"Class: {playerDto.Class}");
@@ -141,74 +139,24 @@ namespace MarrowVale.Business.Services
 
             var race = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
 
-            if (race == Enum.GetName(typeof(RaceEnum), 0))
+            verifyRacePick(playerDto, race);
+        }
+
+        private void verifyRacePick(PlayerDto playerDto, string race)
+        {
+            if(Enum.TryParse<RaceEnum>(race, out var result))
             {
                 var choiceMade = false;
 
                 while (!choiceMade)
                 {
-                    //chose human
                     _printService.Print($"Are you sure you want to be a {race}?  yes | no");
 
                     var choice = _printService.ReadInput();
 
                     if (choice.ToUpper() == "YES")
                     {
-                        playerDto.Race = RaceEnum.Human;
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        pickRace(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else if (race == Enum.GetName(typeof(RaceEnum), 1))
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    //chose elf
-                    _printService.Print($"Are you sure you want to be a {race}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Race = RaceEnum.Elf;
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        pickRace(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else if (race == Enum.GetName(typeof(RaceEnum), 2))
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    //chose dwarf
-                    _printService.Print($"Are you sure you want to be a {race}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Race = RaceEnum.Dwarf;
+                        playerDto.Race = result;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
@@ -228,122 +176,6 @@ namespace MarrowVale.Business.Services
                 Thread.Sleep(3);
                 pickRace(playerDto);
             }
-        }
-
-        private void pickClass(PlayerDto playerDto)
-        {
-            var characterClass = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Class);
-
-            _printService.ClearConsole();
-
-            _drawingService.PrintArtCentered(characterClass);
-
-            var warriorDescription = $"Only ever knowing violence, the warrior's purpose is to protect people from ever experiencing that pain themselves.{Environment.NewLine}" +
-                                     $"Unmatched with blades and axes, the warrior likes to get up close and personal during combat. They rely on their{Environment.NewLine}" +
-                                     $"strength above all else to solve their problems.";
-
-            var rangerDescription = $"Born of the forest, a ranger is one with their surroundings. Heightened senses allow the ranger to detect changes in{Environment.NewLine}" +
-                                    $"their environment that others may not realize. The ranger excels with a bow. The ranger's soft footsteps developed over{Environment.NewLine}" +
-                                    $"years of hunting and tracking are a great tool for getting into places undetected.";
-
-            var mageDescription = $"The mage is born with a connection to the Elemental Plane. Years of study and patience has resulted in an understanding{Environment.NewLine}" +
-                                  $"of the magical world that others can't even begin to realize. Typically, the mage prefers non-physical means of solving{Environment.NewLine}" +
-                                  $"problems, and with their high intelligence and their knowledge of the magical arts, there are few problems that a mage{Environment.NewLine}" +
-                                  $"cannot solve.";
-
-            _printService.Print(warriorDescription);
-            _printService.Print(rangerDescription, 10);
-            _printService.Print(mageDescription, 10);
-
-            _printService.Print("Which class do you want your new character to be?  Warrior | Ranger | Mage", 10);
-
-            var charClass = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
-
-            if (charClass == "Warrior")
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    _printService.Print($"Are you sure you want to be a {charClass}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Class = ClassEnum.Warrior;
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        repickClass(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else if (charClass == "Ranger")
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    _printService.Print($"Are you sure you want to be a {charClass}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Class = ClassEnum.Ranger;
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        repickClass(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else if (charClass == "Mage")
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    _printService.Print($"Are you sure you want to be a {charClass}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Class = ClassEnum.Mage;          
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        repickClass(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else
-            {
-                _printService.Print("You must type the name of the class that you wish for your character.");
-                Thread.Sleep(5000);
-                repickClass(playerDto);
-            }
-
         }
 
         private void pickGender(PlayerDto playerDto)
@@ -392,7 +224,7 @@ namespace MarrowVale.Business.Services
             }
         }
 
-        private void repickClass(PlayerDto playerDto)
+        private void printClassDescriptions()
         {
             var characterClass = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Class);
 
@@ -400,29 +232,38 @@ namespace MarrowVale.Business.Services
 
             _drawingService.PrintArtCentered(characterClass);
 
-            var warriorDescription = "Only ever knowing violence, the warrior's purpose is to protect people from ever experiencing that pain themselves.\n" +
-                                     "Unmatched with blades and axes, the warrior likes to get up close and personal during combat. They rely on their\n" +
-                                     "strength above all else to solve their problems.";
+            var warriorDescription = $"Only ever knowing violence, the warrior's purpose is to protect people from ever experiencing that pain themselves.{Environment.NewLine}" +
+                                     $"Unmatched with blades and axes, the warrior likes to get up close and personal during combat. They rely on their{Environment.NewLine}" +
+                                     $"strength above all else to solve their problems.";
 
-            var rangerDescription = "Born of the forest, a ranger is one with their surroundings. Heightened senses allow the ranger to detect changes in\n" +
-                                    "their environment that others may not realize. The ranger excels with a bow. The ranger's soft footsteps developed over\n" +
-                                    "years of hunting and tracking are a great tool for getting into places undetected.";
+            var rangerDescription = $"Born of the forest, a ranger is one with their surroundings. Heightened senses allow the ranger to detect changes in{Environment.NewLine}" +
+                                    $"their environment that others may not realize. The ranger excels with a bow. The ranger's soft footsteps developed over{Environment.NewLine}" +
+                                    $"years of hunting and tracking are a great tool for getting into places undetected.";
 
-            var mageDescription = "The mage is born with a connection to the Elemental Plane. Years of study and patience has resulted in an understanding\n" +
-                                  "of the magical world that others can't even begin to realize. Typically, the mage prefers non-physical means of solving\n" +
-                                  "problems, and with their high intelligence and their knowledge of the magical arts, there are few problems that a mage\n" +
-                                  "cannot solve.";
+            var mageDescription = $"The mage is born with a connection to the Elemental Plane. Years of study and patience has resulted in an understanding{Environment.NewLine}" +
+                                  $"of the magical world that others can't even begin to realize. Typically, the mage prefers non-physical means of solving{Environment.NewLine}" +
+                                  $"problems, and with their high intelligence and their knowledge of the magical arts, there are few problems that a mage{Environment.NewLine}" +
+                                  $"cannot solve.";
 
             _printService.Print(warriorDescription);
-            _printService.Print(rangerDescription);
-            _printService.Print(mageDescription);
+            _printService.Print(rangerDescription, 10);
+            _printService.Print(mageDescription, 10);
+        }
 
-            _printService.Print("Which class do you want your new character to be?  Warrior | Ranger | Mage");
+        private void pickClass(PlayerDto playerDto)
+        {
+            printClassDescriptions();
+
+            _printService.Print("Which class do you want your new character to be?  Warrior | Ranger | Mage", 10);
 
             var charClass = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
 
-            if (charClass == "Warrior")
-            {
+            verifyClassPick(playerDto, charClass);
+        }
+                
+        private void verifyClassPick(PlayerDto playerDto, string charClass)
+        {
+            if(Enum.TryParse<ClassEnum>(charClass, out var result)){
                 var choiceMade = false;
 
                 while (!choiceMade)
@@ -433,64 +274,12 @@ namespace MarrowVale.Business.Services
 
                     if (choice.ToUpper() == "YES")
                     {
-                        playerDto.Class = ClassEnum.Warrior;
+                        playerDto.Class = result;
                         choiceMade = true;
                     }
                     else if (choice.ToUpper() == "NO")
                     {
-                        repickClass(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else if (charClass == "Ranger")
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    _printService.Print($"Are you sure you want to be a {charClass}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Class = ClassEnum.Ranger;
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        repickClass(playerDto);
-                        choiceMade = true;
-                    }
-                    else
-                    {
-                        _printService.Print("You must type yes or no.");
-                    }
-                }
-            }
-            else if (charClass == "Mage")
-            {
-                var choiceMade = false;
-
-                while (!choiceMade)
-                {
-                    _printService.Print($"Are you sure you want to be a {charClass}?  yes | no");
-
-                    var choice = _printService.ReadInput();
-
-                    if (choice.ToUpper() == "YES")
-                    {
-                        playerDto.Class = ClassEnum.Mage;
-                        choiceMade = true;
-                    }
-                    else if (choice.ToUpper() == "NO")
-                    {
-                        repickClass(playerDto);
+                        pickClass(playerDto);
                         choiceMade = true;
                     }
                     else
@@ -503,9 +292,8 @@ namespace MarrowVale.Business.Services
             {
                 _printService.Print("You must type the name of the class that you wish for your character.");
                 Thread.Sleep(5000);
-                repickClass(playerDto);
+                pickClass(playerDto);
             }
-
         }
 
         private void loadNewInventory(Class startingClass, Player player)

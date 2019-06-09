@@ -18,27 +18,27 @@ namespace MarrowVale.Business.Services
         public void PrintArtCentered(string[] art)
         {
             Console.WindowWidth = _globalItemsProvider.WindowWidth;
-            Console.WriteLine("\n");
-            foreach (string line in art)
+            Console.WriteLine(Environment.NewLine);
+            foreach (var line in art)
             {
                 Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
                 Console.WriteLine(line);
             }
 
-            Console.WriteLine("\n\n");
+            Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}");
         }
 
         public void PrintArt(string[] art)
         {
             Console.WindowWidth = _globalItemsProvider.WindowWidth;
-            Console.WriteLine("\n");
-            foreach (string line in art)
+            Console.WriteLine(Environment.NewLine);
+            foreach (var line in art)
             {
                 Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
                 Console.WriteLine(line);
             }
 
-            Console.WriteLine("\n\n");
+            Console.WriteLine($"{Environment.NewLine}{Environment.NewLine}");
         }
     }
 }

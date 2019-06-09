@@ -17,7 +17,7 @@ namespace MarrowVale.Business.Entities.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public int CurrentHealth { get; set; }
-        public int MaxHealth { get; set; }
+        public int MaxHealth { get; }
         public int BaseDamage { get; }
 
         public IList<Ability> Abilities { get; }

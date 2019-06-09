@@ -1,14 +1,13 @@
 ﻿using MarrowVale.Business.Entities.Enums;
-using Newtonsoft.Json;
-using System.ComponentModel;
 
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Weapon : IItem
     {
-        public Weapon(int worth)
+        public Weapon(int BaseWorth, WeaponTypeEnum Type)
         {
-            BaseWorth = worth;
+            this.BaseWorth = BaseWorth;
+            this.Type = Type;
         }
 
         public int Range { get; set; }
@@ -17,7 +16,7 @@ namespace MarrowVale.Business.Entities.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsBroken { get; set; }
-        public WeaponTypeEnum Type { get; private set; }
+        public WeaponTypeEnum Type { get; }
         public bool IsVisible { get; set; }
         public int BaseWorth { get; set; }
     }
