@@ -33,6 +33,16 @@ namespace MarrowVale.Data.Repositories
             return title;
         }
 
+        public string[] GetLoadSaveArt()
+        {
+            return new[]
+            {
+                 @"--------------------------",
+                 @"Character Save Selection",
+                 @"--------------------------"
+            };
+        }
+
         public string[] GetCharacterCreationStateArt(PlayerCreationStateEnum playerCreationState)
         {
             switch (playerCreationState)
@@ -66,7 +76,7 @@ namespace MarrowVale.Data.Repositories
                         @"-------------------------"
                     };
                 default: return null;
-            }        
-        }       
+            }
+        }
     }
 }

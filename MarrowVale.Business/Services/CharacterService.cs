@@ -33,11 +33,13 @@ namespace MarrowVale.Business.Services
             _playerRepository = playerRepository;
         }
 
-        public Player NewCharacter(PlayerDto playerDto)
+        public Player NewCharacter()
         {
             _printService.Type("Now we are going to create a new character for your adventure.");
 
             Thread.Sleep(2000);
+
+            var playerDto = new PlayerDto();
 
             pickRace(playerDto);
             pickGender(playerDto);
@@ -65,6 +67,8 @@ namespace MarrowVale.Business.Services
             //gets character
             //loads inventory and location
             _printService.ClearConsole();
+
+            _drawingService.PrintArtCentered(_drawingRepository.GetLoadSaveArt());
 
             var players = _playerRepository.GetPlayers();
 
