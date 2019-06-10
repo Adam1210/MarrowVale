@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.Serialization;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -16,12 +13,32 @@ namespace MarrowVale.Business.Entities.Entities
             CurrentCurrency = 0;
             MaxCurrency = 50;
         }
+        [JsonConstructor]
+        private Inventory(int CurrentCurrency, int MaxCurrency)
+        {
+            this.CurrentCurrency = CurrentCurrency;
+            this.MaxCurrency = MaxCurrency;
+        }
 
-        public int Size { get; set; }
+        public int Size { get; private set; }
         public IList<IItem> Items { get; private set; }
 
-        public int CurrentCurrency { get; set; }
+        public int CurrentCurrency { get; private set; }
         public int MaxCurrency { get; private set; }
+
+        public void AddCurrency(int amountToAdd)
+        {
+            var tempCurrency = CurrentCurrency + amountToAdd;
+            if(tempCurrency > MaxCurrency)
+            {
+                CurrentCurrency = MaxCurrency;
+                //ToDo: notify user they are at max and lost currency/left currency
+            }
+            else
+            {
+                CurrentCurrency = tempCurrency;
+            }
+        }
 
         public void AddItem(IItem item)
         {
