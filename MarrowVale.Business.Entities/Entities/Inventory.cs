@@ -14,10 +14,11 @@ namespace MarrowVale.Business.Entities.Entities
             MaxCurrency = 50;
         }
         [JsonConstructor]
-        private Inventory(int CurrentCurrency, int MaxCurrency)
+        private Inventory(int CurrentCurrency, int MaxCurrency, int Size)
         {
             this.CurrentCurrency = CurrentCurrency;
             this.MaxCurrency = MaxCurrency;
+            this.Size = Size;
         }
 
         public int Size { get; private set; }
