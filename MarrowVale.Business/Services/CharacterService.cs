@@ -60,27 +60,42 @@ namespace MarrowVale.Business.Services
             return player;
         }
 
-        public Player LoadCharacter(PlayerDto playerDto)
+        public Player LoadCharacter()
         {
             //gets character
             //loads inventory and location
             _printService.ClearConsole();
 
-            var player = _playerRepository.GetPlayers();
+            var players = _playerRepository.GetPlayers();
 
-            foreach(var item in player)
+            foreach(var item in players)
             {
-                _printService.PrintCentered($"{item.Name}: {item.Race} {item.Class}");
+                _printService.PrintCentered(item.SaveInfo());
             }
 
-            return new Player();
+            _printService.Print("Enter the name of the play you would like to play.");
+
+            var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
+
+            var player = _playerRepository.GetPlayer(name);
+
+            if (player == null)
+            {
+                _printService.Print($"No player with name {name} exists.");
+                Thread.Sleep(2000);
+                return LoadCharacter();
+            }
+            else
+            {
+                return player;
+            }
         }
 
         public Inventory GetInventory(Player player)
         {            
             return player.Inventory;
         }
-
+        
         private void pickName(PlayerDto playerDto)
         {
             var characterName = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Name);
