@@ -13,6 +13,7 @@ namespace MarrowVale.Business.Entities.Entities
             CurrentCurrency = 0;
             MaxCurrency = 50;
         }
+
         [JsonConstructor]
         private Inventory(int CurrentCurrency, int MaxCurrency, int Size)
         {
@@ -22,7 +23,7 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         public int Size { get; private set; }
-        public IList<IItem> Items { get; private set; }
+        private IList<IItem> Items { get; set; }
 
         public int CurrentCurrency { get; private set; }
         public int MaxCurrency { get; private set; }

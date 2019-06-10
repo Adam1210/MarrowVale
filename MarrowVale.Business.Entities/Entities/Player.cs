@@ -48,7 +48,7 @@ namespace MarrowVale.Business.Entities.Entities
             this.Name = Name;
         }
 
-        public string Name { get; set; }
+        public string Name { get;}
         public ClassEnum Class { get; }
         public RaceEnum Race { get; }
         public string Gender { get; }
@@ -66,7 +66,7 @@ namespace MarrowVale.Business.Entities.Entities
         public void SwitchWeapon(Weapon newWeapon)
         {
             //needs checks added later
-            Inventory.Items.Add(CurrentWeapon);
+            Inventory.AddItem(CurrentWeapon);
             CurrentWeapon = newWeapon;
         }
 
