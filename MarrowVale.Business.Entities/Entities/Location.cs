@@ -10,7 +10,16 @@ namespace MarrowVale.Business.Entities.Entities
             Items = new List<IItem>();
             Npcs = new List<Npc>();
         }
+
+        public Location(string Name, string Description): this()
+        {
+            this.Name = Name;
+            this.Description = Description;
+        }
         
+        public string Name { get; }
+        public string Description { get; private set; }
+
         public IList<IItem> Items { get; private set; }
 
         public IList<Npc> Npcs { get; private set; }
