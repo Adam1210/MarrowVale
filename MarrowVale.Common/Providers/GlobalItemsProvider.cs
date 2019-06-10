@@ -1,8 +1,5 @@
 ﻿using MarrowVale.Common.Contracts;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MarrowVale.Common.Providers
 {
@@ -19,6 +16,11 @@ namespace MarrowVale.Common.Providers
 
         public string UpperFirstChar(string text)
         {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return text;
+            }
+
             return char.ToUpper(text[0]) + ((text.Length > 1) ? text.Substring(1).ToLower() : string.Empty);
         }
     }

@@ -64,7 +64,7 @@ namespace MarrowVale.Business.Services
         {
             //display list of characters
             //load character chosen
-            var player = _characterService.LoadCharacter(playerDto);
+            var player = _characterService.LoadCharacter();
             return player;
         }
 
