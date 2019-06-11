@@ -73,7 +73,21 @@ namespace MarrowVale.Data.Repositories
 
         public void RemovePlayer(string playerName)
         {
+            try
+            {
+                var playerList = loadPlayers();
 
+                var player = playerList.FirstOrDefault(x => x.Name == playerName);
+
+                playerList.Remove(player);
+
+                savePlayers(playerList);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"There was a problem with removing player {playerName} from the repository. See Exception Details{Environment.NewLine}" +
+                    $"{ex.Message}");
+            }
         }
                
         public Player GetPlayer(string playerName)
