@@ -8,5 +8,8 @@ namespace MarrowVale.Data.Contracts
         IList<Player> GetPlayers();
         void AddPlayer(Player player);
         Player GetPlayer(string playerName);
+        void RemovePlayer(string playerName);
+        int PlayerCount();
+        void UpdatePlayer(Player player);
     }
 }
