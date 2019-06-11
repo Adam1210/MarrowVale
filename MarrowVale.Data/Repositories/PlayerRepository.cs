@@ -89,6 +89,22 @@ namespace MarrowVale.Data.Repositories
                     $"{ex.Message}");
             }
         }
+
+        public int PlayerCount()
+        {
+            try
+            {
+                var playerList = loadPlayers();
+
+                return playerList.Count();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"There was a problem with couting players . See Exception Details{Environment.NewLine}" +
+                    $"{ex.Message}");
+                return 0;
+            }
+        }
                
         public Player GetPlayer(string playerName)
         {       
@@ -122,7 +138,6 @@ namespace MarrowVale.Data.Repositories
         
         private IList<Player> loadPlayers()
         {
-
             return JsonConvert.DeserializeObject<List<Player>>(PlayerFile, settings);
         }
     }
