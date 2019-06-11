@@ -95,6 +95,11 @@ namespace MarrowVale.Business.Services
             }
         }
 
+        public void SaveCharacter(Player player)
+        {
+
+        }
+
         public Inventory GetInventory(Player player)
         {            
             return player.Inventory;
