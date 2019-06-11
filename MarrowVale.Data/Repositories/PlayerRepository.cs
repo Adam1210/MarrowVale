@@ -28,13 +28,11 @@ namespace MarrowVale.Data.Repositories
             //PlayerFile = File.ReadAllText(PlayerFilePath);
             PlayerFile = File.ReadAllText(PlayerFilePath);
 
-
             settings = new JsonSerializerSettings()
             {
                 TypeNameHandling = TypeNameHandling.All
             };
         }
-
 
         public IList<Player> GetPlayers()
         {
@@ -106,6 +104,29 @@ namespace MarrowVale.Data.Repositories
             }
         }
                
+        public void UpdatePlayer(Player player)
+        {
+            try
+            {
+                var playerList = loadPlayers();
+
+                var oldPlayer = playerList.FirstOrDefault(x => x.Name == player.Name);
+
+                player.LastSaveDateTime = DateTime.Now;
+
+                playerList.Remove(oldPlayer);
+                playerList.Add(player);
+                
+
+                savePlayers(playerList);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"There was a problem with adding new player to the repository. See Exception Details{Environment.NewLine}" +
+                    $"{ex.Message}");
+            }
+        }
+
         public Player GetPlayer(string playerName)
         {       
             try
