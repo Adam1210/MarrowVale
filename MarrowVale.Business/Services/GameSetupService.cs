@@ -31,36 +31,31 @@ namespace MarrowVale.Business.Services
             _printService.TypeCentered("Continue");
 
             var gameType = _printService.ReadInput();
-
-            var playerDto = new PlayerDto();
-            var player = new Player();
-
+            
             if(gameType.ToUpper() == "NEW GAME")
             {
-                player = newGame(playerDto);
+                return newGame();
             }
             else if(gameType.ToUpper() == "CONTINUE")
             {
-                player = continueGame(playerDto);
+                return continueGame();
             }
             else
             {
                 _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
                 Thread.Sleep(4000);
-                player = runSetup(playerDto);
+                return Setup();
             }
-
-            return player;
         }
 
-        private Player newGame(PlayerDto playerDto)
+        private Player newGame()
         {
-            var player = _characterService.NewCharacter(playerDto);
+            var player = _characterService.NewCharacter();
 
             return player;
         }
 
-        private Player continueGame(PlayerDto playerDto)
+        private Player continueGame()
         {
             //display list of characters
             //load character chosen
@@ -68,35 +63,5 @@ namespace MarrowVale.Business.Services
             return player;
         }
 
-        private Player runSetup(PlayerDto playerDto)
-        {
-            _printService.ClearConsole();
-
-            var title = _drawingRepository.GetTitleArt();
-            _drawingService.PrintArtCentered(title);
-
-            _printService.TypeCentered("New Game");
-            _printService.TypeCentered("Continue");
-
-            var gameType = _printService.ReadInput();
-
-            var player = new Player();
-
-            if (gameType.ToUpper() == "NEW GAME")
-            {
-                player = newGame(playerDto);
-            }
-            else if (gameType.ToUpper() == "CONTINUE")
-            {
-                player = continueGame(playerDto);
-            }
-            else
-            {
-                _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
-                player = runSetup(playerDto);
-            }
-
-            return player;
-        }
     }
 }

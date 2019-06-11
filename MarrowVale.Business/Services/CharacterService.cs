@@ -33,11 +33,20 @@ namespace MarrowVale.Business.Services
             _playerRepository = playerRepository;
         }
 
-        public Player NewCharacter(PlayerDto playerDto)
+        public Player NewCharacter()
         {
+            if (_playerRepository.PlayerCount() == 10)
+            {
+                _printService.Type("There are too many saves, you need to delete one to cotinue with your creation.");
+                pickPlayerToRemove();
+            }
+
+            _printService.ClearConsole();
             _printService.Type("Now we are going to create a new character for your adventure.");
 
             Thread.Sleep(2000);
+            
+            var playerDto = new PlayerDto();
 
             pickRace(playerDto);
             pickGender(playerDto);
@@ -64,16 +73,9 @@ namespace MarrowVale.Business.Services
         {
             //gets character
             //loads inventory and location
-            _printService.ClearConsole();
+            displaySavedCharacters();
 
-            var players = _playerRepository.GetPlayers();
-
-            foreach(var item in players)
-            {
-                _printService.PrintCentered(item.SaveInfo());
-            }
-
-            _printService.Print("Enter the name of the play you would like to play.");
+            _printService.Type("Enter the name of the player you would like to play.");
 
             var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
 
@@ -91,11 +93,50 @@ namespace MarrowVale.Business.Services
             }
         }
 
+        public void SaveCharacter(Player player)
+        {
+
+        }
+
         public Inventory GetInventory(Player player)
         {            
             return player.Inventory;
         }
         
+        private void pickPlayerToRemove()
+        {
+            displaySavedCharacters();
+
+            _printService.Type("Enter the name of the player you would like to delete.");
+
+            var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
+
+            var player = _playerRepository.GetPlayer(name);
+
+            if (player == null)
+            {
+                _printService.Print($"No player with name {name} exists.");
+                Thread.Sleep(2000);
+                pickPlayerToRemove();
+            }
+
+            _playerRepository.RemovePlayer(name);
+        }
+
+        private void displaySavedCharacters()
+        {
+            _printService.ClearConsole();
+
+            _drawingService.PrintArtCentered(_drawingRepository.GetLoadSaveArt());
+
+            var players = _playerRepository.GetPlayers();
+
+            foreach (var item in players)
+            {
+                _printService.PrintCentered(item.SaveInfo());
+            }
+        }
+
         private void pickName(PlayerDto playerDto)
         {
             var characterName = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Name);
