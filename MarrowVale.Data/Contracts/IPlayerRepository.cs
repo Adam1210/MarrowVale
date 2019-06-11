@@ -9,5 +9,6 @@ namespace MarrowVale.Data.Contracts
         void AddPlayer(Player player);
         Player GetPlayer(string playerName);
         void RemovePlayer(string playerName);
+        int PlayerCount();
     }
 }

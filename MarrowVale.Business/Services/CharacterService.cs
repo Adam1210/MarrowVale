@@ -35,10 +35,16 @@ namespace MarrowVale.Business.Services
 
         public Player NewCharacter()
         {
+            if (_playerRepository.PlayerCount() == 10)
+            {
+
+            }
+
+            _printService.ClearConsole();
             _printService.Type("Now we are going to create a new character for your adventure.");
 
             Thread.Sleep(2000);
-
+            
             var playerDto = new PlayerDto();
 
             pickRace(playerDto);
@@ -66,16 +72,7 @@ namespace MarrowVale.Business.Services
         {
             //gets character
             //loads inventory and location
-            _printService.ClearConsole();
-
-            _drawingService.PrintArtCentered(_drawingRepository.GetLoadSaveArt());
-
-            var players = _playerRepository.GetPlayers();
-
-            foreach(var item in players)
-            {
-                _printService.PrintCentered(item.SaveInfo());
-            }
+            displaySavedCharacters();
 
             _printService.Print("Enter the name of the play you would like to play.");
 
@@ -105,6 +102,25 @@ namespace MarrowVale.Business.Services
             return player.Inventory;
         }
         
+        private void pickPlayerToRemove()
+        {
+            displaySavedCharacters();
+        }
+
+        private void displaySavedCharacters()
+        {
+            _printService.ClearConsole();
+
+            _drawingService.PrintArtCentered(_drawingRepository.GetLoadSaveArt());
+
+            var players = _playerRepository.GetPlayers();
+
+            foreach (var item in players)
+            {
+                _printService.PrintCentered(item.SaveInfo());
+            }
+        }
+
         private void pickName(PlayerDto playerDto)
         {
             var characterName = _drawingRepository.GetCharacterCreationStateArt(PlayerCreationStateEnum.Name);
