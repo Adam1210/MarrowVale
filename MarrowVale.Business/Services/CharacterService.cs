@@ -37,7 +37,8 @@ namespace MarrowVale.Business.Services
         {
             if (_playerRepository.PlayerCount() == 10)
             {
-
+                _printService.Type("There are too many saves, you need to delete one to cotinue with your creation.");
+                pickPlayerToRemove();
             }
 
             _printService.ClearConsole();
@@ -74,7 +75,7 @@ namespace MarrowVale.Business.Services
             //loads inventory and location
             displaySavedCharacters();
 
-            _printService.Print("Enter the name of the play you would like to play.");
+            _printService.Type("Enter the name of the player you would like to play.");
 
             var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
 
@@ -105,6 +106,21 @@ namespace MarrowVale.Business.Services
         private void pickPlayerToRemove()
         {
             displaySavedCharacters();
+
+            _printService.Type("Enter the name of the player you would like to delete.");
+
+            var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
+
+            var player = _playerRepository.GetPlayer(name);
+
+            if (player == null)
+            {
+                _printService.Print($"No player with name {name} exists.");
+                Thread.Sleep(2000);
+                pickPlayerToRemove();
+            }
+
+            _playerRepository.RemovePlayer(name);
         }
 
         private void displaySavedCharacters()
