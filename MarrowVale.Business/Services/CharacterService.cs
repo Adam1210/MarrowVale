@@ -82,6 +82,10 @@ namespace MarrowVale.Business.Services
 
             var player = _playerRepository.GetPlayer(name);
 
+            player.LastSaveDateTime = DateTime.Now;
+
+            _playerRepository.SavePlayers();
+
             if (player == null)
             {
                 _printService.Print($"No player with name {name} exists.");

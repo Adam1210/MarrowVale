@@ -14,11 +14,10 @@ namespace MarrowVale.Data.Repositories
     {
         private readonly ILogger _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
-        private string PlayerFile { get; set; }
         private string PlayerFilePath { get; set; }
 
-        private JsonSerializerSettings settings { get; set; }
-        private IList<Player> players { get; set; }
+        private JsonSerializerSettings Settings { get; set; }
+        private IList<Player> Players { get; set; }
 
         public PlayerRepository(ILoggerFactory logger, IAppSettingsProvider appSettingsProvider)
         {
@@ -26,69 +25,44 @@ namespace MarrowVale.Data.Repositories
             _appSettingsProvider = appSettingsProvider;
             //PlayerFilePath = $"{_appSettingsProvider.DataFilesLocation}\\PlayerList.json";
             PlayerFilePath = $"{Environment.CurrentDirectory}\\Game Tools\\DataFiles\\PlayerList.json";
-            //PlayerFile = File.ReadAllText(PlayerFilePath);
-            PlayerFile = File.ReadAllText(PlayerFilePath);
 
-            settings = new JsonSerializerSettings()
+            Settings = new JsonSerializerSettings()
             {
                 TypeNameHandling = TypeNameHandling.All,
                 ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
             };
-            players = loadPlayers();
-            if (players == null)
+            Players = loadPlayers();
+            if (Players == null)
             {
-                players = new List<Player>();
+                Players = new List<Player>();
             }
         }
 
         public IList<string> GetPlayers()
         {
-            return players.Select(x => x.SaveInfo()).ToList();
+            return Players.Select(x => x.SaveInfo()).ToList();
         }
 
         public void AddPlayer(Player player)
         {
-            players.Add(player);
+            Players.Add(player);
         }
 
         public void RemovePlayer(string playerName)
         {
-            var player = players.FirstOrDefault(x => x.Name == playerName);
+            var player = Players.FirstOrDefault(x => x.Name == playerName);
 
-            players.Remove(player);
+            Players.Remove(player);
         }
 
         public int PlayerCount()
         {
-            return players.Count();
+            return Players.Count();
         }
-
-        //public void UpdatePlayer(Player player)
-        //{
-        //    try
-        //    {
-        //        var playerList = loadPlayers();
-
-        //        var oldPlayer = playerList.FirstOrDefault(x => x.Name == player.Name);
-
-        //        player.LastSaveDateTime = DateTime.Now;
-
-        //        playerList.Remove(oldPlayer);
-        //        playerList.Add(player);
-
-
-        //        savePlayers(playerList);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"There was a problem with adding new player to the repository. See Exception Details{Environment.NewLine}" +
-        //            $"{ex.Message}");
-        //    }
-        //}
 
         public Player GetPlayer(string playerName)
         {
-            var player = players.FirstOrDefault(x => x.Name == playerName);
+            var player = Players.FirstOrDefault(x => x.Name == playerName);
 
             if (player == null)
             {
@@ -100,14 +74,15 @@ namespace MarrowVale.Data.Repositories
 
         public void SavePlayers()
         {
-            var newJson = JsonConvert.SerializeObject(players, Formatting.Indented, settings);
+            var newJson = JsonConvert.SerializeObject(Players, Formatting.Indented, Settings);
 
             File.WriteAllText(PlayerFilePath, newJson);
         }
 
         private IList<Player> loadPlayers()
         {
-            return JsonConvert.DeserializeObject<List<Player>>(PlayerFile, settings);
+            var playerFile = File.ReadAllText(PlayerFilePath);
+            return JsonConvert.DeserializeObject<List<Player>>(playerFile, Settings);
         }
     }
 }
