@@ -86,7 +86,7 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string SaveInfo()
         {
-            return $"{Name}: {Race}  {Class}  - Last Saved {LastSaveDateTime.ToShortDateString()}";
+            return $"{Name}: {Race}  {Class}  - Last Saved {LastSaveDateTime:MM/dd/yyyy  hh:mm}";
         }
     }
 }

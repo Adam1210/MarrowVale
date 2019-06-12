@@ -95,7 +95,7 @@ namespace MarrowVale
                 .AddTransient<IDrawingRepository, DrawingRepository>()
                 .AddTransient<ISoundRepository, SoundRepository>()
                 .AddTransient<IClassRepository, ClassRepository>()
-                .AddTransient<IPlayerRepository, PlayerRepository>();
+                .AddSingleton<IPlayerRepository, PlayerRepository>();
         }
 
         private static void ConfigureProviders(IServiceCollection services)

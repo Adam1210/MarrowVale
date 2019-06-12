@@ -60,7 +60,8 @@ namespace MarrowVale.Business.Services
             loadNewInventory(startingClass, player);
 
             _playerRepository.AddPlayer(player);
-                       
+            _playerRepository.SavePlayers();
+
             Console.WriteLine($"{Environment.NewLine}Name: {playerDto.Name}");
             Console.WriteLine($"Gender: {playerDto.Gender}");
             Console.WriteLine($"Race: {playerDto.Race}");
@@ -81,6 +82,10 @@ namespace MarrowVale.Business.Services
 
             var player = _playerRepository.GetPlayer(name);
 
+            player.LastSaveDateTime = DateTime.Now;
+
+            _playerRepository.SavePlayers();
+
             if (player == null)
             {
                 _printService.Print($"No player with name {name} exists.");
@@ -93,9 +98,9 @@ namespace MarrowVale.Business.Services
             }
         }
 
-        public void SaveCharacter(Player player)
+        public void SaveCharacter()
         {
-
+            _playerRepository.SavePlayers();
         }
 
         public Inventory GetInventory(Player player)
@@ -133,7 +138,7 @@ namespace MarrowVale.Business.Services
 
             foreach (var item in players)
             {
-                _printService.PrintCentered(item.SaveInfo());
+                _printService.PrintCentered(item);
             }
         }
 
