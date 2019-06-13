@@ -15,7 +15,7 @@ namespace MarrowVale.Business.Entities.Entities
             Items = new List<IItem>();
         }
 
-        public Npc(Dialogue Dialogue): this()
+        public Npc(IList<Dialogue> Dialogue): this()
         {
             this.StartingDialogue = Dialogue;
         }
@@ -30,16 +30,24 @@ namespace MarrowVale.Business.Entities.Entities
         public IList<Spell> SpellBook { get; }
         public IList<IItem> Items { get; }
 
-        private Dialogue StartingDialogue { get; }
+        private IList<Dialogue> StartingDialogue { get; }
         private Dialogue CurrentDialogue { get; set; }
                
         public NpcTypeEnum Type { get; private set; }
 
         public string Speak(string responseText = null)
         {
-            if(string.IsNullOrWhiteSpace(responseText) && CurrentDialogue == StartingDialogue)
+            if (string.IsNullOrWhiteSpace(responseText))
             {
-                return StartingDialogue.Text;
+                return "Do you need something?";
+            }
+
+            if(CurrentDialogue == null)
+            {
+                var startDialogue = StartingDialogue.FirstOrDefault(x => x.TriggerText.Equals(responseText, StringComparison.CurrentCultureIgnoreCase));
+
+                CurrentDialogue = startDialogue;
+                return startDialogue.Text;
             }
 
             var nextDialogue = CurrentDialogue.Dialogues.FirstOrDefault(x => x.TriggerText.Equals(responseText,StringComparison.CurrentCultureIgnoreCase));
