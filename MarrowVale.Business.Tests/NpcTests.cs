@@ -27,7 +27,7 @@ namespace MarrowVale.Business.Tests
             var dialogues = new List<Dialogue>();
             var newDialogue = new Dialogue();
 
-            newDialogue.Text = "Greetings traveler, how are you this day";
+            newDialogue.Text = "Greetings traveler, how are you this day?";
             newDialogue.TriggerText = "Greeting";
             newDialogue.Dialogues.Add(new Dialogue
             {
@@ -41,9 +41,13 @@ namespace MarrowVale.Business.Tests
         }
 
         [Fact]
-        public void Test1()
+        public void GetGreetingText()
         {
+            var npc = CreateNpc();
 
+            var text = npc.Speak("Greeting");
+
+            Assert.True(text == "Greetings traveler, how are you this day?");
         }
     }
 }
