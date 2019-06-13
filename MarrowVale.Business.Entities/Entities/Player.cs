@@ -12,6 +12,7 @@ namespace MarrowVale.Business.Entities.Entities
             Abilities = new List<Ability>();
             Spellbook = new List<Spell>();
             Inventory = new Inventory();
+            KnownLanguages = new List<LanguageEnum>();
         }
 
         public Player(PlayerDto player) : this()
@@ -62,6 +63,9 @@ namespace MarrowVale.Business.Entities.Entities
         public IList<Spell> Spellbook { get;}
 
         public IList<Ability> Abilities { get; }
+
+        [JsonProperty]
+        private IList<LanguageEnum> KnownLanguages { get; set; }
 
         public Weapon CurrentWeapon { get; private set; }
 
