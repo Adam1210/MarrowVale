@@ -21,6 +21,19 @@ namespace MarrowVale.Business.Entities.Entities
             Gender = player.Gender;
             Class = player.Class;
             Name = player.Name;
+            KnownLanguages.Add(LanguageEnum.Common);
+
+            switch (Race)
+            {
+                case RaceEnum.Dwarf:
+                    KnownLanguages.Add(LanguageEnum.Dwarvish);
+                    break;
+                case RaceEnum.Elf:
+                    KnownLanguages.Add(LanguageEnum.Elvish);
+                    break;
+                default:
+                    break;
+            }
             
             if (Class == ClassEnum.Mage)
             {               
