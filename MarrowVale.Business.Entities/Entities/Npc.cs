@@ -1,6 +1,7 @@
 ﻿using MarrowVale.Business.Entities.Enums;
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -14,6 +15,11 @@ namespace MarrowVale.Business.Entities.Entities
             Items = new List<IItem>();
         }
 
+        public Npc(IList<Dialogue> Dialogue): this()
+        {
+            this.StartingDialogue = Dialogue;
+        }
+
         public string Name { get; set; }
         public string Description { get; set; }
         public int CurrentHealth { get; set; }
@@ -24,6 +30,35 @@ namespace MarrowVale.Business.Entities.Entities
         public IList<Spell> SpellBook { get; }
         public IList<IItem> Items { get; }
 
+        private IList<Dialogue> StartingDialogue { get; }
+        private Dialogue CurrentDialogue { get; set; }
+               
         public NpcTypeEnum Type { get; private set; }
+
+        public string Speak(string responseText = null)
+        {
+            if (string.IsNullOrWhiteSpace(responseText))
+            {
+                return "Do you need something?";
+            }
+
+            if(CurrentDialogue == null)
+            {
+                var startDialogue = StartingDialogue.FirstOrDefault(x => x.TriggerText.Equals(responseText, StringComparison.CurrentCultureIgnoreCase));
+
+                CurrentDialogue = startDialogue;
+                return startDialogue.Text;
+            }
+
+            var nextDialogue = CurrentDialogue.Dialogues.FirstOrDefault(x => x.TriggerText.Equals(responseText,StringComparison.CurrentCultureIgnoreCase));
+
+            if(nextDialogue != null)
+            {
+                CurrentDialogue = nextDialogue;
+                return nextDialogue.Text;
+            }
+
+            return $"I don't understand try again.{Environment.NewLine}{CurrentDialogue.Text}";
+        }        
     }
 }
