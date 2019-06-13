@@ -12,6 +12,7 @@ namespace MarrowVale.Data.Seeder.DialogueSeeds
 
             var greetingDialogue = new Dialogue();
 
+            listOfDialogues.Add(greetingDialogue);
 
             return listOfDialogues;
         }

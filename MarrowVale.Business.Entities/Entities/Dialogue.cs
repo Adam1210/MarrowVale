@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MarrowVale.Business.Entities.Enums;
+using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -8,7 +9,7 @@ namespace MarrowVale.Business.Entities.Entities
         public string Type { get; set; }
         public string TriggerText { get; set; }
         public bool AlreadySpoken { get; set; }
+        public LanguageEnum Language { get; set; }
         public IList<Dialogue> Dialogues { get; set; }
-
     }
 }
