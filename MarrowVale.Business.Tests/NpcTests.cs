@@ -1,5 +1,6 @@
 using MarrowVale.Business.Entities.Entities;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace MarrowVale.Business.Tests
@@ -21,18 +22,22 @@ namespace MarrowVale.Business.Tests
             return newNpc;
         }
 
-        private Dialogue CreateDialogue()
+        private IList<Dialogue> CreateDialogue()
         {
+            var dialogues = new List<Dialogue>();
             var newDialogue = new Dialogue();
 
             newDialogue.Text = "Greetings traveler, how are you this day";
+            newDialogue.TriggerText = "Greeting";
             newDialogue.Dialogues.Add(new Dialogue
             {
                 Text = "",
                 TriggerText = "",
             });
 
-            return newDialogue;
+            dialogues.Add(newDialogue);
+
+            return dialogues;
         }
 
         [Fact]
