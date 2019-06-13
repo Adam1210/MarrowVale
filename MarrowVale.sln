@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarrowVale.Common", "Marrow
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{31591F10-976F-4A2F-9156-D2D7C43E2B08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarrowVale.Business.Tests", "MarrowVale.Business.Tests\MarrowVale.Business.Tests.csproj", "{212F9844-CF8D-48E2-BB81-D8038706CA4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarrowVale.Business.Tests", "MarrowVale.Business.Tests\MarrowVale.Business.Tests.csproj", "{212F9844-CF8D-48E2-BB81-D8038706CA4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarrowVale.Data.Seeder", "MarrowVale.Data.Seeder\MarrowVale.Data.Seeder.csproj", "{F0B9A133-5BE0-4A4E-9D13-4A5177A9D978}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{212F9844-CF8D-48E2-BB81-D8038706CA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{212F9844-CF8D-48E2-BB81-D8038706CA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{212F9844-CF8D-48E2-BB81-D8038706CA4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0B9A133-5BE0-4A4E-9D13-4A5177A9D978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0B9A133-5BE0-4A4E-9D13-4A5177A9D978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0B9A133-5BE0-4A4E-9D13-4A5177A9D978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0B9A133-5BE0-4A4E-9D13-4A5177A9D978}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{4E186DD3-D203-4444-BCD8-2D1474FBEB89} = {30377738-EB5D-4E38-9BBB-E14D0D7AD318}
 		{57947761-6A98-4991-A475-E7C7ABF986C8} = {2F7DDB66-CAE5-43AF-AE0C-A6C223FB4C46}
 		{212F9844-CF8D-48E2-BB81-D8038706CA4C} = {31591F10-976F-4A2F-9156-D2D7C43E2B08}
+		{F0B9A133-5BE0-4A4E-9D13-4A5177A9D978} = {30377738-EB5D-4E38-9BBB-E14D0D7AD318}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A519AA7-701B-463E-B981-554DF12F507A}

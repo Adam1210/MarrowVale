@@ -8,6 +8,7 @@ namespace MarrowVale.Business.Entities.Enums
     {
         Human,
         Elf,
-        Dwarf
+        Dwarf,
+        Dragonkin
     }
 }

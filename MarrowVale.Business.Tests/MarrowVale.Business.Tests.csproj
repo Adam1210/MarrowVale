@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MarrowVale.Business.Entities\MarrowVale.Business.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,11 +5,11 @@ namespace MarrowVale.Data.Contracts
 {
     public interface IPlayerRepository
     {
-        IList<Player> GetPlayers();
+        IList<string> GetPlayers();
         void AddPlayer(Player player);
         Player GetPlayer(string playerName);
         void RemovePlayer(string playerName);
         int PlayerCount();
-        void UpdatePlayer(Player player);
+        void SavePlayers();
     }
 }
