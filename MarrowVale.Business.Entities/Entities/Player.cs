@@ -55,13 +55,14 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         [JsonConstructor]
-        private Player(RaceEnum Race, string Gender, ClassEnum Class, string Name, DateTime LastSaveDateTime)
+        private Player(RaceEnum Race, string Gender, ClassEnum Class, string Name, DateTime LastSaveDateTime, IList<LanguageEnum> KnownLanguages)
         {
             this.Race = Race;
             this.Gender = Gender;
             this.Class = Class;
             this.Name = Name;
             this.LastSaveDateTime = LastSaveDateTime;
+            this.KnownLanguages = KnownLanguages;
         }
 
         public string Name { get;}
