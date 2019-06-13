@@ -1,5 +1,7 @@
 ﻿using MarrowVale.Business.Entities.Enums;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -11,5 +13,15 @@ namespace MarrowVale.Business.Entities.Entities
         public bool AlreadySpoken { get; set; }
         public LanguageEnum Language { get; set; }
         public IList<Dialogue> Dialogues { get; set; }
+
+        public string GetTriggerText(IList<LanguageEnum> KnownLanguages)
+        {
+            return string.Join($"{Environment.NewLine}",Dialogues.Where(x => KnownLanguages.Contains(x.Language)).Select(x=>x.TriggerText));
+        }
+
+        public string GetOptionText()
+        {
+            return $"({Language}) {TriggerText}";
+        }
     }
 }
