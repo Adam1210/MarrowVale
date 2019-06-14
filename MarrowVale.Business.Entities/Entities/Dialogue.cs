@@ -13,7 +13,7 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         public string Text { get; set; }
-        public string Type { get; set; }
+        public DialogueTypeEnum Type { get; set; }
         public string TriggerText { get; set; }
         public bool AlreadySpoken { get; set; }
         public LanguageEnum Language { get; set; }
