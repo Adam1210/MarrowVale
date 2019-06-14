@@ -34,29 +34,32 @@ namespace MarrowVale.Business.Entities.Entities
                 default:
                     break;
             }
-            
-            if (Class == ClassEnum.Mage)
-            {               
-                MaxHealth = 15;
-                CurrentHealth = 15;
-            }
-            else if(Class == ClassEnum.Ranger)
-            {
-                MaxHealth = 20;
-                CurrentHealth = 20;
-            }
-            else
-            {
-                MaxHealth = 25;
-                CurrentHealth = 25;
+
+            switch (Class) {
+                case (ClassEnum.Mage):
+                    MaxHealth = 15;
+                    CurrentHealth = 15;
+                    break;
+                case (ClassEnum.Ranger):
+                    MaxHealth = 20;
+                    CurrentHealth = 20;
+                    break;
+                case (ClassEnum.Warrior):
+                default:
+                    MaxHealth = 25;
+                    CurrentHealth = 25;
+                    break;
             }
 
             LastSaveDateTime = DateTime.Now;
         }
 
         [JsonConstructor]
-        private Player(RaceEnum Race, string Gender, ClassEnum Class, string Name, DateTime LastSaveDateTime, IList<LanguageEnum> KnownLanguages)
+        private Player(Inventory Inventory, RaceEnum Race, string Gender, ClassEnum Class, string Name, DateTime LastSaveDateTime, IList<LanguageEnum> KnownLanguages,
+                        int CurrentHealth)
         {
+            this.Inventory = Inventory;
+            this.CurrentHealth = CurrentHealth;
             this.Race = Race;
             this.Gender = Gender;
             this.Class = Class;
@@ -69,14 +72,14 @@ namespace MarrowVale.Business.Entities.Entities
         public ClassEnum Class { get; }
         public RaceEnum Race { get; }
         public string Gender { get; }
-        public int CurrentHealth { get; set; }
-        public int MaxHealth { get; set; }
-        public Inventory Inventory { get; set; }
+        public int CurrentHealth { get; private set; }
+        public int MaxHealth { get; private set; }
+        public Inventory Inventory { get; }
         public Location CurrentLocation { get; set; }
                 
-        public IList<Spell> Spellbook { get;}
+        private IList<Spell> Spellbook { get;}
 
-        public IList<Ability> Abilities { get; }
+        private IList<Ability> Abilities { get; }
 
         [JsonProperty]
         private IList<LanguageEnum> KnownLanguages { get; set; }
@@ -84,6 +87,19 @@ namespace MarrowVale.Business.Entities.Entities
         public Weapon CurrentWeapon { get; private set; }
 
         public DateTime LastSaveDateTime { get; set; } 
+
+        public void Heal(int amount)
+        {
+            var tempHealth = CurrentHealth + amount;
+            if(tempHealth > MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+            else
+            {
+                CurrentHealth = tempHealth;
+            }
+        }
 
         public void SwitchWeapon(Weapon newWeapon)
         {
