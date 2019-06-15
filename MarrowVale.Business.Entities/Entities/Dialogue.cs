@@ -21,7 +21,7 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string GetTriggerText(IList<LanguageEnum> KnownLanguages)
         {
-            return string.Join($"{Environment.NewLine}",Dialogues.Where(x => KnownLanguages.Contains(x.Language)).Select(x=>x.TriggerText));
+            return string.Join($"{Environment.NewLine}",Dialogues.Where(x => KnownLanguages.Contains(x.Language)).Select(x=>x.GetOptionText()));
         }
 
         public string GetOptionText()

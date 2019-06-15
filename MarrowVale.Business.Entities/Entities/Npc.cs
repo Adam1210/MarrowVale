@@ -63,7 +63,7 @@ namespace MarrowVale.Business.Entities.Entities
         
         public string GetOptionsText()
         {
-            return CurrentDialogue.GetOptionText();
+            return CurrentDialogue.GetTriggerText();
         }
     }
 }
