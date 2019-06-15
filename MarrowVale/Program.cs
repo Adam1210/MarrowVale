@@ -27,13 +27,17 @@ namespace MarrowVale
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var soundRepo = serviceProvider.GetService<ISoundRepository>();
+            var inputProcessor = serviceProvider.GetService<IInputProcessingService>();
+
+            inputProcessor.ProcessInput("Hello");
+
+            //var soundRepo = serviceProvider.GetService<ISoundRepository>();
                      
-            var audio = soundRepo.GetMusicLooping("Title.wav");
+            //var audio = soundRepo.GetMusicLooping("Title.wav");
 
-            var gameSetup = serviceProvider.GetService<IGameSetupService>();
+            //var gameSetup = serviceProvider.GetService<IGameSetupService>();
 
-            var player = gameSetup.Setup();
+            //var player = gameSetup.Setup();
 
             //var artRepo = serviceProvider.GetService<IDrawingRepository>();
             //var title = artRepo.GetTitleArt();
@@ -84,7 +88,8 @@ namespace MarrowVale
                 .AddTransient<IInputProcessingService, InputProcessingService>()
                 .AddTransient<IPrintService, PrintService>()
                 .AddTransient<IGameSetupService, GameSetupService>()
-                .AddTransient<IDrawingService, DrawingService>();
+                .AddTransient<IDrawingService, DrawingService>()
+                .AddTransient<ITimeService, TimeService>();
         }
 
         private static void ConfigureRepositories(IServiceCollection services)
