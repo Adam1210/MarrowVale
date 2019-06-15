@@ -6,7 +6,7 @@ namespace MarrowVale.Business.Entities.Dtos
     {
         public string Name { get; set; }
         public ClassEnum Class { get; set; }
-        public RaceEnum Race { get; set; }
+        public PlayerRaceEnum Race { get; set; }
         public string Gender { get; set; }
 
         public PlayerDto() { }

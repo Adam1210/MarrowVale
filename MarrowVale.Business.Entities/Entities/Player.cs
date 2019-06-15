@@ -25,10 +25,10 @@ namespace MarrowVale.Business.Entities.Entities
 
             switch (Race)
             {
-                case RaceEnum.Dwarf:
+                case PlayerRaceEnum.Dwarf:
                     KnownLanguages.Add(LanguageEnum.Dwarvish);
                     break;
-                case RaceEnum.Elf:
+                case PlayerRaceEnum.Elf:
                     KnownLanguages.Add(LanguageEnum.Elvish);
                     break;
                 default:
@@ -55,7 +55,7 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         [JsonConstructor]
-        private Player(Inventory Inventory, RaceEnum Race, string Gender, ClassEnum Class, string Name, DateTime LastSaveDateTime, IList<LanguageEnum> KnownLanguages,
+        private Player(Inventory Inventory, PlayerRaceEnum Race, string Gender, ClassEnum Class, string Name, DateTime LastSaveDateTime, IList<LanguageEnum> KnownLanguages,
                         int CurrentHealth)
         {
             this.Inventory = Inventory;
@@ -70,7 +70,7 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string Name { get;}
         public ClassEnum Class { get; }
-        public RaceEnum Race { get; }
+        public PlayerRaceEnum Race { get; }
         public string Gender { get; }
         public int CurrentHealth { get; private set; }
         public int MaxHealth { get; private set; }
