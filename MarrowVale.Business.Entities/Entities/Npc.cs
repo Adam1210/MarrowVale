@@ -61,9 +61,9 @@ namespace MarrowVale.Business.Entities.Entities
             return $"I don't understand try again.{Environment.NewLine}{CurrentDialogue.Text}";
         } 
         
-        public string GetOptionsText()
+        public string GetOptionsText(IList<LanguageEnum> KnownLanguages)
         {
-            return CurrentDialogue.GetTriggerText();
+            return CurrentDialogue.GetTriggerText(KnownLanguages);
         }
     }
 }
