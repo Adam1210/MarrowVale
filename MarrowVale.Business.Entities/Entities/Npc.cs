@@ -15,9 +15,10 @@ namespace MarrowVale.Business.Entities.Entities
             Items = new List<IItem>();
         }
 
-        public Npc(IList<Dialogue> Dialogue): this()
+        public Npc(IList<Dialogue> Dialogue, NpcRaceEnum Race): this()
         {
             this.StartingDialogue = Dialogue;
+            this.Race = Race;
         }
 
         public string Name { get; set; }
@@ -34,6 +35,7 @@ namespace MarrowVale.Business.Entities.Entities
         private Dialogue CurrentDialogue { get; set; }
                
         public NpcTypeEnum Type { get; private set; }
+        public NpcRaceEnum Race { get; }
 
         public string Speak(string responseText = null)
         {

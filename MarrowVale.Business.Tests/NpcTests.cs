@@ -1,4 +1,5 @@
 using MarrowVale.Business.Entities.Entities;
+using MarrowVale.Business.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -16,7 +17,7 @@ namespace MarrowVale.Business.Tests
 
         private Npc CreateNpc()
         {
-            var newNpc = new Npc(CreateDialogue());
+            var newNpc = new Npc(CreateDialogue(), NpcRaceEnum.Human);
 
 
             return newNpc;
