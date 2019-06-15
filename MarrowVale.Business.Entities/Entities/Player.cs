@@ -76,6 +76,8 @@ namespace MarrowVale.Business.Entities.Entities
         public int MaxHealth { get; private set; }
         public Inventory Inventory { get; }
         public Location CurrentLocation { get; set; }
+
+        public string GameSaveName { get; set; }
                 
         private IList<Spell> Spellbook { get;}
 

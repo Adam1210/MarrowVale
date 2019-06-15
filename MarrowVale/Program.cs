@@ -95,6 +95,7 @@ namespace MarrowVale
                 .AddTransient<IDrawingRepository, DrawingRepository>()
                 .AddTransient<ISoundRepository, SoundRepository>()
                 .AddTransient<IClassRepository, ClassRepository>()
+                .AddSingleton<IGameRepository, GameRepository>()
                 .AddSingleton<IPlayerRepository, PlayerRepository>();
         }
 

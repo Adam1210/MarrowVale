@@ -12,5 +12,6 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         public Location CurrentLocation { get; private set; }
+        public string TestDescription { get; set; }
     }
 }
