@@ -1,5 +1,4 @@
 ﻿using MarrowVale.Business.Contracts;
-using MarrowVale.Business.Entities.Dtos;
 using MarrowVale.Business.Entities.Entities;
 using MarrowVale.Data.Contracts;
 using System;
@@ -13,13 +12,16 @@ namespace MarrowVale.Business.Services
         private readonly IPrintService _printService;
         private readonly IDrawingRepository _drawingRepository;
         private readonly IDrawingService _drawingService;
+        private readonly IGameRepository _gameRepository;
+
         public GameSetupService(ICharacterService characterService, IDrawingRepository drawingRepository, IPrintService printService,
-            IDrawingService drawingService)
+            IDrawingService drawingService, IGameRepository gameRepository)
         {
             _characterService = characterService;
             _printService = printService;
             _drawingRepository = drawingRepository;
             _drawingService = drawingService;
+            _gameRepository = gameRepository;
         }
 
         public Player Setup()
@@ -51,6 +53,10 @@ namespace MarrowVale.Business.Services
         private Player newGame()
         {
             var player = _characterService.NewCharacter();
+            var game = new Game();
+            game.TestDescription = "test";
+            
+            _gameRepository.SaveGame(game, null, player.GameSaveName);
 
             return player;
         }

@@ -52,6 +52,7 @@ namespace MarrowVale.Business.Entities.Entities
             }
 
             LastSaveDateTime = DateTime.Now;
+            GameSaveName = DateTime.Now.ToFileTime().ToString();
         }
 
         [JsonConstructor]
@@ -75,7 +76,8 @@ namespace MarrowVale.Business.Entities.Entities
         public int CurrentHealth { get; private set; }
         public int MaxHealth { get; private set; }
         public Inventory Inventory { get; }
-        public Location CurrentLocation { get; set; }
+
+        public string GameSaveName { get; set; }
                 
         private IList<Spell> Spellbook { get;}
 
