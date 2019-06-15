@@ -6,7 +6,7 @@ namespace MarrowVale.Data.Seeder.DialogueSeeds
 {
     public static class GeneralDialogueSeed
     {
-        private static IList<Dialogue> GetDialogues()
+        public static IList<Dialogue> GetDialogues()
         {
             var listOfDialogues = new List<Dialogue>();
 

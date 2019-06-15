@@ -1,4 +1,6 @@
 ﻿using MarrowVale.Business.Entities.Entities;
+using MarrowVale.Business.Entities.Enums;
+using MarrowVale.Data.Seeder.DialogueSeeds;
 
 namespace MarrowVale.Data.Seeder.Npcs
 {
@@ -6,7 +8,8 @@ namespace MarrowVale.Data.Seeder.Npcs
     {
         public static Npc GetVillager()
         {
-            var villager = new Npc();
+            var dialogues = GeneralDialogueSeed.GetDialogues();
+            var villager = new Npc(dialogues, NpcRaceEnum.Human, ClassEnum.Warrior);
 
             return villager;
         }

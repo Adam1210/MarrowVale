@@ -8,7 +8,7 @@ namespace MarrowVale.Business.Entities.Entities
     // This would most likely be a base class, and may want to make more enemy types that inherit this.
     public class Npc
     {
-        public Npc()
+        private Npc()
         {
             Abilities = new List<Ability>();
             SpellBook = new List<Spell>();
@@ -21,6 +21,8 @@ namespace MarrowVale.Business.Entities.Entities
             this.Race = Race;
             this.Class = Class;
         }
+
+        //ToDo: add a way to track players status with the npc (hostile, neutral, friend)
 
         public string Name { get; set; }
         public string Description { get; set; }
