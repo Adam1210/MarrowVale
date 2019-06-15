@@ -1,5 +1,4 @@
 ﻿using MarrowVale.Business.Contracts;
-using MarrowVale.Business.Entities.Dtos;
 using MarrowVale.Business.Entities.Entities;
 using MarrowVale.Data.Contracts;
 using System;
@@ -13,13 +12,16 @@ namespace MarrowVale.Business.Services
         private readonly IPrintService _printService;
         private readonly IDrawingRepository _drawingRepository;
         private readonly IDrawingService _drawingService;
+        private readonly IGameRepository _gameRepository;
+
         public GameSetupService(ICharacterService characterService, IDrawingRepository drawingRepository, IPrintService printService,
-            IDrawingService drawingService)
+            IDrawingService drawingService, IGameRepository gameRepository)
         {
             _characterService = characterService;
             _printService = printService;
             _drawingRepository = drawingRepository;
             _drawingService = drawingService;
+            _gameRepository = gameRepository;
         }
 
         public Player Setup()
@@ -31,72 +33,41 @@ namespace MarrowVale.Business.Services
             _printService.TypeCentered("Continue");
 
             var gameType = _printService.ReadInput();
-
-            var playerDto = new PlayerDto();
-            var player = new Player();
-
+            
             if(gameType.ToUpper() == "NEW GAME")
             {
-                player = newGame(playerDto);
+                return newGame();
             }
             else if(gameType.ToUpper() == "CONTINUE")
             {
-                player = continueGame(playerDto);
+                return continueGame();
             }
             else
             {
                 _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
                 Thread.Sleep(4000);
-                player = runSetup(playerDto);
+                return Setup();
             }
-
-            return player;
         }
 
-        private Player newGame(PlayerDto playerDto)
+        private Player newGame()
         {
-            var player = _characterService.NewCharacter(playerDto);
+            var player = _characterService.NewCharacter();
+            var game = new Game();
+            game.TestDescription = "test";
+            
+            _gameRepository.SaveGame(game, null, player.GameSaveName);
 
             return player;
         }
 
-        private Player continueGame(PlayerDto playerDto)
+        private Player continueGame()
         {
             //display list of characters
             //load character chosen
-            var player = _characterService.LoadCharacter(playerDto);
+            var player = _characterService.LoadCharacter();
             return player;
         }
 
-        private Player runSetup(PlayerDto playerDto)
-        {
-            _printService.ClearConsole();
-
-            var title = _drawingRepository.GetTitleArt();
-            _drawingService.PrintArtCentered(title);
-
-            _printService.TypeCentered("New Game");
-            _printService.TypeCentered("Continue");
-
-            var gameType = _printService.ReadInput();
-
-            var player = new Player();
-
-            if (gameType.ToUpper() == "NEW GAME")
-            {
-                player = newGame(playerDto);
-            }
-            else if (gameType.ToUpper() == "CONTINUE")
-            {
-                player = continueGame(playerDto);
-            }
-            else
-            {
-                _printService.Print("You must choose to start a New Game or Continue a saved game. Type your choice.");
-                player = runSetup(playerDto);
-            }
-
-            return player;
-        }
     }
 }

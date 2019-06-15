@@ -5,8 +5,8 @@ namespace MarrowVale.Business.Contracts
 {
     public interface ICharacterService
     {
-        Player NewCharacter(PlayerDto gameDto);
-        Player LoadCharacter(PlayerDto gameDto);
+        Player NewCharacter();
+        Player LoadCharacter();
         Inventory GetInventory(Player player);
     }
 }

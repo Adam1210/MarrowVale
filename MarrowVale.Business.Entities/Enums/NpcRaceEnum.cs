@@ -4,10 +4,14 @@ using Newtonsoft.Json.Converters;
 namespace MarrowVale.Business.Entities.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum RaceEnum
+    public enum NpcRaceEnum
     {
         Human,
         Elf,
-        Dwarf
+        Dwarf,
+        Dragonkin,
+        Goblin,
+        Troll,
+        Orc
     }
 }

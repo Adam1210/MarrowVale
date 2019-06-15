@@ -1,6 +1,4 @@
 ﻿using MarrowVale.Business.Entities.Enums;
-using Newtonsoft.Json;
-using System.ComponentModel;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -11,7 +9,7 @@ namespace MarrowVale.Business.Entities.Entities
         public string Name { get; }
         public string Description { get; }
         public int Damage { get; private set; }
-        public SpellElementEnum Element { get; protected set; }
+        public SpellElementEnum Element { get; }
 
         public int NumberOfUses { get; set; }
         public int AvailableNumberOfUses { get; set; }
