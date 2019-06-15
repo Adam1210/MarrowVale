@@ -29,6 +29,7 @@ namespace MarrowVale.Business.Entities.Entities
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; }
         public int BaseDamage { get; }
+        public bool Visible { get; private set; }
 
         public IList<Ability> Abilities { get; }
         public IList<Spell> SpellBook { get; }
