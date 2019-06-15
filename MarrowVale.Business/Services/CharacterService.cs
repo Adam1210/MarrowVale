@@ -205,7 +205,7 @@ namespace MarrowVale.Business.Services
 
         private void verifyRacePick(PlayerDto playerDto, string race)
         {
-            if(Enum.TryParse<RaceEnum>(race, out var result))
+            if(Enum.TryParse<PlayerRaceEnum>(race, out var result))
             {
                 var choiceMade = false;
 

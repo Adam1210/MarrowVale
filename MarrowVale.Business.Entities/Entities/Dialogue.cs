@@ -13,7 +13,7 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         public string Text { get; set; }
-        public string Type { get; set; }
+        public DialogueTypeEnum Type { get; set; }
         public string TriggerText { get; set; }
         public bool AlreadySpoken { get; set; }
         public LanguageEnum Language { get; set; }
@@ -21,7 +21,7 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string GetTriggerText(IList<LanguageEnum> KnownLanguages)
         {
-            return string.Join($"{Environment.NewLine}",Dialogues.Where(x => KnownLanguages.Contains(x.Language)).Select(x=>x.TriggerText));
+            return string.Join($"{Environment.NewLine}",Dialogues.Where(x => KnownLanguages.Contains(x.Language)).Select(x=>x.GetOptionText()));
         }
 
         public string GetOptionText()
