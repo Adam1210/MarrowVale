@@ -28,5 +28,11 @@ namespace MarrowVale.Business.Entities.Entities
         {
             Items.Add(item);
         }
+
+        public string GetLocationDescription()
+        {
+            //prints out description based on Items and time of day
+            return "";
+        }
     }
 }

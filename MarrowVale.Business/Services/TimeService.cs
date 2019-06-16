@@ -10,7 +10,7 @@ namespace MarrowVale.Business.Services
 {
     public class TimeService : ITimeService
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<TimeService> _logger;
         public TimeService(ILoggerFactory logger)
         {
             _logger = logger.CreateLogger<TimeService>();

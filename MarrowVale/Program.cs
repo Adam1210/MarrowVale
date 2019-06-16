@@ -4,7 +4,6 @@ using MarrowVale.Common.Contracts;
 using MarrowVale.Common.Providers;
 using MarrowVale.Data.Contracts;
 using MarrowVale.Data.Repositories;
-using MarrowVale.Game_Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,9 +26,9 @@ namespace MarrowVale
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var inputProcessor = serviceProvider.GetService<IInputProcessingService>();
+            //var inputProcessor = serviceProvider.GetService<IInputProcessingService>();
 
-            inputProcessor.ProcessInput("Hello");
+            //inputProcessor.ProcessInput("Hello");
 
             //var soundRepo = serviceProvider.GetService<ISoundRepository>();
                      
@@ -87,8 +86,8 @@ namespace MarrowVale
                 .AddTransient<IInputProcessingService, InputProcessingService>()
                 .AddTransient<IPrintService, PrintService>()
                 .AddTransient<IGameSetupService, GameSetupService>()
-                .AddTransient<ITimeService, TimeService>();
-                .AddTransient<IGameService, GameService>()
+                .AddTransient<ITimeService, TimeService>()
+                .AddSingleton<IGameService, GameService>()
                 .AddTransient<IDrawingService, DrawingService>();
         }
 
