@@ -6,12 +6,8 @@ namespace MarrowVale.Data.Seeder.Items
     {
         public static Weapon GetWoodenSword()
         {
-            var woodenSword = new Weapon(1, Business.Entities.Enums.WeaponTypeEnum.Sword);
-
-            woodenSword.Damage = 1;
-            woodenSword.Name = "Wooden Sword";
-            woodenSword.Description = "Fragile piece of wood that comes to a point";
-
+            var woodenSword = new Weapon("Wooden Sword", "Fragile piece of wood that comes to a point",1, Business.Entities.Enums.WeaponTypeEnum.Sword,1,5);
+            
             return woodenSword;
         }
     }
