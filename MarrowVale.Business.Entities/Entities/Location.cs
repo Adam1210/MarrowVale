@@ -9,12 +9,14 @@ namespace MarrowVale.Business.Entities.Entities
         {
             Items = new List<IItem>();
             Npcs = new List<Npc>();
+            EnvironmentalObjects = new List<EnvironmentalObject>();
         }
 
-        public Location(string Name, string Description): this()
+        public Location(string Name, string Description, IList<EnvironmentalObject> environmentalObjects): this()
         {
             this.Name = Name;
             this.Description = Description;
+            this.EnvironmentalObjects = environmentalObjects;
         }
         
         public string Name { get; }
@@ -23,6 +25,7 @@ namespace MarrowVale.Business.Entities.Entities
         public IList<IItem> Items { get; private set; }
 
         public IList<Npc> Npcs { get; private set; }
+        private IList<EnvironmentalObject> EnvironmentalObjects { get; set; }
 
         public void AddItem(IItem item)
         {
