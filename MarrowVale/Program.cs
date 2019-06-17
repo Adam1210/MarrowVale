@@ -4,7 +4,6 @@ using MarrowVale.Common.Contracts;
 using MarrowVale.Common.Providers;
 using MarrowVale.Data.Contracts;
 using MarrowVale.Data.Repositories;
-using MarrowVale.Game_Tools;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -27,14 +26,17 @@ namespace MarrowVale
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            var soundRepo = serviceProvider.GetService<ISoundRepository>();
+            //var inputProcessor = serviceProvider.GetService<IInputProcessingService>();
+
+            //inputProcessor.ProcessInput("Hello");
+
+            //var soundRepo = serviceProvider.GetService<ISoundRepository>();
                      
-            var audio = soundRepo.GetMusicLooping("Title.wav");
+            //var audio = soundRepo.GetMusicLooping("Title.wav");
 
-            var gameSetup = serviceProvider.GetService<IGameSetupService>();
-
-            var player = gameSetup.Setup();
-
+            var gameService = serviceProvider.GetService<IGameService>();
+            gameService.Start();
+            
             //var artRepo = serviceProvider.GetService<IDrawingRepository>();
             //var title = artRepo.GetTitleArt();
             //artRepo.PrintArtCentered(title);
@@ -84,6 +86,8 @@ namespace MarrowVale
                 .AddTransient<IInputProcessingService, InputProcessingService>()
                 .AddTransient<IPrintService, PrintService>()
                 .AddTransient<IGameSetupService, GameSetupService>()
+                .AddTransient<ITimeService, TimeService>()
+                .AddSingleton<IGameService, GameService>()
                 .AddTransient<IDrawingService, DrawingService>();
         }
 
@@ -95,6 +99,7 @@ namespace MarrowVale
                 .AddTransient<IDrawingRepository, DrawingRepository>()
                 .AddTransient<ISoundRepository, SoundRepository>()
                 .AddTransient<IClassRepository, ClassRepository>()
+                .AddSingleton<IGameRepository, GameRepository>()
                 .AddSingleton<IPlayerRepository, PlayerRepository>();
         }
 

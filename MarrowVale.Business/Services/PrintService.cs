@@ -101,6 +101,7 @@ namespace MarrowVale.Business.Services
 
         public string ReadInput()
         {
+            Console.Write(">");
             return Console.ReadLine();
         }
 

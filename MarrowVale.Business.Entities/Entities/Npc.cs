@@ -8,23 +8,28 @@ namespace MarrowVale.Business.Entities.Entities
     // This would most likely be a base class, and may want to make more enemy types that inherit this.
     public class Npc
     {
-        public Npc()
+        private Npc()
         {
             Abilities = new List<Ability>();
             SpellBook = new List<Spell>();
             Items = new List<IItem>();
         }
 
-        public Npc(IList<Dialogue> Dialogue): this()
+        public Npc(IList<Dialogue> Dialogue, NpcRaceEnum Race, ClassEnum Class): this()
         {
             this.StartingDialogue = Dialogue;
+            this.Race = Race;
+            this.Class = Class;
         }
+
+        //ToDo: add a way to track players status with the npc (hostile, neutral, friend)
 
         public string Name { get; set; }
         public string Description { get; set; }
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; }
         public int BaseDamage { get; }
+        public bool Visible { get; private set; }
 
         public IList<Ability> Abilities { get; }
         public IList<Spell> SpellBook { get; }
@@ -34,6 +39,8 @@ namespace MarrowVale.Business.Entities.Entities
         private Dialogue CurrentDialogue { get; set; }
                
         public NpcTypeEnum Type { get; private set; }
+        public NpcRaceEnum Race { get; }
+        public ClassEnum Class { get; }
 
         public string Speak(string responseText = null)
         {
@@ -59,6 +66,11 @@ namespace MarrowVale.Business.Entities.Entities
             }
 
             return $"I don't understand try again.{Environment.NewLine}{CurrentDialogue.Text}";
-        }        
+        } 
+        
+        public string GetOptionsText(IList<LanguageEnum> KnownLanguages)
+        {
+            return CurrentDialogue.GetTriggerText(KnownLanguages);
+        }
     }
 }
