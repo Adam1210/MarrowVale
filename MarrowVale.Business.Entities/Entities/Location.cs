@@ -1,4 +1,5 @@
 ﻿
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
@@ -9,14 +10,15 @@ namespace MarrowVale.Business.Entities.Entities
         {
             Items = new List<IItem>();
             Npcs = new List<Npc>();
-            EnvironmentalObjects = new List<EnvironmentalObject>();
         }
 
-        public Location(string Name, string Description, IList<EnvironmentalObject> environmentalObjects): this()
+        [JsonConstructor]
+        public Location(string Name, string Description, IList<EnvironmentalObject> EnvironmentalObjects, IList<EnvironmentalInteraction> EnvironmentalInteractions): this()
         {
             this.Name = Name;
             this.Description = Description;
-            this.EnvironmentalObjects = environmentalObjects;
+            this.EnvironmentalObjects = EnvironmentalObjects;
+            this.EnvironmentalInteractions = EnvironmentalInteractions;
         }
         
         public string Name { get; }
@@ -26,6 +28,7 @@ namespace MarrowVale.Business.Entities.Entities
 
         public IList<Npc> Npcs { get; private set; }
         private IList<EnvironmentalObject> EnvironmentalObjects { get; set; }
+        private IList<EnvironmentalInteraction> EnvironmentalInteractions { get; set; }
 
         public void AddItem(IItem item)
         {
