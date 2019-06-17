@@ -28,11 +28,12 @@ namespace MarrowVale.Business.Services
             _drawingService = drawingService;
             _gameRepository = gameRepository;
             Player = gameSetupService.Setup();
+            Game = _gameRepository.LoadGame(Player.GameSaveName);
         }
 
         public void Start()
         {
-            Game = _gameRepository.LoadGame(Player.GameSaveName);
+                       
 
 
         }

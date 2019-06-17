@@ -1,8 +1,4 @@
-﻿
-using Newtonsoft.Json;
-using System.ComponentModel;
-
-namespace MarrowVale.Business.Entities.Entities
+﻿namespace MarrowVale.Business.Entities.Entities
 {
     public class Ammunition : IItem
     {
@@ -11,5 +7,13 @@ namespace MarrowVale.Business.Entities.Entities
         public int Count { get; set; }
         public bool IsVisible { get; set; }
         public int BaseWorth { get; set; }
+
+        public string EnvironmentalDescription { get; private set; }
+        
+        public string GetDescription()
+        {
+            // Add the logic to build this description.
+            return Description;
+        }
     }
 }

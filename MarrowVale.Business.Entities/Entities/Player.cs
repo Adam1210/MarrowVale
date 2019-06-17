@@ -79,12 +79,13 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string GameSaveName { get; set; }
                 
-        private IList<Spell> Spellbook { get;}
-
+        private IList<Spell> Spellbook { get; }
         private IList<Ability> Abilities { get; }
 
         [JsonProperty]
         private IList<LanguageEnum> KnownLanguages { get; set; }
+        [JsonProperty]
+        private IList<string> Buffs { get; set; }
 
         public Weapon CurrentWeapon { get; private set; }
 
@@ -123,6 +124,12 @@ namespace MarrowVale.Business.Entities.Entities
         public string SaveInfo()
         {
             return $"{Name}: {Race}  {Class}  - Last Saved {LastSaveDateTime:MM/dd/yyyy  hh:mm}";
+        }
+
+        public int GetClimbingAbility()
+        {
+            //will be dependent on class/race
+            return 1;
         }
     }
 }
