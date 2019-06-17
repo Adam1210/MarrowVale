@@ -124,5 +124,11 @@ namespace MarrowVale.Business.Entities.Entities
         {
             return $"{Name}: {Race}  {Class}  - Last Saved {LastSaveDateTime:MM/dd/yyyy  hh:mm}";
         }
+
+        public int GetClimbingAbility()
+        {
+            //will be dependent on class/race
+            return 1;
+        }
     }
 }
