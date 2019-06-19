@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -54,6 +56,11 @@ namespace MarrowVale.Business.Entities.Entities
             }
 
             Items.Add(item);
+        }
+
+        public string GetItems()
+        {
+            return string.Join($"{Environment.NewLine}", Items.Select(x => x.ToString()));
         }
     }
 }

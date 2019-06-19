@@ -33,5 +33,10 @@ namespace MarrowVale.Business.Entities.Entities
             // Add the logic to build this description.
             return Description;
         }
+
+        public override string ToString()
+        {
+            return $"{Name} - {GetDescription()}";
+        }
     }
 }
