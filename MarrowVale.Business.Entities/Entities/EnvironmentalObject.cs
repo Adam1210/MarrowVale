@@ -23,8 +23,14 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string GetDescription()
         {
-            //Add logic for this.
-            return Description;
+            if (Moved)
+            {
+                return $"{Description}{Environment.NewLine}{MovedDescription}";
+            }
+            else
+            {
+                return Description;
+            }
         }
     }
 }
