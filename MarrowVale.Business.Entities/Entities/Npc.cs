@@ -17,13 +17,16 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         [JsonConstructor]
-        public Npc(IList<Dialogue> Dialogue, NpcRaceEnum Race, ClassEnum Class, string Name, string Description): this()
+        public Npc(IList<Dialogue> Dialogue, NpcRaceEnum Race, ClassEnum Class, string Name, string Description, int CurrentHealth, int MaxHealth, int BaseDamage): this()
         {
             this.StartingDialogue = Dialogue;
             this.Race = Race;
             this.Class = Class;
             this.Name = Name;
             this.Description = Description;
+            this.CurrentHealth = CurrentHealth;
+            this.MaxHealth = MaxHealth;
+            this.BaseDamage = BaseDamage;
         }
 
         //ToDo: add a way to track players status with the npc (hostile, neutral, friend)
@@ -33,6 +36,7 @@ namespace MarrowVale.Business.Entities.Entities
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; }
         public int BaseDamage { get; }
+        [JsonProperty]
         public bool Visible { get; private set; }
 
         public IList<Ability> Abilities { get; }
