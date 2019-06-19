@@ -1,4 +1,5 @@
 ﻿using MarrowVale.Business.Entities.Enums;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,19 @@ namespace MarrowVale.Business.Entities.Entities
             Items = new List<IItem>();
         }
 
-        public Npc(IList<Dialogue> Dialogue, NpcRaceEnum Race, ClassEnum Class): this()
+        [JsonConstructor]
+        public Npc(IList<Dialogue> Dialogue, NpcRaceEnum Race, ClassEnum Class, string Name, string Description): this()
         {
             this.StartingDialogue = Dialogue;
             this.Race = Race;
             this.Class = Class;
+            this.Name = Name;
+            this.Description = Description;
         }
 
         //ToDo: add a way to track players status with the npc (hostile, neutral, friend)
 
-        public string Name { get; set; }
+        public string Name { get; }
         public string Description { get; set; }
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; }

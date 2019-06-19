@@ -16,7 +16,7 @@ namespace MarrowVale.Business.Tests
 
         private Npc CreateNpc()
         {
-            var newNpc = new Npc(CreateDialogue(), NpcRaceEnum.Human, ClassEnum.Warrior);
+            var newNpc = new Npc(CreateDialogue(), NpcRaceEnum.Human, ClassEnum.Warrior, "Bob", "A simple villager. Looks to somewhat poor and dirty.");
 
 
             return newNpc;
