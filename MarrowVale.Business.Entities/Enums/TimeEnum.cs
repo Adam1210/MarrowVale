@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MarrowVale.Business.Entities.Enums
+﻿namespace MarrowVale.Business.Entities.Enums
 {
     public enum TimeEnum
     {
