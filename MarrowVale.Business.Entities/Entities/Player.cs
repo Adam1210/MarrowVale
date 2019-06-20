@@ -104,6 +104,20 @@ namespace MarrowVale.Business.Entities.Entities
             }
         }
 
+        public void Damage(int amount)
+        {
+            var tempHealth = CurrentHealth - amount;
+            if(tempHealth > 0)
+            {
+                CurrentHealth = tempHealth;
+            }
+            else
+            {
+                //somehow notify user they died.
+            }
+
+        }
+
         public void SwitchWeapon(Weapon newWeapon)
         {
             //needs checks added later

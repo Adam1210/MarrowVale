@@ -54,7 +54,6 @@ namespace MarrowVale.Business.Services
         {
             var player = _characterService.NewCharacter();
             var game = new Game();
-            game.TestDescription = "test";
             
             _gameRepository.SaveGame(game, null, player.GameSaveName);
 
