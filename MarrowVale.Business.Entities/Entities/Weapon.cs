@@ -30,7 +30,6 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string GetDescription()
         {
-            // Add the logic to build this description.
             return Description;
         }
 
