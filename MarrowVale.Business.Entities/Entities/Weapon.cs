@@ -27,6 +27,11 @@ namespace MarrowVale.Business.Entities.Entities
         public bool IsVisible { get; private set; }
         public int BaseWorth { get; }
 
+        public void Show()
+        {
+            IsVisible = true;
+        }
+
         public string EnvironmentalDescription { get; private set; }
 
         public string GetDescription()
