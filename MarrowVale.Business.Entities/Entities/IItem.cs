@@ -12,5 +12,6 @@ namespace MarrowVale.Business.Entities.Entities
         int BaseWorth { get; }
 
         string GetDescription();
+        string ToString();
     }
 }

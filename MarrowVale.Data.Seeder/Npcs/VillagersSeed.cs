@@ -9,7 +9,7 @@ namespace MarrowVale.Data.Seeder.Npcs
         public static Npc GetVillager()
         {
             var dialogues = GeneralDialogueSeed.GetDialogues();
-            var villager = new Npc(dialogues, NpcRaceEnum.Human, ClassEnum.Warrior);
+            var villager = new Npc(dialogues, NpcRaceEnum.Human, ClassEnum.Warrior, "Bob", "A simple villager. Looks to somewhat poor and dirty.", 10, 10, 2);
 
             return villager;
         }
