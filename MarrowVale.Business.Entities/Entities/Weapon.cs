@@ -1,5 +1,6 @@
 ﻿using MarrowVale.Business.Entities.Enums;
 using Newtonsoft.Json;
+using System;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -30,7 +31,7 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string GetDescription()
         {
-            return Description;
+            return $"{Description}{Environment.NewLine}{EnvironmentalDescription}";
         }
 
         public override string ToString()
