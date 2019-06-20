@@ -3,6 +3,8 @@ using MarrowVale.Business.Entities.Entities;
 using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MarrowVale.Business.Services
 {
@@ -33,9 +35,30 @@ namespace MarrowVale.Business.Services
 
         public void Start()
         {
-                       
+            var clockCancellationToken = startGameClock();
 
 
+            var test = _printService.ReadInput();
         }
+
+        private CancellationTokenSource startGameClock()
+        {
+            var tokenSource = new CancellationTokenSource();
+            var cancellableTask = Task.Run(() =>
+            {
+                while (true) {
+                    if (tokenSource.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    Game.GameTime.IncrementTime();
+                    Thread.Sleep(5 * 60 * 1000);
+                }
+            }, tokenSource.Token);
+
+            return tokenSource;
+        }
+
+
     }
 }
