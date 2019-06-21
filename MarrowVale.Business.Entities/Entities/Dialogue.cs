@@ -24,7 +24,7 @@ namespace MarrowVale.Business.Entities.Entities
         public string TriggerText { get;  }
         public bool AlreadySpoken { get; private set; }
         public LanguageEnum Language { get;  }
-        private IList<Dialogue> Dialogues { get; set; }
+        private IList<Dialogue> Dialogues { get; }
 
         public string GetTriggerText(IList<LanguageEnum> KnownLanguages)
         {
