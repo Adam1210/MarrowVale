@@ -1,6 +1,9 @@
 ﻿
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -37,8 +40,12 @@ namespace MarrowVale.Business.Entities.Entities
 
         public string GetLocationDescription()
         {
-            //prints out description based on Items and time of day
-            return "";
+            //first attempt at building location description
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(Description);
+            stringBuilder.AppendJoin($"{Environment.NewLine}", Items.Where(x=>x.IsVisible).ToString());
+            stringBuilder.AppendJoin($"{Environment.NewLine}", EnvironmentalObjects.ToString());
+            return stringBuilder.ToString();
         }
     }
 }
