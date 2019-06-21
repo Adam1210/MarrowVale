@@ -27,15 +27,22 @@ namespace MarrowVale.Business.Entities.Entities
         public string Name { get; }
         public string Description { get; private set; }
 
-        public IList<IItem> Items { get; private set; }
+        [JsonProperty]
+        private IList<IItem> Items { get; }
 
-        public IList<Npc> Npcs { get; private set; }
+        [JsonProperty]
+        private IList<Npc> Npcs { get; }
         private IList<EnvironmentalObject> EnvironmentalObjects { get; set; }
         private IList<EnvironmentalInteraction> EnvironmentalInteractions { get; set; }
 
         public void AddItem(IItem item)
         {
             Items.Add(item);
+        }
+
+        public IItem PickUpItem(string item)
+        {
+            return Items.FirstOrDefault(x => x.Name.Equals(item, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public string GetLocationDescription()
