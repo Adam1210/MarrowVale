@@ -25,15 +25,8 @@ namespace MarrowVale.Business.Tests
         private IList<Dialogue> CreateDialogue()
         {
             var dialogues = new List<Dialogue>();
-            var newDialogue = new Dialogue();
 
-            newDialogue.Text = "Greetings traveler, how are you this day?";
-            newDialogue.TriggerText = "Greeting";
-            newDialogue.Dialogues.Add(new Dialogue
-            {
-                Text = "",
-                TriggerText = "",
-            });
+            var newDialogue = new Dialogue("Greetings traveler, how are you this day?",DialogueTypeEnum.Friendly,"Greeting", LanguageEnum.Common, new List<Dialogue>());
 
             dialogues.Add(newDialogue);
 

@@ -65,7 +65,7 @@ namespace MarrowVale.Business.Entities.Entities
                 return startDialogue.Text;
             }
 
-            var nextDialogue = CurrentDialogue.Dialogues.FirstOrDefault(x => x.TriggerText.Equals(responseText,StringComparison.CurrentCultureIgnoreCase));
+            var nextDialogue = CurrentDialogue.GetResponse(responseText);
 
             if(nextDialogue != null)
             {
