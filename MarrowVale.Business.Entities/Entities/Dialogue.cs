@@ -11,7 +11,7 @@ namespace MarrowVale.Business.Entities.Entities
         {
             Dialogues = new List<Dialogue>();
         }
-
+            
         public string Text { get; set; }
         public DialogueTypeEnum Type { get; set; }
         public string TriggerText { get; set; }
