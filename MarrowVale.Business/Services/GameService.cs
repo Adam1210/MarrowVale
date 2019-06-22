@@ -16,12 +16,15 @@ namespace MarrowVale.Business.Services
         private readonly IDrawingRepository _drawingRepository;
         private readonly IDrawingService _drawingService;
         private readonly IGameRepository _gameRepository;
+
+        private readonly ICombatService _combatService;
         
         private Player Player { get; set; }
         private Game Game { get; set; }
         
         public GameService(ILoggerFactory loggerFactory, IPrintService printService, IGlobalItemsProvider globalItemsProvider,
-            IDrawingRepository drawingRepository, IDrawingService drawingService, IGameSetupService gameSetupService, IGameRepository gameRepository)
+            IDrawingRepository drawingRepository, IDrawingService drawingService, IGameSetupService gameSetupService, IGameRepository gameRepository,
+            ICombatService combatService)
         {
             _logger = loggerFactory.CreateLogger<GameService>();
             _printService = printService;
@@ -29,6 +32,7 @@ namespace MarrowVale.Business.Services
             _drawingRepository = drawingRepository;
             _drawingService = drawingService;
             _gameRepository = gameRepository;
+            _combatService = combatService;
             Player = gameSetupService.Setup();
             Game = _gameRepository.LoadGame(Player.GameSaveName);
         }
