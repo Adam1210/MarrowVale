@@ -21,5 +21,7 @@
   "Move {structure}": "Attempts to move target structure",
   "Health": "Displays current HP and Max HP",
   "Class Abilities": "Displays your class specific abilities",
-  "Speak to {character}": "Starts a dialogue with the given character"
+  "Speak to {character}": "Starts a dialogue with the given character",
+  "Save": "Save progress",
+  "Quit":  "Quit the game"
 }
