@@ -36,6 +36,7 @@ namespace MarrowVale.Business.Entities.Entities
         public int CurrentHealth { get; set; }
         public int MaxHealth { get; }
         public int BaseDamage { get; }
+
         [JsonProperty]
         public bool Visible { get; private set; }
 
@@ -65,7 +66,7 @@ namespace MarrowVale.Business.Entities.Entities
                 return startDialogue.Text;
             }
 
-            var nextDialogue = CurrentDialogue.Dialogues.FirstOrDefault(x => x.TriggerText.Equals(responseText,StringComparison.CurrentCultureIgnoreCase));
+            var nextDialogue = CurrentDialogue.GetResponse(responseText);
 
             if(nextDialogue != null)
             {
@@ -74,7 +75,17 @@ namespace MarrowVale.Business.Entities.Entities
             }
 
             return $"I don't understand try again.{Environment.NewLine}{CurrentDialogue.Text}";
-        } 
+        }
+        
+        public void Show()
+        {
+            Visible = true;
+        }
+
+        public void Hide()
+        {
+            Visible = false;
+        }
         
         public string GetOptionsText(IList<LanguageEnum> KnownLanguages)
         {

@@ -1,18 +1,28 @@
 ﻿using MarrowVale.Business.Entities.Enums;
+using Newtonsoft.Json;
 
 namespace MarrowVale.Business.Entities.Entities
 {
     public class Spell
     {
-        public Spell(){ }
+        [JsonConstructor]
+        public Spell(string Name, string Description, int Damage, SpellElementEnum Element, int NumberOfUses, int AvailableNumberOfUses)
+        {
+            this.Name = Name;
+            this.Description = Description;
+            this.Damage = Damage;
+            this.Element = Element;
+            this.NumberOfUses = NumberOfUses;
+            this.AvailableNumberOfUses = AvailableNumberOfUses;
+        }
 
         public string Name { get; }
         public string Description { get; }
         public int Damage { get; private set; }
         public SpellElementEnum Element { get; }
 
-        public int NumberOfUses { get; set; }
-        public int AvailableNumberOfUses { get; set; }
+        public int NumberOfUses { get; private set; }
+        public int AvailableNumberOfUses { get; private set; }
 
         public int UseSpell()
         {

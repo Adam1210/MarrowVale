@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MarrowVale.Business.Entities.Entities;
+using MarrowVale.Business.Entities.Enums;
 
 namespace MarrowVale.Data.Seeder.DialogueSeeds
 {
@@ -10,7 +11,7 @@ namespace MarrowVale.Data.Seeder.DialogueSeeds
         {
             var listOfDialogues = new List<Dialogue>();
 
-            var greetingDialogue = new Dialogue();
+            var greetingDialogue = new Dialogue("Greetings!",DialogueTypeEnum.Friendly,"Greeting",LanguageEnum.Common, new List<Dialogue>());
 
             listOfDialogues.Add(greetingDialogue);
 
