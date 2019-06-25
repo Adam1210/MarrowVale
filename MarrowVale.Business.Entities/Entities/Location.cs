@@ -1,6 +1,9 @@
 ﻿
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace MarrowVale.Business.Entities.Entities
 {
@@ -24,9 +27,11 @@ namespace MarrowVale.Business.Entities.Entities
         public string Name { get; }
         public string Description { get; private set; }
 
-        public IList<IItem> Items { get; private set; }
+        [JsonProperty]
+        private IList<IItem> Items { get; }
 
-        public IList<Npc> Npcs { get; private set; }
+        [JsonProperty]
+        private IList<Npc> Npcs { get; }
         private IList<EnvironmentalObject> EnvironmentalObjects { get; set; }
         private IList<EnvironmentalInteraction> EnvironmentalInteractions { get; set; }
 
@@ -35,10 +40,19 @@ namespace MarrowVale.Business.Entities.Entities
             Items.Add(item);
         }
 
+        public IItem PickUpItem(string item)
+        {
+            return Items.FirstOrDefault(x => x.Name.Equals(item, StringComparison.CurrentCultureIgnoreCase));
+        }
+
         public string GetLocationDescription()
         {
-            //prints out description based on Items and time of day
-            return "";
+            //first attempt at building location description
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(Description);
+            stringBuilder.AppendJoin($"{Environment.NewLine}", Items.Where(x=>x.IsVisible).ToString());
+            stringBuilder.AppendJoin($"{Environment.NewLine}", EnvironmentalObjects.ToString());
+            return stringBuilder.ToString();
         }
     }
 }

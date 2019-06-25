@@ -145,5 +145,11 @@ namespace MarrowVale.Business.Entities.Entities
             //will be dependent on class/race
             return 1;
         }
+
+        public void UpdateSaveFields()
+        {
+            LastSaveDateTime = DateTime.Now;
+            GameSaveName = LastSaveDateTime.ToFileTime().ToString();
+        }
     }
 }
