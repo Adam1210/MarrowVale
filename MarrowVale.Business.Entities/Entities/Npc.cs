@@ -51,6 +51,8 @@ namespace MarrowVale.Business.Entities.Entities
         public NpcRaceEnum Race { get; }
         public ClassEnum Class { get; }
 
+        public string LocationName { get; set; }
+
         public string Speak(string responseText = null)
         {
             if (string.IsNullOrWhiteSpace(responseText))
