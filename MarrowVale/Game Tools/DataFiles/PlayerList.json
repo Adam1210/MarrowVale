@@ -1,2 +1,66 @@
-[]
-
+{
+  "$type": "System.Collections.Generic.List`1[[MarrowVale.Business.Entities.Entities.Player, MarrowVale.Business.Entities]], System.Private.CoreLib",
+  "$values": [
+    {
+      "$type": "MarrowVale.Business.Entities.Entities.Player, MarrowVale.Business.Entities",
+      "Name": "Jeremey",
+      "Class": "Ranger",
+      "Race": "Dwarf",
+      "Gender": "Male",
+      "CurrentHealth": 20,
+      "MaxHealth": 20,
+      "Inventory": {
+        "$type": "MarrowVale.Business.Entities.Entities.Inventory, MarrowVale.Business.Entities",
+        "Size": 15,
+        "Items": {
+          "$type": "System.Collections.Generic.List`1[[MarrowVale.Business.Entities.Entities.IItem, MarrowVale.Business.Entities]], System.Private.CoreLib",
+          "$values": [
+            {
+              "$type": "MarrowVale.Business.Entities.Entities.Weapon, MarrowVale.Business.Entities",
+              "Range": 20,
+              "Damage": 4,
+              "DamageRange": 0,
+              "Name": "Shortbow",
+              "Description": "Simple bow, often used for hunting.",
+              "IsBroken": false,
+              "Type": "Bow",
+              "IsVisible": false,
+              "BaseWorth": 10,
+              "EnvironmentalDescription": null
+            },
+            {
+              "$type": "MarrowVale.Business.Entities.Entities.Consumable, MarrowVale.Business.Entities",
+              "Name": "Health Potion",
+              "Description": "Restores 5 health",
+              "EnvironmentalDescription": null,
+              "IsVisible": true,
+              "BaseWorth": 2
+            },
+            {
+              "$type": "MarrowVale.Business.Entities.Entities.Ammunition, MarrowVale.Business.Entities",
+              "Name": "Wooden Arrow",
+              "Description": "Simple arrow made from any type of wood.",
+              "Count": 20,
+              "IsVisible": true,
+              "BaseWorth": 5,
+              "EnvironmentalDescription": null
+            }
+          ]
+        },
+        "CurrentCurrency": 0,
+        "MaxCurrency": 50
+      },
+      "GameSaveName": "132072864184656600",
+      "KnownLanguages": {
+        "$type": "System.Collections.Generic.List`1[[MarrowVale.Business.Entities.Enums.LanguageEnum, MarrowVale.Business.Entities]], System.Private.CoreLib",
+        "$values": [
+          0,
+          1
+        ]
+      },
+      "Buffs": null,
+      "CurrentWeapon": null,
+      "LastSaveDateTime": "2019-07-10T22:40:18.424015-04:00"
+    }
+  ]
+}
