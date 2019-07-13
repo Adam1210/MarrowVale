@@ -21,7 +21,8 @@ namespace MarrowVale.Data.Repositories
             _logger = logger.CreateLogger<CommandListRepository>();
             _appSettingsProvider = appSettingsProvider;
             _globalItemsProvider = globalItemsProvider;
-            CommandFile = File.ReadAllText(_appSettingsProvider.DataFilesLocation + "\\CommandList.json");
+            var file = Path.Combine(appSettingsProvider.DataFilesLocation, "CommandList.json");
+            CommandFile = File.ReadAllText(file);
             //gets directory from bin folder
             //CommandFile = File.ReadAllText(Environment.CurrentDirectory + "\\Game Tools\\DataFiles\\CommandList.json");
         }

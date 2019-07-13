@@ -17,7 +17,9 @@ namespace MarrowVale.Business.Services
 
         public void PrintArtCentered(string[] art)
         {
+            #if Windows
             Console.WindowWidth = _globalItemsProvider.WindowWidth;
+            #endif
             Console.WriteLine(Environment.NewLine);
             foreach (var line in art)
             {
@@ -30,7 +32,9 @@ namespace MarrowVale.Business.Services
 
         public void PrintArt(string[] art)
         {
-            Console.WindowWidth = _globalItemsProvider.WindowWidth;
+            #if Windows
+            Console.WindowWidth = _globalItemsProvider.WindowWidth; // only available in Windows
+            #endif
             Console.WriteLine(Environment.NewLine);
             foreach (var line in art)
             {
