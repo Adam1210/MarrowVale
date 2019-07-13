@@ -20,7 +20,9 @@ namespace MarrowVale.Business.Services
 
         public void PrintCentered(string line)
         {
+            #if Windows
             Console.WindowWidth = _globalItemsProvider.WindowWidth;
+            #endif
             Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
             Console.WriteLine(line);
         }
@@ -40,7 +42,9 @@ namespace MarrowVale.Business.Services
 
         public void TypeCentered(string line)
         {
+            #if Windows
             Console.WindowWidth = _globalItemsProvider.WindowWidth;
+            #endif
             Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
 
             foreach (var letter in line)
@@ -63,7 +67,9 @@ namespace MarrowVale.Business.Services
         {
             Thread.Sleep(seconds * 1000);
 
+            #if Windows
             Console.WindowWidth = _globalItemsProvider.WindowWidth;
+            #endif
             Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
             Console.WriteLine(line);
         }
@@ -87,7 +93,10 @@ namespace MarrowVale.Business.Services
         {
             Thread.Sleep(seconds * 1000);
 
+            #if Windows
             Console.WindowWidth = _globalItemsProvider.WindowWidth;
+            #endif
+            
             Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
 
             foreach (var letter in line)
