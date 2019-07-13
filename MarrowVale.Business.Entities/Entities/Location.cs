@@ -34,6 +34,8 @@ namespace MarrowVale.Business.Entities.Entities
         private IList<Npc> Npcs { get; }
         private IList<EnvironmentalObject> EnvironmentalObjects { get; set; }
         private IList<EnvironmentalInteraction> EnvironmentalInteractions { get; set; }
+        
+        private IList<string> ConnectingLocationNames { get; set; }
 
         public void AddItem(IItem item)
         {
