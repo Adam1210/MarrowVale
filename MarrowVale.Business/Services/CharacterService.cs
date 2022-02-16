@@ -39,11 +39,11 @@ namespace MarrowVale.Business.Services
 
         public Player NewCharacter()
         {
-            //if (_playerRepository.PlayerCount() == 10)
-            //{
-            //    _printService.Type("There are too many saves, you need to delete one to cotinue with your creation.");
-            //    pickPlayerToRemove();
-            //}
+            if (_playerRepository.All().Result.Count() == 10)
+            {
+                _printService.Type("There are too many saves, you need to delete one to cotinue with your creation.");
+                pickPlayerToRemove();
+            }
 
             _printService.ClearConsole();
             _printService.Type("Now we are going to create a new character for your adventure.");
