@@ -21,7 +21,7 @@ namespace MarrowVale.Business.Services
             Console.WriteLine(Environment.NewLine);
             foreach (var line in art)
             {
-                Console.SetCursorPosition((Console.WindowWidth - line.Length) / 20, Console.CursorTop);
+                Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
                 Console.WriteLine(line);
             }
 
