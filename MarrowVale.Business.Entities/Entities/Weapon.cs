@@ -1,13 +1,19 @@
 ﻿using MarrowVale.Business.Entities.Enums;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
 {
-    public class Weapon : IItem
+    public class Weapon : Item
     {
+        public Weapon() {
+            this.EntityLabel = "Weapon";
+            this.Labels = new List<string>() { "Item", EntityLabel };
+        }
+
         [JsonConstructor]
-        public Weapon(string Name, string Description, int BaseWorth, WeaponTypeEnum Type, int Damage, int Range)
+        public Weapon(string Name, string Description, int BaseWorth, WeaponTypeEnum Type, int Damage, int Range) : this()
         {
             this.BaseWorth = BaseWorth;
             this.Damage = Damage;
@@ -17,24 +23,31 @@ namespace MarrowVale.Business.Entities.Entities
             this.Description = Description;
         }
 
-        public int Range { get; private set; }
-        public int Damage { get; private set; }
-        public int DamageRange { get; private set; }
-        public string Name { get; }
-        public string Description { get; }
-        public bool IsBroken { get; private set; }
-        public WeaponTypeEnum Type { get; }
-        public bool IsVisible { get; private set; }
-        public int BaseWorth { get; }
+
+        public int Range { get; set; }
+        public int Damage { get; set; }
+        public int DamageRange { get; set; }
+        public bool IsBroken { get; set; }
+        public WeaponTypeEnum Type { get; set; }
 
         public void Show()
         {
             IsVisible = true;
         }
 
-        public string EnvironmentalDescription { get; private set; }
+        public string CombatDescription()
+        {
+            return $"Weapon: {Name} | Damage: {Damage}";
+        }
 
-        public string GetDescription()
+        public override string GetShortDescription()
+        {
+            if (IsVisible)
+                return Type.ToString();
+            return "";
+        }
+
+        public override string GetDescription()
         {
             return $"{Description}{Environment.NewLine}{EnvironmentalDescription}";
         }

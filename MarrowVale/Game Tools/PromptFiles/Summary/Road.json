@@ -1,0 +1,17 @@
+{
+  "description": "Generate a summary based on what you can see nearby",
+  "useDescription": true,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "input": "Building: Giant's Inn, Type: Inn, Size: Large\nBuidling: Rusty Nail, Type: Bar, Size: Small\n Road:Parcel's Path, Description: Short Dirt Road\n Road:Bordo's Avenue, Description:Cobblestone Pathway",
+      "output": "You see the Giant's Inn which is unsuprisingly a large hotel.  Across the street is the Rusty Nail.  Not far off you also see a short dirt road called Parcel's path and a Cobblestone Pathway, Bordo's Avenue"
+    },
+    {
+      "input": "Building: Buster's Castle, Type: Castle,Size: Enormous\nRoad: Trendo Pass, description: A trecharous path that leads between two mountains",
+      "output": "Not far in the distance you see a castle the size you have never seen.  This must be Buster's castle you think.  There is also the Trendo Pass nearby which is known for being trecharous."
+    }
+  ],
+  "inputPrefix": "",
+  "outputPrefix": "Summary:"
+}

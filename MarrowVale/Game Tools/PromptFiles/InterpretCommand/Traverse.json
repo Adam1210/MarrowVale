@@ -1,0 +1,27 @@
+{
+  "description": "Where do we want to go?",
+  "useDescription": false,
+  "useExampleCount": 3,
+  "examples": [
+    {
+      "id": 1,
+      "rating": 1,
+      "input": "Walk to Broad Street",
+      "output": "Broad Street"
+    },
+    {
+      "id": 2,
+      "rating": 1,
+      "input": "Walk down walker road",
+      "output": "Walker Road"
+    },
+    {
+      "id": 3,
+      "rating": 1,
+      "input": "Walk to the end of Reynold Street",
+      "output": "Reynold Street"
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Object:"
+}

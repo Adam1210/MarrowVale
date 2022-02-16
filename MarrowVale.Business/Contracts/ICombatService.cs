@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarrowVale.Business.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,6 @@ namespace MarrowVale.Business.Contracts
 {
     public interface ICombatService
     {
-        void Attack();
+        string Attack(Player player, Npc npc);
     }
 }

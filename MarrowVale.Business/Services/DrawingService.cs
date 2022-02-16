@@ -17,13 +17,11 @@ namespace MarrowVale.Business.Services
 
         public void PrintArtCentered(string[] art)
         {
-            #if Windows
             Console.WindowWidth = _globalItemsProvider.WindowWidth;
-            #endif
             Console.WriteLine(Environment.NewLine);
             foreach (var line in art)
             {
-                Console.SetCursorPosition((Console.WindowWidth - line.Length) / 2, Console.CursorTop);
+                Console.SetCursorPosition((Console.WindowWidth - line.Length) / 20, Console.CursorTop);
                 Console.WriteLine(line);
             }
 
@@ -32,9 +30,7 @@ namespace MarrowVale.Business.Services
 
         public void PrintArt(string[] art)
         {
-            #if Windows
-            Console.WindowWidth = _globalItemsProvider.WindowWidth; // only available in Windows
-            #endif
+            Console.WindowWidth = _globalItemsProvider.WindowWidth;
             Console.WriteLine(Environment.NewLine);
             foreach (var line in art)
             {

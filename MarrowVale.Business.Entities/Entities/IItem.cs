@@ -1,17 +1,29 @@
 ﻿
+using MarrowVale.Common.Utilities;
+
 namespace MarrowVale.Business.Entities.Entities
 {
-    public interface IItem
+    public class Item : GraphNode
     {
-        string Name { get;  }        
-        string Description { get; }
-        string EnvironmentalDescription { get; }
-        bool IsVisible { get;  }
+        public Item()
+        {
 
-        //Cost to buy/sell item
-        int BaseWorth { get; }
+        }
+        public string EnvironmentalDescription { get; set; }
+        public bool IsVisible { get; set; }
+        public int BaseWorth { get; set; }
+        public virtual string GetShortDescription()
+        {
+            return IsVisible ? $"{Name} - {Description} - {CurrencyUtility.StandardizeCurrency(BaseWorth)}" : "";
+        }
+        public virtual string GetDescription()
+        {
+            return "";
+        }
 
-        string GetDescription();
-        string ToString();
+        private string convertCurrency(int currency)
+        {
+            return $"{currency} bronze";  
+        }
     }
 }

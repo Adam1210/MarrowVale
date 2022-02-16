@@ -1,0 +1,33 @@
+{
+  "description": "Interprets the type of combat action to take",
+  "useDescription": false,
+  "useExampleCount": 6,
+  "examples": [
+    {
+      "input": "Hit Borlon with my Great Axe",
+      "output": "Melee"
+    },
+    {
+      "input": "Use Fire Ball",
+      "output": "Spell"
+    },
+    {
+      "input": "Run away",
+      "output": "Flee"
+    },
+    {
+      "input": "Tell him to calm down and lets talk this out",
+      "output": "Talk"
+    },
+    {
+      "input": "Pick up the arrow next to me",
+      "output": "PickUp"
+    },
+    {
+      "input": "Pray to Mithras for aid",
+      "output": "DivineHelp"
+    }
+  ],
+  "inputPrefix": "Q:",
+  "outputPrefix": "A:"
+}

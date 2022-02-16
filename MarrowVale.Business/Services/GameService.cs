@@ -19,15 +19,17 @@ namespace MarrowVale.Business.Services
         private readonly IGameRepository _gameRepository;
         private readonly IPlayerRepository _playerRepository;
         private readonly IInputProcessingService _inputProcessingService;
+        private readonly IEntityGenerator _entityGenerator;
 
         private readonly ICombatService _combatService;
+        private readonly ICommandProcessingService _commandProccesingService;
         
         private Player Player { get; set; }
         private Game Game { get; set; }
         
         public GameService(ILoggerFactory loggerFactory, IPrintService printService, IGlobalItemsProvider globalItemsProvider,
             IDrawingRepository drawingRepository, IDrawingService drawingService, IGameSetupService gameSetupService, IGameRepository gameRepository,
-            ICombatService combatService, IInputProcessingService inputProcessingService, IPlayerRepository playerRepository)
+            ICombatService combatService, IInputProcessingService inputProcessingService, IPlayerRepository playerRepository, IEntityGenerator entityGenerator, ICommandProcessingService commandProccesingService)
         {
             _logger = loggerFactory.CreateLogger<GameService>();
             _printService = printService;
@@ -38,25 +40,24 @@ namespace MarrowVale.Business.Services
             _combatService = combatService;
             _playerRepository = playerRepository;
             _inputProcessingService = inputProcessingService;
+            _entityGenerator = entityGenerator;
+            _commandProccesingService = commandProccesingService;
             Player = gameSetupService.Setup();
             Game = _gameRepository.LoadGame(Player.GameSaveName);
         }
 
         public void Start()
         {
-            var clockCancellationToken = startGameClock();
+            Console.Clear();
+            _printService.Type(_commandProccesingService.ShowWorld(Player));
             while (true)
             {
                 var playerInput = _printService.ReadInput();
-                var command = _inputProcessingService.ProcessInput(playerInput)?.ToUpper();
-
-                if (command == "QUIT")
-                {
+                if (playerInput == "QUIT")
                     break;
-                }else if(command == "SAVE")
-                {
-                    saveGame(clockCancellationToken);
-                }
+
+                var command = _inputProcessingService.ProcessInput(playerInput, "", Player);
+                _printService.Type(_commandProccesingService.ProcessCommand(command, Player));
 
             }
         }
@@ -77,16 +78,6 @@ namespace MarrowVale.Business.Services
             }, tokenSource.Token);
 
             return tokenSource;
-        }
-
-        private void saveGame(CancellationTokenSource token)
-        {
-            token.Cancel();
-
-            var oldSave = Player.GameSaveName;
-            Player.UpdateSaveFields();
-            _gameRepository.SaveGame(Game, oldSave, Player.GameSaveName);
-            _playerRepository.SavePlayers();
         }
     }
 }

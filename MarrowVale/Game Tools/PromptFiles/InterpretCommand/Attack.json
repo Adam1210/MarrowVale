@@ -1,0 +1,21 @@
+{
+  "description": "Where do we want to go?",
+  "useDescription": false,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "id": 1,
+      "rating": 1,
+      "input": "Attack Ray Len",
+      "output": "Ray Len"
+    },
+    {
+      "id": 2,
+      "rating": 1,
+      "input": "Slash Michael Morse with my Vaporal Blade",
+      "output": "Michael Morse"
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Object:"
+}

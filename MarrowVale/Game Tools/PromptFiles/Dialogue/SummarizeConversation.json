@@ -1,0 +1,25 @@
+{
+  "description": "Conversation:",
+  "useDescription": true,
+  "useExampleCount": 1,
+  "examples": [
+    {
+      "context": "Bordo is an excited goblin merchant.  He is in a tent and has plenty off goods for sale.",
+      "person1": "Player",
+      "person2": "Adam Dosto",
+      "dialogue": [
+        "Hi nice to meet you",
+        "Nice to meet you too! Dosto the goblin merchant here to make some deals! What are you looking for?",
+        "Show me what you got",
+        "Sure, what are you looking for?",
+        "Swords",
+        "I have many swords for sale, the rarest is this purple one.",
+        "Sure tell me about that one.",
+        "Yeah, this is my favorite. It's a very rare sword that I got in a raid against the Deep Elves. I've not seen another one in Tibia. It's made out of purple metal. A must have if you hang out with elves often!"
+      ],
+      "summary": "Player asked about purple swords. Dosto told player about his purple sword."
+    }
+  ],
+  "inputPrefix": "Conversation:",
+  "outputPrefix": "Summary:"
+}

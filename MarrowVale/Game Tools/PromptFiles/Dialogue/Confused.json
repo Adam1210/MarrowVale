@@ -1,0 +1,29 @@
+{
+  "description": "Introduces an NPC Character to the player",
+  "useDescription": false,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "context": "Bordo is an excited goblin merchant.  He is in a tent and has plenty off goods for sale.",
+      "person1": "Player",
+      "person2": "Bordo",
+      "dialogue": [
+        "I am monkey",
+        "huh interesting, I'm not sure what you are saying...'"
+      ]
+    },
+    {
+      "context": "Prento is an sullen human farmer.  He is minding his business in his field.",
+      "person1": "Player",
+      "person2": "Prento",
+      "dialogue": [
+        "Hello there",
+        "Hi.  Is there anything I can do for you?  If not I would suggest you be on your way.",
+        "I like to dance with the dolphins",
+        "umm...  I'm confused and don't know what you mean."
+      ]
+    }
+  ],
+  "inputPrefix": "",
+  "outputPrefix": ""
+}

@@ -1,0 +1,45 @@
+{
+  "description": "Describes an attack with a melee weapon",
+  "useDescription": true,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "damage": 2,
+      "player": {
+        "name": "Will",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Purple Sword",
+        "armor": "Wood Armor"
+      },
+      "enemy": {
+        "name": "Bredford",
+        "fullHealth": 30,
+        "currentHealth": 24,
+        "armor": "Chainmail",
+        "Weapon": "Great Axe"
+      },
+      "output": "Bredford cleaves his great axe toward you.  He hits your wood armor preventing you from severe harm."
+    },
+    {
+      "damage": 12,
+      "player": {
+        "name": "Bono",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Axe",
+        "armor": "Steel Armor"
+      },
+      "enemy": {
+        "name": "Gordon",
+        "fullHealth": 30,
+        "currentHealth": 15,
+        "armor": "Leather Armor",
+        "weapon": "Purple Sword"
+      },
+      "output": "Gordon rapidly slashes his mighty purple sword at you.  You have cuts up and down but you still stand strong."
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Description:"
+}

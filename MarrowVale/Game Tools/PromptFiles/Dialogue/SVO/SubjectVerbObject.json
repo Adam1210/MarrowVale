@@ -1,0 +1,53 @@
+{
+  "description": "Player attempts to purchase item from an NPC",
+  "useDescription": false,
+  "useExampleCount": 4,
+  "examples": [
+    {
+      "id": 1,
+      "rating": 1,
+      "input": "What swords do you have for sale?",
+      "subject": "You",
+      "subjectFilter": null,
+      "verb": "SELL",
+      "verbFilter": null,
+      "object": "Sword",
+      "objectFilter": null
+    },
+    {
+      "id": 2,
+      "rating": 1,
+      "input": "What potions do you have for sale under 100 bronze?",
+      "subject": "You",
+      "subjectFilter": null,
+      "verb": "SELL",
+      "verbFilter": null,
+      "object": "Potions",
+      "objectFilter": "Cost<100"
+    },
+    {
+      "id": 3,
+      "rating": 1,
+      "input": "Are you selling a great axe",
+      "subject": "You",
+      "subjectFilter": null,
+      "verb": "SELL",
+      "verbFilter": null,
+      "object": "Great Axe",
+      "objectFilter": null
+    },
+    {
+      "id": 4,
+      "rating": 1,
+      "input": "Do you know who sells purple swords in this town?",
+      "subject": null,
+      "subjectFilter": "Location=CurrentTown",
+      "verb": "SELL",
+      "verbFilter": null,
+      "object": "Purple Sword",
+      "objectFilter": ""
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Object:"
+}

@@ -1,0 +1,21 @@
+{
+  "description": "Where do we want to go?",
+  "useDescription": false,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "id": 1,
+      "rating": 1,
+      "input": "Talk to Ray Len",
+      "output": "Ray Len"
+    },
+    {
+      "id": 2,
+      "rating": 1,
+      "input": "Talk to Michael Morse",
+      "output": "Michael Morse"
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Object:"
+}

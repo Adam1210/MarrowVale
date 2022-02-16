@@ -7,9 +7,11 @@ using System.IO;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using MarrowVale.Common.Contracts;
+using Newtonsoft.Json;
 
 namespace MarrowVale.Data.Repositories
 {
+    [Obsolete]
     public class CommandListRepository : ICommandListRepository
     {
         private readonly ILogger _logger;
@@ -21,8 +23,7 @@ namespace MarrowVale.Data.Repositories
             _logger = logger.CreateLogger<CommandListRepository>();
             _appSettingsProvider = appSettingsProvider;
             _globalItemsProvider = globalItemsProvider;
-            var file = Path.Combine(appSettingsProvider.DataFilesLocation, "CommandList.json");
-            CommandFile = File.ReadAllText(file);
+            CommandFile = File.ReadAllText(_appSettingsProvider.DataFilesLocation + "\\CommandList.json");
             //gets directory from bin folder
             //CommandFile = File.ReadAllText(Environment.CurrentDirectory + "\\Game Tools\\DataFiles\\CommandList.json");
         }
@@ -30,11 +31,9 @@ namespace MarrowVale.Data.Repositories
         public IList<GameCommand> GetCommands()
         { 
             var commandList = new List<GameCommand>();
-
             try
             {
                 var file = JObject.Parse(CommandFile);
-
                 if (file == null)
                 {
                     _logger.LogWarning($"File CommandList.json has no contents");
@@ -47,7 +46,6 @@ namespace MarrowVale.Data.Repositories
                         Command = item.Key,
                         Description = item.Value.ToString()
                     };
-
                     commandList.Add(command);
                 }
             }
@@ -57,6 +55,25 @@ namespace MarrowVale.Data.Repositories
             }
 
             return commandList;
+        }
+
+        public string CompletionPrompt(string text)
+        {
+            var prompt = new StringBuilder();
+            try
+            {
+                var commands = JsonConvert.DeserializeObject<List<GameCommand>>(File.ReadAllText(_appSettingsProvider.DataFilesLocation + "\\CommandList.json"));
+                foreach (var command in commands)
+                {
+                    prompt.Append($"{command.Example}: {command.Command}\n");
+                }
+                prompt.Append($"{text}:");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+            return prompt.ToString();
         }
 
         public void PrintCommands()

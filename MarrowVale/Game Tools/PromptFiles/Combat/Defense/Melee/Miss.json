@@ -1,0 +1,45 @@
+{
+  "description": "Describes an attack with a melee weapon that misses",
+  "useDescription": true,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "damage": 0,
+      "player": {
+        "name": "Will",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Purple Sword",
+        "armor": "Wood Armor"
+      },
+      "enemy": {
+        "name": "Bredford",
+        "fullHealth": 30,
+        "currentHealth": 24,
+        "armor": "Chainmail",
+        "Weapon": "Great Axe"
+      },
+      "output": "Bredford cleaves his great axe horizontally toward you.  You backflip over the axe's blade with ease."
+    },
+    {
+      "damage": 0,
+      "player": {
+        "name": "Bono",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Axe",
+        "armor": "Steel Armor"
+      },
+      "enemy": {
+        "name": "Gordon",
+        "fullHealth": 30,
+        "currentHealth": 15,
+        "armor": "Leather Armor",
+        "weapon": "Purple Sword"
+      },
+      "output": "Gordon rapidly slashes his mighty purple sword at you.  You parry each slash with your trusy axe."
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Description:"
+}

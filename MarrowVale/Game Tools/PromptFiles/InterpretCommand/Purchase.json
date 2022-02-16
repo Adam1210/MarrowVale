@@ -1,0 +1,21 @@
+{
+  "description": "Player attempts to purchase item from an NPC",
+  "useDescription": false,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "id": 1,
+      "rating": 1,
+      "input": "I would like to buy the purple longsword",
+      "output": "Purple Longsword"
+    },
+    {
+      "id": 2,
+      "rating": 1,
+      "input": "How much for the great axe?",
+      "output": "Great Axe"
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Object:"
+}

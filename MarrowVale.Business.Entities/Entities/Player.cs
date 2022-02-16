@@ -6,17 +6,20 @@ using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
 {
-    public class Player
+    public class Player : GraphNode
     {
         public Player() {
             Abilities = new List<Ability>();
             Spellbook = new List<Spell>();
             Inventory = new Inventory();
             KnownLanguages = new List<LanguageEnum>();
+            this.EntityLabel = "Player";
+            this.Labels = new List<string>() { EntityLabel };
         }
 
         public Player(PlayerDto player) : this()
         {
+            Id = Guid.NewGuid().ToString();
             Race = player.Race;
             Gender = player.Gender;
             Class = player.Class;
@@ -68,26 +71,28 @@ namespace MarrowVale.Business.Entities.Entities
             this.LastSaveDateTime = LastSaveDateTime;
             this.KnownLanguages = KnownLanguages;
         }
-
-        public string Name { get;}
-        public ClassEnum Class { get; }
-        public PlayerRaceEnum Race { get; }
-        public string Gender { get; }
-        public int CurrentHealth { get; private set; }
-        public int MaxHealth { get; private set; }
-        public Inventory Inventory { get; }
-
+        public ClassEnum Class { get; set; }
+        public PlayerRaceEnum Race { get; set; }
+        public string Gender { get; set; }
+        public int CurrentHealth { get; set; }
+        public int MaxHealth { get; set; }
+        [JsonIgnore]
+        public Inventory Inventory { get; set; }
         public string GameSaveName { get; set; }
-                
+
+        [JsonIgnore]
         private IList<Spell> Spellbook { get; }
+        [JsonIgnore]
         private IList<Ability> Abilities { get; }
 
-        [JsonProperty]
+        [JsonIgnore]
         private IList<LanguageEnum> KnownLanguages { get; set; }
-        [JsonProperty]
+        [JsonIgnore]
         private IList<string> Buffs { get; set; }
-
-        public Weapon CurrentWeapon { get; private set; }
+        [JsonIgnore]
+        public Weapon CurrentWeapon { get; set; }
+        [JsonIgnore]
+        public Armor CurrentArmor { get; set; }
 
         public DateTime LastSaveDateTime { get; set; } 
 
@@ -103,6 +108,12 @@ namespace MarrowVale.Business.Entities.Entities
                 CurrentHealth = tempHealth;
             }
         }
+
+        public bool IsAlive()
+        {
+            return CurrentHealth > 0;
+        }
+
 
         public void Damage(int amount)
         {
@@ -121,7 +132,7 @@ namespace MarrowVale.Business.Entities.Entities
         public void SwitchWeapon(Weapon newWeapon)
         {
             //needs checks added later
-            Inventory.AddItem(CurrentWeapon);
+            Inventory.AddItem<Weapon>(CurrentWeapon);
             CurrentWeapon = newWeapon;
         }
 
@@ -150,6 +161,11 @@ namespace MarrowVale.Business.Entities.Entities
         {
             LastSaveDateTime = DateTime.Now;
             GameSaveName = LastSaveDateTime.ToFileTime().ToString();
+        }
+
+        public string CombatDescription()
+        {
+            return $"Player: {Name} | Weapon: {CurrentWeapon?.Name} Armor: {CurrentArmor?.Name}";
         }
     }
 }

@@ -1,0 +1,89 @@
+{
+  "description": "Interprets the basic intent of a line of text to an NPC",
+  "useDescription": false,
+  "useExampleCount": 20,
+  "examples": [
+    {
+      "input": "Hello there",
+      "output": "Introduction"
+    },
+    {
+      "input": "Pee Pee Poo Poo",
+      "output": "Confused"
+    },
+    {
+      "input": "What do you know about the magic ring?",
+      "output": "Question"
+    },
+    {
+      "input": "Thank you for your help, bye",
+      "output": "Farewell"
+    },
+    {
+      "input": "You are very cool.",
+      "output": "Statement"
+    },
+    {
+      "input": "Prepare to fight",
+      "output": "Attack"
+    },
+    {
+      "input": "Bye now",
+      "output": "Farewell"
+    },
+    {
+      "input": "I will buy that purple longsword",
+      "output": "Purchase"
+    },
+    {
+      "input": "I will sell my common longsword to you",
+      "output": "Sell"
+    },
+    {
+      "input": "I will give you my great axe",
+      "output": "Give"
+    },
+    {
+      "input": "Whats up",
+      "output": "Introduction"
+    },
+    {
+      "input": "I am monkey",
+      "output": "Confused"
+    },
+    {
+      "input": "Which way is it too the capital city?",
+      "output": "Question"
+    },
+    {
+      "input": "Pee Pee Poo Poo",
+      "output": "Confused"
+    },
+    {
+      "input": "I will talk to you later",
+      "output": "Farewell"
+    },
+    {
+      "input": "I like the new king",
+      "output": "Statement"
+    },
+    {
+      "input": "You are getting on my nerves you jerk",
+      "output": "Attack"
+    },
+    {
+      "input": "I would like to buy 10 healing potions",
+      "output": "Purchase"
+    },
+    {
+      "input": "How much will you give me for my silver axe?",
+      "output": "Sell"
+    },
+    {
+      "input": "I would like to give you this rock as a gift",
+      "output": "Give"
+    }
+  ],
+  "inputPrefix": "Q:",
+  "outputPrefix": "A:"
+}

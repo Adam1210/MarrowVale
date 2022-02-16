@@ -1,8 +1,14 @@
 ﻿using MarrowVale.Business.Contracts;
+using MarrowVale.Business.Entities.Commands;
+using MarrowVale.Business.Entities.Entities;
+using MarrowVale.Business.Entities.Enums;
+using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -11,161 +17,98 @@ namespace MarrowVale.Business.Services
     public class InputProcessingService : IInputProcessingService
     {
         private readonly ILogger _logger;
-        private readonly ICommandListRepository _commandListRepository;
-        public InputProcessingService(ILoggerFactory logger, ICommandListRepository commandListRepository)
+        private readonly IPrintService _printService;
+        private readonly IOpenAiProvider _openAiProvider;
+        private readonly IWorldContextService _worldContextService;
+        private readonly IPromptService _promptService;
+        private readonly IDivineInterventionService _divineInterventionService;
+
+        public InputProcessingService(ILoggerFactory logger, IPrintService printService, IOpenAiProvider openAiProvider, 
+            IWorldContextService worldContextService, IPromptService promptService, IDivineInterventionService divineInterventionService)
         {
             _logger = logger.CreateLogger<InputProcessingService>();
-            _commandListRepository = commandListRepository;
+            _printService = printService;
+            _openAiProvider = openAiProvider;
+            _worldContextService = worldContextService;
+            _promptService = promptService;
+            _divineInterventionService = divineInterventionService;
         }
 
-        public string ProcessInput(string input)
-        {        
-            //account for multiple commands separated by a commassssssssss
-            var commands = _commandListRepository.GetCommands();
-
-            var inputCommands = input.Split(',');
-
-            foreach (var command in inputCommands)
-            {
-                var cmdTokens = command.Trim().Split(' ');
-
-                switch (cmdTokens[0])
-                {
-                    case "/HELP":
-                        Console.WriteLine("help");
-                        break;
-                    case "OPEN":
-                        Console.WriteLine("Open Bag");
-                        break;
-                    case "MOVE":
-                        Console.WriteLine("North");
-                        break;                 
-                    case "CLIMB":
-                        Console.WriteLine("Climb up stucture");
-                        break;                
-                    case "TAKE":
-                        Console.WriteLine("Take item");
-                        break;
-                    case "GIVE":
-                        Console.WriteLine("Give item to target");
-                        break;
-                    case "ATTACK":
-                        Console.WriteLine("Attack target");
-                        break;
-                    case "EQUIP":
-                        Console.WriteLine("Equip item");
-                        break;
-                    case "USE":
-                        Console.WriteLine("Use item");
-                        break;
-                    case "READ":
-                        Console.WriteLine("Read item");
-                        break;
-                    case "CAST":
-                        Console.WriteLine("Cast spell at target");
-                        break;                
-                    case "HEALTH":
-                        Console.WriteLine("Shows current health");
-                        break;
-                    case "CLASS":
-                        Console.WriteLine("Displays class abilities");
-                        break;
-                    case "SPEAK":
-                        Console.WriteLine("Starts a dialogue with the given character");
-                        break;
-                }
-            }
-
-            //foreach (var command in commands)
-            //{
-            //    //trims inputs from user
-            //    var cmd = command.Command.Trim();
-            //    Regex rx = new Regex("(\\{)(.*?)(\\})");
-            //    var result = rx.Replace(cmd, "");
-            //    Console.WriteLine(result);
-            //}
-
-            //switch (input.ToUpper())
-            //{
-            //    case "/HELP":
-            //        Console.WriteLine("help");
-            //        break;
-            //    case "OPEN BAG":
-            //        Console.WriteLine("Open Bag");
-            //        break;
-            //    case "MOVE NORTH":
-            //        Console.WriteLine("North");
-            //        break;
-            //    case "MOVE SOUTH":
-            //        Console.WriteLine("South");
-            //        break;
-            //    case "MOVE EAST":
-            //        Console.WriteLine("East");
-            //        break;
-            //    case "MOVE WEST":
-            //        Console.WriteLine("West");
-            //        break;
-            //    case "MOVE NORTHEAST":
-            //        Console.WriteLine("Northeast");
-            //        break;
-            //    case "MOVE NORTHWEST":
-            //        Console.WriteLine("Northwest");
-            //        break;
-            //    case "MOVE SOUTHEAST":
-            //        Console.WriteLine("Southeast");
-            //        break;
-            //    case "MOVE SOUTHWEST":
-            //        Console.WriteLine("Southwest");
-            //        break;
-            //    case "CLIMB UP {structure}":
-            //        Console.WriteLine("Climb up stucture");
-            //        break;
-            //    case "CLIMB DOWN {structure}":
-            //        Console.WriteLine("Climb down stucture");
-            //        break;
-            //    case "TAKE {item}":
-            //        Console.WriteLine("Take item");
-            //        break;
-            //    case "GIVE {item} to {target}":
-            //        Console.WriteLine("Give item to target");
-            //        break;
-            //    case "ATTACK {target}":
-            //        Console.WriteLine("Attack target");
-            //        break;
-            //    case "EQUIP {item}":
-            //        Console.WriteLine("Equip item");
-            //        break;
-            //    case "USE {item}":
-            //        Console.WriteLine("Use item");
-            //        break;
-            //    case "READ {item}":
-            //        Console.WriteLine("Read item");
-            //        break;
-            //    case "CAST {spell name} AT {target}":
-            //        Console.WriteLine("Cast spell at target");
-            //        break;
-            //    case "MOVE {structure}":
-            //        Console.WriteLine("Move structure");
-            //        break;
-            //    case "HEALTH":
-            //        Console.WriteLine("Shows current health");
-            //        break;
-            //    case "CLASS ABILITIES":
-            //        Console.WriteLine("Displays class abilities");
-            //        break;
-            //    case "SPEAK TO {character}":
-            //        Console.WriteLine("Starts a dialogue with the given character");
-            //        break;
-            //}
-
-            return "";
-        }
-
-        private string parseMoveCommand(string[] cmdTokens)
+        public Command ProcessInput(string input, string context, Player player)
         {
+            var prompt = _promptService.CommandTypePrompt(input);
+            var commandName = _openAiProvider.Complete(prompt).Result;
+            var isValidEnum = CommandEnum.TryParse(commandName, out CommandEnum commandEnum);
 
+            if (!isValidEnum)
+                return tryAgain(context, player, input);
 
-            return "";
+            return CreateCommand(input, context, player, commandEnum);
+
         }
+
+
+        private Command CreateCommand(string input, string context, Player player, CommandEnum command) =>
+            command switch
+            {
+                CommandEnum.Inventory => directObjectCommand(input, context, player, command),
+                CommandEnum.Enter => directObjectCommand(input, context, player, command),
+                CommandEnum.Exit => directObjectCommand(input, context, player, command),
+                CommandEnum.Traverse => directObjectCommand(input, context, player, command),
+                CommandEnum.Attack => directObjectCommand(input, context, player, command),
+                CommandEnum.Speak => directObjectCommand(input, context, player, command),
+                CommandEnum.Health => new Command(CommandEnum.Health),
+                CommandEnum.MoveToward => throw new NotImplementedException(),
+                CommandEnum.ClimbUp => throw new NotImplementedException(),
+                CommandEnum.ClimbDown => throw new NotImplementedException(),
+                CommandEnum.Swim => throw new NotImplementedException(),
+                CommandEnum.Dance => throw new NotImplementedException(),
+                CommandEnum.Give => throw new NotImplementedException(),
+                CommandEnum.Equip => throw new NotImplementedException(),
+                CommandEnum.Use => throw new NotImplementedException(),
+                CommandEnum.Cast => throw new NotImplementedException(),
+                CommandEnum.Abilities => throw new NotImplementedException(),
+                //CommandEnum.Read => throw new NotImplementedException(),
+                _ => tryAgain(context, player, input)
+            };
+
+
+        private Command directObjectCommand(string input, string context, Player player, CommandEnum command)
+        {
+            while (true)
+            {
+                try
+                {
+                    var prompt = _promptService.GenerateDirectObjectPrompt(input, command);
+                    var directObject = _openAiProvider.Complete(prompt.ToString()).Result;
+                    var node = _worldContextService.GetObjectLabelIdPair(directObject, player, input);
+                    if (string.IsNullOrWhiteSpace(node?.Id))
+                    {
+                        var divineResponse = _divineInterventionService.HandleError(input, "Not found");
+                        Debug.WriteLine("Direct Object Node Not Found");
+                        _printService.PrintDivineText(divineResponse);
+                        input = Console.ReadLine();
+                    }
+                    else
+                        return new Command { Type = command, DirectObjectNode = node };
+                }
+                catch
+                {
+                    var divineResponse = _divineInterventionService.HandleError(input, "Unexpected Error");
+                    _printService.PrintDivineText(divineResponse);
+                    input = _printService.ReadInput();
+                }
+
+            }
+        }
+
+        private Command tryAgain(string context, Player player, string input)
+        {
+            var divineResponse = _divineInterventionService.HandleError(input, "Unexpected Command");
+            _printService.PrintDivineText(divineResponse);
+            input = Console.ReadLine();
+            return ProcessInput(input, context, player);
+        }
+
     }
 }

@@ -1,0 +1,30 @@
+{
+  "description": "Introduces an NPC Character to the player",
+  "useDescription": false,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "context": "Bordo is an excited goblin merchant.  The weather is rainy",
+      "person1": "Player",
+      "person2": "Bordo",
+      "dialogue": [
+        "Hi nice to meet you",
+        "Nice to meet you too! Dosto the goblin merchant here to make some deals! What are you looking for?",
+        "Just wanted to say, this is lovely weather",
+        "Yes, I can see that its raining"
+      ]
+    },
+    {
+      "context": "Prento is an sullen human farmer.  The town of phandalin has 100 buildings and 5000 people",
+      "person1": "Player",
+      "person2": "Prento",
+      "dialogue": [
+        "Hello there",
+        "Hi.  This town seems quite large",
+        "Yes, there are a great deal of people that live here."
+      ]
+    }
+  ],
+  "inputPrefix": "",
+  "outputPrefix": ""
+}

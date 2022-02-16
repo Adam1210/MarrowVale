@@ -1,0 +1,21 @@
+{
+  "description": "Generate a summary off a room you see through a door",
+  "useDescription": true,
+  "useExampleCount": 3,
+  "examples": [
+    {
+      "input": "Size: Large\nDirection:Left\nRoom: Lobby",
+      "output": "You see the doorway to a large lobby to your left."
+    },
+    {
+      "input": "Size: Small\nDirection:Right\nRoom: Bar",
+      "output": "On the right of you there is a doorway that leads to a small bar."
+    },
+    {
+      "input": "Size: Large\nDirection:Front\nRoom: Hallway",
+      "output": "You see the opening to a large hallway ahead of you."
+    }
+  ],
+  "inputPrefix": "",
+  "outputPrefix": "Summary:"
+}

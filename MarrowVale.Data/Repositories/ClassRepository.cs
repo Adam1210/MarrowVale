@@ -4,7 +4,6 @@ using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,10 +19,7 @@ namespace MarrowVale.Data.Repositories
         {
             _logger = logger.CreateLogger<ClassRepository>();
             _appSettingsProvider = appSettingsProvider;
-
-            //Changed the way the path is constructed to ensure that this will work on any OS
-            var file = Path.Combine(Environment.CurrentDirectory, _appSettingsProvider.DataFilesLocation, "ClassList.json");
-            ClassFile = File.ReadAllText(file);
+            ClassFile = File.ReadAllText(_appSettingsProvider.DataFilesLocation + "\\CLassList.json");
         }
 
         public IList<Class> GetClasses()

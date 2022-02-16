@@ -7,12 +7,15 @@ using System.Text;
 
 namespace MarrowVale.Business.Entities.Entities
 {
-    public class Location
+    public class Location : Area
     {
         public Location()
         {
-            Items = new List<IItem>();
+            LeadsTo = new List<Location>();
+            Items = new List<Item>();
             Npcs = new List<Npc>();
+            this.EntityLabel = "Location";
+            this.Labels = new List<string>() { EntityLabel };
         }
 
         [JsonConstructor]
@@ -23,38 +26,52 @@ namespace MarrowVale.Business.Entities.Entities
             this.EnvironmentalObjects = EnvironmentalObjects;
             this.EnvironmentalInteractions = EnvironmentalInteractions;
         }
-        
-        public string Name { get; }
-        public string Description { get; private set; }
 
-        [JsonProperty]
-        private IList<IItem> Items { get; }
-
-        [JsonProperty]
+        [JsonIgnore]
+        private IList<Item> Items { get; }
+        [JsonIgnore]
         private IList<Npc> Npcs { get; }
+        [JsonIgnore]
         private IList<EnvironmentalObject> EnvironmentalObjects { get; set; }
+        [JsonIgnore]
         private IList<EnvironmentalInteraction> EnvironmentalInteractions { get; set; }
-        
-        private IList<string> ConnectingLocationNames { get; set; }
+        [JsonIgnore]
+        public IList<Location> LeadsTo { get; set; }
 
-        public void AddItem(IItem item)
+        public void AddItem(Item item)
         {
             Items.Add(item);
         }
 
-        public IItem PickUpItem(string item)
+        public Item PickUpItem(string item)
         {
             return Items.FirstOrDefault(x => x.Name.Equals(item, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        public string GetLocationDescription()
+        public virtual StringBuilder DescriptionPromptInput()
         {
-            //first attempt at building location description
-            var stringBuilder = new StringBuilder();
-            stringBuilder.Append(Description);
-            stringBuilder.AppendJoin($"{Environment.NewLine}", Items.Where(x=>x.IsVisible).ToString());
-            stringBuilder.AppendJoin($"{Environment.NewLine}", EnvironmentalObjects.ToString());
-            return stringBuilder.ToString();
+            var description = new StringBuilder();
+            description.Append($"Name: {this.Name}");
+            return description;
+        }
+
+
+        public override string CalculateSize()
+        {
+            var area = SquareArea();
+            //Change Based on Location
+            if (area > 1000)
+                return "Enormous";
+            else if (area > 500)
+                return "Large";
+            else if (area > 200)
+                return "Normal Size";
+            else if (area > 150)
+                return "Samll";
+            else if (area > 50)
+                return "Tiny";
+            return "Miniscule";
+
         }
     }
 }

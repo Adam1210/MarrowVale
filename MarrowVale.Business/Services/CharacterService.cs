@@ -6,6 +6,8 @@ using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace MarrowVale.Business.Services
@@ -19,10 +21,11 @@ namespace MarrowVale.Business.Services
         private readonly IDrawingService _drawingService;
         private readonly IClassRepository _classRepository;
         private readonly IPlayerRepository _playerRepository;
+        private readonly IAppSettingsProvider _appSettingsProvider;
 
         public CharacterService(ILoggerFactory loggerFactory, IPrintService printService, IGlobalItemsProvider globalItemsProvider, 
             IDrawingRepository drawingRepository, IDrawingService drawingService, IClassRepository classRepository,
-            IPlayerRepository playerRepository)
+            IPlayerRepository playerRepository, IAppSettingsProvider appSettingsProvider)
         {
             _logger = loggerFactory.CreateLogger<CharacterService>();
             _printService = printService;
@@ -31,15 +34,16 @@ namespace MarrowVale.Business.Services
             _drawingService = drawingService;
             _classRepository = classRepository;
             _playerRepository = playerRepository;
+            _appSettingsProvider = appSettingsProvider;
         }
 
         public Player NewCharacter()
         {
-            if (_playerRepository.PlayerCount() == 10)
-            {
-                _printService.Type("There are too many saves, you need to delete one to cotinue with your creation.");
-                pickPlayerToRemove();
-            }
+            //if (_playerRepository.PlayerCount() == 10)
+            //{
+            //    _printService.Type("There are too many saves, you need to delete one to cotinue with your creation.");
+            //    pickPlayerToRemove();
+            //}
 
             _printService.ClearConsole();
             _printService.Type("Now we are going to create a new character for your adventure.");
@@ -56,11 +60,8 @@ namespace MarrowVale.Business.Services
             var startingClass = _classRepository.GetClass(playerDto.Class);
 
             var player = new Player(playerDto);
-
             loadNewInventory(startingClass, player);
-
-            _playerRepository.AddPlayer(player);
-            _playerRepository.SavePlayers();
+            _playerRepository.CreatePlayer(player).Wait();
 
             Console.WriteLine($"{Environment.NewLine}Name: {playerDto.Name}");
             Console.WriteLine($"Gender: {playerDto.Gender}");
@@ -72,19 +73,20 @@ namespace MarrowVale.Business.Services
 
         public Player LoadCharacter()
         {
-            //gets character
-            //loads inventory and location
-            displaySavedCharacters();
+            var players = _playerRepository.All().Result.ToList();
+            displaySavedCharacters(players);
 
             _printService.Type("Enter the name of the player you would like to play.");
 
             var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
 
-            var player = _playerRepository.GetPlayer(name);
+
+            var playerId = players.FirstOrDefault(x=> x.Name == name).Id;
+            var player = _playerRepository.GetPlayerWithInventory(playerId);
 
             player.LastSaveDateTime = DateTime.Now;
 
-            _playerRepository.SavePlayers();
+            //_playerRepository.SavePlayers();
 
             if (player == null)
             {
@@ -98,25 +100,20 @@ namespace MarrowVale.Business.Services
             }
         }
 
-        public void SaveCharacter()
-        {
-            _playerRepository.SavePlayers();
-        }
-
         public Inventory GetInventory(Player player)
         {            
-            return player.Inventory;
+            return _playerRepository.GetInventory(player);
         }
         
         private void pickPlayerToRemove()
         {
-            displaySavedCharacters();
+            var players = _playerRepository.All().Result.ToList();
+            displaySavedCharacters(players);
 
             _printService.Type("Enter the name of the player you would like to delete.");
 
             var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
-
-            var player = _playerRepository.GetPlayer(name);
+            var player = _playerRepository.Single(x => x.Name == name).Result;
 
             if (player == null)
             {
@@ -125,20 +122,18 @@ namespace MarrowVale.Business.Services
                 pickPlayerToRemove();
             }
 
-            _playerRepository.RemovePlayer(name);
+            _playerRepository.Delete(x => x.Id == player.Id);
         }
 
-        private void displaySavedCharacters()
+        private void displaySavedCharacters(IList<Player> players)
         {
             _printService.ClearConsole();
 
             _drawingService.PrintArtCentered(_drawingRepository.GetLoadSaveArt());
 
-            var players = _playerRepository.GetPlayers();
-
-            foreach (var item in players)
+            foreach (var player in players)
             {
-                _printService.PrintCentered(item);
+                _printService.PrintCentered($"{player.Name}  ||  {player.Race.ToString()}  ||  {player.Class.ToString()}");
             }
         }
 
@@ -154,7 +149,7 @@ namespace MarrowVale.Business.Services
 
             var name = _globalItemsProvider.UpperFirstChar(_printService.ReadInput());
 
-            var newName = _playerRepository.GetPlayer(name);
+            var newName = _playerRepository.Single(x => x.Name.ToUpper() == name.ToUpper()).Result;
 
             if (newName != null)
             {
@@ -307,8 +302,8 @@ namespace MarrowVale.Business.Services
                                   $"cannot solve.";
 
             _printService.Print(warriorDescription);
-            _printService.Print(rangerDescription, 10);
-            _printService.Print(mageDescription, 10);
+            _printService.Print(rangerDescription, _appSettingsProvider.CharacterCreateWait);
+            _printService.Print(mageDescription, _appSettingsProvider.CharacterCreateWait);
         }
 
         private void pickClass(PlayerDto playerDto)
@@ -359,8 +354,11 @@ namespace MarrowVale.Business.Services
 
         private void loadNewInventory(Class startingClass, Player player)
         {
+            player.CurrentWeapon = startingClass.StartingWeapons.FirstOrDefault();
+            player.CurrentArmor = new Armor { Name = "Scraps of Leather", BaseWorth = 0, PysicalResistance = 1, MagicResistance = 0, Description = "Cheap Leather Armor" };
+
             //get weapons
-            foreach(var weapon in startingClass.StartingWeapons)
+            foreach (var weapon in startingClass.StartingWeapons)
             {
                 player.Inventory.AddItem(weapon);
             }

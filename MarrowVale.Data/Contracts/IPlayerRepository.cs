@@ -1,15 +1,17 @@
 ﻿using MarrowVale.Business.Entities.Entities;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MarrowVale.Data.Contracts
 {
-    public interface IPlayerRepository
+    public interface IPlayerRepository : IBaseRepository<Player>
     {
-        IList<string> GetPlayers();
-        void AddPlayer(Player player);
-        Player GetPlayer(string playerName);
-        void RemovePlayer(string playerName);
-        int PlayerCount();
-        void SavePlayers();
+        Task CreatePlayer(Player player);
+        void MovePlayer(Player player, string currentLocationId, string newLocationId);
+        IList<string> PlayerLocationType(Player player);
+        Location GetPlayerLocation(Player player);
+        Player GetPlayerWithInventory(string playerId);
+        Inventory GetInventory(Player player);
     }
 }

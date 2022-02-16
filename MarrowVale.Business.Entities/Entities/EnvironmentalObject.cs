@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MarrowVale.Business.Entities.Entities
 {
-    public class EnvironmentalObject
+    public class EnvironmentalObject : GraphNode
     {
         [JsonConstructor]
         public EnvironmentalObject(string Name, string Description, string MovedDescription = null, bool Moved = false)
@@ -14,10 +14,10 @@ namespace MarrowVale.Business.Entities.Entities
             this.Description = Description;
             this.MovedDescription = MovedDescription;
             this.Moved = Moved;
+            this.EntityLabel = "EnvironmentalObject";
+            this.Labels = new List<string>() { EntityLabel };
         }
 
-        public string Name { get; }
-        public string Description { get; }
         public bool Moved { get; private set; }
         public string MovedDescription { get; }
 

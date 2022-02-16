@@ -1,18 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UserSecretsId>56165aa1-b476-4fcd-8eb0-45bdbc62412b</UserSecretsId>
+    <Configurations>Debug;Release;Development</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
-    <PackageReference Include="NAudio" Version="1.9.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
+    <PackageReference Include="NAudio" Version="2.0.1" />
+    <PackageReference Include="Neo4jClient" Version="4.1.18" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +27,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="appsettings.development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.debug.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -30,6 +40,111 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Game Tools\DataFiles\CommandList.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Attack\Melee\Minor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Attack\Spell\SpellKillDescription.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Attack\Spell\SpellAttackDescription.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Attack\Melee\Miss.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Attack\Melee\Kill.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Defense\Melee\Minor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Defense\Melee\Kill.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Defense\Melee\Miss.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Defense\Spell\SpellAttackDescription.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\Defense\Spell\SpellKillDescription.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Combat\InterpretIntent.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\Confused.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\Attack.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\Farewell.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\Answer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\Statement.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\SummarizeConversation.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\Introduction.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\SVO\SubjectVerbObject.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\DivineIntervention\Explanation.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\DivineIntervention\Smite.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\InterpretCommand\Sell.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\InterpretCommand\Purchase.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Summary\Road.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Dialogue\InterpretIntent.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Summary\ConnectingRooms.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Summary\Room.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Summary\Npcs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\Summary\Location.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\InterpretCommand\CommandList.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\InterpretCommand\Exit.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\InterpretCommand\Speak.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\InterpretCommand\Attack.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\InterpretCommand\Enter.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Game Tools\PromptFiles\InterpretCommand\Traverse.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Game Tools\DataFiles\PlayerList.json">
@@ -41,7 +156,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Game Tools\PromptFiles\Combat\Attack\Range\" />
+    <Folder Include="Game Tools\PromptFiles\Combat\Defense\Range\" />
+    <Folder Include="Game Tools\PromptFiles\Evaluation\" />
     <Folder Include="Game Tools\SoundFiles\" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties game_x0020_tools_4promptfiles_4summary_4connectingrooms_1json__JsonSchema=" " /></VisualStudio></ProjectExtensions>
 
 </Project>

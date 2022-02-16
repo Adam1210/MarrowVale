@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace MarrowVale.Business.Entities.Entities
 {
-    public class Ammunition : IItem
+    public class Ammunition : Item
     {
         [JsonConstructor]
         public Ammunition(string Name, string Description, int Count, bool IsVisible, int BaseWorth, string EnvironmentalDescription)
@@ -13,15 +14,11 @@ namespace MarrowVale.Business.Entities.Entities
             this.IsVisible = IsVisible;
             this.BaseWorth = BaseWorth;
             this.EnvironmentalDescription = EnvironmentalDescription;
+            this.EntityLabel = "Ammunition";
+            this.Labels = new List<string>() { EntityLabel };
         }
 
-        public string Name { get; }
-        public string Description { get; }
         public int Count { get; private set; }
-        public bool IsVisible { get; private set; }
-        public int BaseWorth { get; }
-
-        public string EnvironmentalDescription { get; private set; }
         
         public void SetEnvironmentalDescription(string description)
         {
@@ -40,8 +37,13 @@ namespace MarrowVale.Business.Entities.Entities
                 Count--;
             }
         }
+        public override string GetShortDescription()
+        {
+            // Add the logic to build this description.
+            return Description;
+        }
 
-        public string GetDescription()
+        public override string GetDescription()
         {
             // Add the logic to build this description.
             return Description;

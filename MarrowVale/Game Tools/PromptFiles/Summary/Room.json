@@ -1,0 +1,17 @@
+{
+  "description": "Generate a summary based on a location",
+  "useDescription": true,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "input": "Size: Large\nAtmosphere: Quiet\nInterior: Old brick\nFloor: Tile\nObjects: Marble Desk, Ivory Bar, Stage\nRoom: Lobby",
+      "output": "You enter into a large room with old brick walls and tile floors.  There is a Marble Desk, Ivory Bar, and Stage.  There is quiet in the air."
+    },
+    {
+      "input": "Size: Small\nAtmosphere: Lively\nObjects: Bar, Axe(In corner)",
+      "output": "You enter into a small lively bar.  There is a bar, stage, and in the corner you notice an axe."
+    }
+  ],
+  "inputPrefix": "",
+  "outputPrefix": "Summary:"
+}

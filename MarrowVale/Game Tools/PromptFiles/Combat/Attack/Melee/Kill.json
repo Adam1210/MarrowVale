@@ -1,0 +1,44 @@
+{
+  "description": "Describes an attack with a melee weapon that kills an opponent",
+  "useDescription": true,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "damage": 24,
+      "attemptedAction": "Cleave my greatsword into him",
+      "player": {
+        "name": "Will",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Great Axe"
+      },
+      "enemy": {
+        "name": "Bredford",
+        "fullHealth": 30,
+        "currentHealth": 24,
+        "armor": "Chainmail"
+      },
+      "output": "You cleave your great axe toward Bredford.  He grunts, why Bradly as he falls to the ground dead."
+    },
+    {
+      "damage": 15,
+      "attemptedAction": "Attack with my sword",
+      "player": {
+        "name": "Bono",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Purple Sword"
+      },
+      "enemy": {
+        "name": "Gordon",
+        "fullHealth": 30,
+        "currentHealth": 15,
+        "armor": "Leather Armor"
+
+      },
+      "output": "You rapidly slash your mighty purple sword at Borpol.  Today was not his day, he falls down dead."
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Description:"
+}

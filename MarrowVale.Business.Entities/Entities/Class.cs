@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace MarrowVale.Business.Entities.Entities
 {
 
-    public class Class
+    public class Class : GraphNode
     {
         public Class()
         {
@@ -13,11 +13,11 @@ namespace MarrowVale.Business.Entities.Entities
             StartingAmmunition = new List<Ammunition>();
             StartingConsumables = new List<Consumable>();
             StartingAbilities = new List<Ability>();
+            this.EntityLabel = "Class";
+            this.Labels = new List<string>() { EntityLabel };
         }
 
         public ClassEnum Type { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
         public IList<Weapon> StartingWeapons { get; set; }
         public IList<Spell> StartingSpells { get; set; }
         public IList<Ammunition> StartingAmmunition { get; set; }

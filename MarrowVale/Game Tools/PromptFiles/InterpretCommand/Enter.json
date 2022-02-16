@@ -1,0 +1,27 @@
+{
+  "description": "What do you want to enter into?",
+  "useDescription": false,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "id": 1,
+      "rating": 1,
+      "input": "Leave the Brando Bank",
+      "output": "Brando Bank"
+    },
+    {
+      "id": 2,
+      "rating": 1,
+      "input": "Walk out of Michael's Sword Shop",
+      "output": "Michael's Sword Shop"
+    },
+    {
+      "id": 3,
+      "rating": 1,
+      "input": "Input:Walk outside",
+      "output": "Object:outside"
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Output:"
+}

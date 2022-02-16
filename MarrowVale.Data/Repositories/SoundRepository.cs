@@ -3,7 +3,6 @@ using MarrowVale.Common.Models;
 using MarrowVale.Data.Contracts;
 using Microsoft.Extensions.Logging;
 using NAudio.Wave;
-using System.IO;
 
 namespace MarrowVale.Data.Repositories
 {
@@ -19,8 +18,7 @@ namespace MarrowVale.Data.Repositories
 
         public Audio GetMusic(string fileName)
         {
-            var file = Path.Combine(_appSettingsProvider.SoundFilesLocation, fileName);
-            var audioFile = new AudioFileReader(file);
+            var audioFile = new AudioFileReader(_appSettingsProvider.SoundFilesLocation + $"\\{fileName}");
             var outputDevice = new WaveOutEvent();
             
             outputDevice.Init(audioFile);
@@ -37,9 +35,7 @@ namespace MarrowVale.Data.Repositories
 
         public Audio GetMusicLooping(string fileName)
         {
-            var file = Path.Combine(_appSettingsProvider.SoundFilesLocation, fileName);
-            
-            var audioFile = new AudioFileReader(file);
+            var audioFile = new AudioFileReader(_appSettingsProvider.SoundFilesLocation + $"\\{fileName}");
             var loop = new LoopStream(audioFile);
             var outputDevice = new WaveOutEvent();
 

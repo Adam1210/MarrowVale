@@ -25,9 +25,10 @@ namespace MarrowVale.Data.Repositories
 
         public Game LoadGame(string fileName)
         {
-            var filePath = generateFilePath(fileName);
-            var gameFile = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<Game>(gameFile, Settings);
+            //var filePath = generateFilePath(fileName);
+            //var gameFile = File.ReadAllText(filePath);
+            //return JsonConvert.DeserializeObject<Game>(gameFile, Settings);
+            return null;
         }
 
         public void SaveGame(Game game, string oldFileName, string newFileName)

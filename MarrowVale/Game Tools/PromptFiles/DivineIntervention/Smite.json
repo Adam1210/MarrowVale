@@ -1,0 +1,34 @@
+{
+  "description": "Describes a diety smiting an npc",
+  "useDescription": true,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "diety": {
+        "name": "Mithras"
+      },
+      "npc": {
+        "name": "Bredford",
+        "fullHealth": 30,
+        "currentHealth": 24,
+        "armor": "Chainmail"
+      },
+      "output": "There is a great flash of light followed by a rumble.  Where Bredford once stood is now just a pile of ash."
+    },
+    {
+      "diety": {
+        "name": "Purplexw"
+      },
+      "enemy": {
+        "name": "Gordon",
+        "fullHealth": 30,
+        "currentHealth": 15,
+        "armor": "Leather Armor"
+
+      },
+      "output": "The ground around Gordon opens up and swallows Gordon.  He is no longer on this plane."
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Description:"
+}

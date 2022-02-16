@@ -1,11 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Configurations>Debug;Release;Development</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Neo4jClient" Version="4.1.18" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MarrowVale.Business.Entities\MarrowVale.Business.Entities.csproj" />
+    <ProjectReference Include="..\MarrowVale.Data\MarrowVale.Data.csproj" />
   </ItemGroup>
 
 </Project>

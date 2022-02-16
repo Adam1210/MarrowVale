@@ -1,0 +1,47 @@
+{
+  "description": "Describes an attack with a melee weapon that kills an opponent",
+  "useDescription": true,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "damage": 24,
+      "player": {
+        "name": "Will",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Great Axe",
+        "armor":  "Wood Armor"
+          
+      },
+      "enemy": {
+        "name": "Bredford",
+        "fullHealth": 30,
+        "currentHealth": 24,
+        "armor": "Chainmail",
+        "Weapon" : "Purple Sword"
+      },
+      "output": "Bredford jabs you with his sword.  'Why Bredford' you grunt falling to the ground dead."
+    },
+    {
+      "damage": 15,
+      "player": {
+        "name": "Bono",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Purple Sword",
+        "armor": "Leather Armor"
+      },
+      "enemy": {
+        "name": "Gordon",
+        "fullHealth": 30,
+        "currentHealth": 15,
+        "armor": "Leather Armor",
+        "Weapon": "Whip"
+
+      },
+      "output": "Gordon leans back and then violently releases his whip at you.  Today was not your day, you fall down dead."
+    }
+  ],
+  "inputPrefix": "Input:",
+  "outputPrefix": "Description:"
+}

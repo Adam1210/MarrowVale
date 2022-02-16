@@ -1,27 +1,102 @@
-{
-  "/help": "Displays list of possible game commands",
-  "Open Bag": "Shows a list of all the items in your inventory",
-  "Move North": "Moves your character North",
-  "Move South": "Moves your character South",
-  "Move East": "Moves your character East",
-  "Move West": "Moves your character West",
-  "Move Northeast": "Moves your character Northeast",
-  "Move Northwest": "Moves your character Northwest",
-  "Move Southeast": "Moves your character Southeast",
-  "Move Southwest": "Moves your character Southwest",
-  "Climb up {structure}": "Your character tries to climb up the specified structure",
-  "Climb down {structure}": "Your character tries to climb down the specified structure",
-  "Take {item}": "Takes specified item and puts it in your inventory",
-  "Give {item} to {target}": "Gives item to target character or structure",
-  "Attack {target}": "Attacks target with currently equipped weapon",
-  "Equip {item}": "Equips item",
-  "Use {item}": "Uses item",
-  "Read {item}": "Try to read the target item",
-  "Cast {spell name} at {target}": "Casts spell at target enemy or structure",
-  "Move {structure}": "Attempts to move target structure",
-  "Health": "Displays current HP and Max HP",
-  "Class Abilities": "Displays your class specific abilities",
-  "Speak to {character}": "Starts a dialogue with the given character",
-  "Save": "Save progress",
-  "Quit":  "Quit the game"
-}
+[
+  {
+    "command": "Inventory",
+    "description": "Shows a list of all the items in your inventory",
+    "example": "Open Inventory"
+  },
+  {
+    "command": "MoveToward",
+    "description": "Moves your character toward a specified object",
+    "example": "Approach the {object}"
+  },
+  {
+    "command": "Traverse",
+    "description": "Moves your character toward a specified location",
+    "example": "Walk down path"
+  },
+  {
+    "command": "Enter",
+    "description": "Moves your character toward a specified location",
+    "example": "Enter building"
+  },
+  {
+    "command": "Exit",
+    "description": "Leave a particular area",
+    "example": "Leave the area"
+  },
+  {
+    "command": "ClimbUp",
+    "description": "Your character tries to climb up the specified structure",
+    "example": "Climb up the side of the building"
+  },
+  {
+    "command": "ClimbDown",
+    "description": "Your character tries to climb down the specified structure",
+    "example": "Try to climb down the ladder "
+  },
+  {
+    "command": "Swim",
+    "description": "Your character tries to swim in specified body of liquid",
+    "example": "Swim over to the boat"
+  },
+  {
+    "command": "Dance",
+    "description": "Your character starts to move their hips in rythm",
+    "example": "Start dancing to the beat"
+  },
+  {
+    "command": "Sing",
+    "description": "Your character give their best attempt at a melody",
+    "example": "Sing a song"
+  },
+  {
+    "command": "Take",
+    "description": "Takes specified item and puts it in your inventory",
+    "example": "Pick up sword"
+  },
+  {
+    "command": "Give",
+    "description": "Gives item to target character or structure",
+    "example": "Give my sword to don gately as a gift"
+  },
+  {
+    "command": "Attack",
+    "description": "Attacks target with currently equipped weapon",
+    "example": "Hit the goblin"
+  },
+  {
+    "command": "Equip",
+    "description": "Equips item",
+    "example": "Equip my longbow"
+  },
+  {
+    "command": "Use",
+    "description": "Equips item",
+    "example": "Use healing potion"
+  },
+  {
+    "command": "Read",
+    "description": "Try to read the target item",
+    "example": "Read the sacred book of blob"
+  },
+  {
+    "command": "Cast",
+    "description": "Casts spell at target enemy or structure",
+    "example": "Cast fireball at shrack"
+  },
+  {
+    "command": "Health",
+    "description": "Displays current HP and Max HP",
+    "example": "How am I feeling?"
+  },
+  {
+    "command": "Abilities",
+    "description": "Displays your class specific abilities",
+    "example": "What am I capable of?"
+  },
+  {
+    "description": "Starts a dialogue with the given character",
+    "example": "Talk to bordo",
+    "command": "Speak"
+  }
+]

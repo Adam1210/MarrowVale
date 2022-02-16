@@ -5,18 +5,21 @@ using System.Linq;
 
 namespace MarrowVale.Business.Entities.Entities
 {
-    public class Inventory
+    public class Inventory : GraphNode
     {
         public Inventory()
         {
-            Items = new List<IItem>();
+            Id = Guid.NewGuid().ToString();
+            Items = new List<Item>();
             Size = 15;
             CurrentCurrency = 0;
             MaxCurrency = 50;
+            this.EntityLabel = "Inventory";
+            this.Labels = new List<string>() { EntityLabel };
         }
 
         [JsonConstructor]
-        private Inventory(int CurrentCurrency, int MaxCurrency, int Size, IList<IItem> Items)
+        private Inventory(int CurrentCurrency, int MaxCurrency, int Size, IList<Item> Items)
         {
             this.CurrentCurrency = CurrentCurrency;
             this.MaxCurrency = MaxCurrency;
@@ -25,10 +28,8 @@ namespace MarrowVale.Business.Entities.Entities
         }
 
         public int Size { get; private set; }
-
-        [JsonProperty]
-        private IList<IItem> Items { get; set; }
-
+        [JsonIgnore]
+        public IEnumerable<Item> Items { get; set; }
         public int CurrentCurrency { get; private set; }
         public int MaxCurrency { get; private set; }
 
@@ -46,27 +47,28 @@ namespace MarrowVale.Business.Entities.Entities
             }
         }
 
-        public void AddItem(IItem item)
+        public void AddItem<T>(T item) where T : Item
         {
-            if(Items.Count >= Size)
+            if (Items.Count() >= Size)
             {
                 //add some sort of notification or indication it failed
                 return;
             }
 
-            Items.Add(item);
+            Items = Items.Append(item);
         }
 
-        public IItem DropItem(string name)
+        public Item DropItem(string name)
         {
-            var itemToDrop = Items.FirstOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            //var itemToDrop = Items.FirstOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 
-            if(itemToDrop != null)
-            {
-                Items.Remove(itemToDrop);
-            }
+            //if(itemToDrop != null)
+            //{
+            //    Items.(itemToDrop);
+            //}
 
-            return itemToDrop;
+            //return itemToDrop;
+            return null;
         }
 
         public string GetItems()

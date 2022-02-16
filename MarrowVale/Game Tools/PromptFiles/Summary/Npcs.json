@@ -1,0 +1,13 @@
+{
+  "description": "Generate a summary of people at a location",
+  "useDescription": false,
+  "useExampleCount": 1,
+  "examples": [
+    {
+      "input": "Location: You enter into the Giant's Inn Lobby, a large room with old brick walls and tile floors.  There is a Marble Desk, Ivory Bar, and Stage.  There is quiet in the air.\nKnown Person: Duke Fonzo\nUnknown Person: An older human with a great beard\nUnknown Person: A purple grung with bright green eyes\n",
+      "output": "In the corner of the room you recognize Duke Fonzo.  You also see a Grung and an older human with a great beard you haven't met before."
+    }
+  ],
+  "inputPrefix": "",
+  "outputPrefix": "Summary:"
+}

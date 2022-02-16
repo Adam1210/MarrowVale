@@ -14,33 +14,5 @@ namespace MarrowVale.Business.Tests
 
         }
 
-        private Npc CreateNpc()
-        {
-            var newNpc = new Npc(CreateDialogue(), NpcRaceEnum.Human, ClassEnum.Warrior, "Bob", "A simple villager. Looks to somewhat poor and dirty.", 10, 10, 2);
-
-
-            return newNpc;
-        }
-
-        private IList<Dialogue> CreateDialogue()
-        {
-            var dialogues = new List<Dialogue>();
-
-            var newDialogue = new Dialogue("Greetings traveler, how are you this day?",DialogueTypeEnum.Friendly,"Greeting", LanguageEnum.Common, new List<Dialogue>());
-
-            dialogues.Add(newDialogue);
-
-            return dialogues;
-        }
-
-        [Fact]
-        public void GetGreetingText()
-        {
-            var npc = CreateNpc();
-
-            var text = npc.Speak("Greeting");
-
-            Assert.True(text == "Greetings traveler, how are you this day?");
-        }
     }
 }

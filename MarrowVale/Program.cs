@@ -1,11 +1,13 @@
 ﻿using MarrowVale.Business.Contracts;
 using MarrowVale.Business.Services;
 using MarrowVale.Common.Contracts;
+using MarrowVale.Common.Evaluator;
 using MarrowVale.Common.Providers;
 using MarrowVale.Data.Contracts;
 using MarrowVale.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Neo4jClient;
 using System;
 
 namespace MarrowVale
@@ -79,16 +81,35 @@ namespace MarrowVale
 
         private static void ConfigureServices(IServiceCollection services)
         {
+            LogLevel logLevel;
+
+            #if DEBUG
+                logLevel = LogLevel.Information;
+            #elif DEVELOPMENT
+                logLevel = LogLevel.Information;
+            #elif RELEASE
+                logLevel = LogLevel.Error;
+            #endif
+
+
             //add services to service collection
-            services.AddLogging(configure => configure.AddConsole())
+            services.AddLogging(configure => configure.AddConsole().SetMinimumLevel(logLevel))
                 .AddTransient<ICombatService, CombatService>()
                 .AddTransient<ICharacterService, CharacterService>()
                 .AddTransient<IInputProcessingService, InputProcessingService>()
                 .AddTransient<IPrintService, PrintService>()
                 .AddTransient<IGameSetupService, GameSetupService>()
+                .AddTransient<IEntityGenerator, EntityGenerator>()
+                .AddTransient<ITextGenerator, TextGenerator>()
                 .AddTransient<ITimeService, TimeService>()
                 .AddSingleton<IGameService, GameService>()
-                .AddTransient<IDrawingService, DrawingService>();
+                .AddTransient<IDrawingService, DrawingService>()
+                .AddTransient<IDialogueService, DialogueService>()
+                .AddSingleton<IWorldContextService, WorldContextService>()
+                .AddTransient<ICommandProcessingService, CommandProcessingService>()
+                .AddTransient<IPromptService, PromptService>()
+                .AddTransient<INpcActionService, NpcActionService>()
+                .AddTransient<IDivineInterventionService, DivineInterventionService>();
         }
 
         private static void ConfigureRepositories(IServiceCollection services)
@@ -100,14 +121,30 @@ namespace MarrowVale
                 .AddTransient<ISoundRepository, SoundRepository>()
                 .AddTransient<IClassRepository, ClassRepository>()
                 .AddSingleton<IGameRepository, GameRepository>()
-                .AddSingleton<IPlayerRepository, PlayerRepository>();
+                .AddSingleton<IPlayerRepository, PlayerRepository>()
+                .AddSingleton<ILocationRepository, LocationRepository>()
+                .AddSingleton<IBuildingRepository, BuildingRepository>()
+                .AddSingleton<IRoomRepository, RoomRepository>()
+                .AddSingleton<INpcRepository, NpcRepository>()
+                .AddSingleton<IDeityRepository, DeityRepository>()
+                .AddSingleton<IOpenAiSettingRepository, OpenAiSettingRepository>();
         }
 
         private static void ConfigureProviders(IServiceCollection services)
         {
             //add providers to service collection
             services.AddTransient<IAppSettingsProvider, AppSettingsProvider>()
-                .AddSingleton<IGlobalItemsProvider, GlobalItemsProvider>();
+                .AddSingleton<IGlobalItemsProvider, GlobalItemsProvider>()
+                .AddSingleton<IOpenAiProvider, OpenAiProvider>()
+                .AddSingleton<IAiEvaluator, AiEvaluator>()
+                .AddSingleton<IGraphClient>(context =>
+                {
+                    var graphClient = new GraphClient(new Uri("http://localhost:7474"),"test","test");
+                    graphClient.ConnectAsync().Wait();
+                    return graphClient;
+                });
+
+
         }
     }
 }

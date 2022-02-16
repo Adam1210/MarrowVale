@@ -2,7 +2,7 @@
 
 namespace MarrowVale.Business.Entities.Entities
 {
-    public class Consumable : IItem
+    public class Consumable : Item
     {
         [JsonConstructor]
         public Consumable(int BaseWorth, string Name, string Description, string EnvironmentalDescription, bool IsVisible)
@@ -14,18 +14,19 @@ namespace MarrowVale.Business.Entities.Entities
             this.EnvironmentalDescription = EnvironmentalDescription;
         }
 
-        public string Name { get; }
-        public string Description { get; }
-        public string EnvironmentalDescription { get; private set; }
-        public bool IsVisible { get; private set; }
-        public int BaseWorth { get; }
 
         public void Show()
         {
             IsVisible = true;
         }
 
-        public string GetDescription()
+        public override string GetShortDescription()
+        {
+            if (IsVisible)
+                return Name.ToString();
+            return "";
+        }
+        public override string GetDescription()
         {
             // Add the logic to build this description.
             return Description;

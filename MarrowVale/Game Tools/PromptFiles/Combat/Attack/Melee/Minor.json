@@ -1,0 +1,43 @@
+{
+  "description": "Describes an attack with a melee weapon",
+  "useDescription": true,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "damage": 2,
+      "attemptedAction": "Cleave my axe into him",
+      "player": {
+        "name": "Will",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Great Axe"
+      },
+      "enemy": {
+        "name": "Bredford",
+        "fullHealth": 30,
+        "currentHealth": 24,
+        "armor": "Chainmail"
+      },
+      "output": "You cleave your great axe toward Bredford.  You hit but the chainmail prevents him from severe harm."
+    },
+    {
+      "damage": 12,
+      "attemptedAction": "Slash him with sword",
+      "player": {
+        "name": "Bono",
+        "fullHealth": 30,
+        "currentHealth": 30,
+        "weapon": "Purple Sword"
+      },
+      "enemy": {
+        "name": "Gordon",
+        "fullHealth": 30,
+        "currentHealth": 15,
+        "armor": "Leather Armor"
+      },
+      "output": "You rapidly slash your mighty purple sword at Gordon.  He is cut severly but is still standing."
+    }
+  ],
+  "inputPrefix": "Q:",
+  "outputPrefix": "A:"
+}

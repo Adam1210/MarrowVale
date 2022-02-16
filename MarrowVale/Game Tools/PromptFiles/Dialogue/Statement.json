@@ -1,0 +1,30 @@
+{
+  "description": "Introduces an NPC Character to the player",
+  "useDescription": false,
+  "useExampleCount": 2,
+  "examples": [
+    {
+      "context": "Bordo is an excited goblin merchant.  Bordo does not believe he has any longswords.",
+      "person1": "Player",
+      "person2": "Bordo",
+      "dialogue": [
+        "Hi nice to meet you",
+        "Nice to meet you too! Dosto the goblin merchant here to make some deals! What are you looking for?",
+        "I'm looking for longswords, do you have any?'",
+        "No, I'm afraid I'm out of longswords.  Anything else you might need"
+      ]
+    },
+    {
+      "context": "Prento is an sullen human farmer.  Prento has magic beans for sale.",
+      "person1": "Player",
+      "person2": "Prento",
+      "dialogue": [
+        "Hello there",
+        "Hi.  Do you have any magic peas for sale",
+        "No, I don't have any magic peas but I do have some magic beans for sale.'"
+      ]
+    }
+  ],
+  "inputPrefix": "",
+  "outputPrefix": ""
+}

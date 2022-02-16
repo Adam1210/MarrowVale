@@ -1,6 +1,8 @@
 ﻿using MarrowVale.Business.Contracts;
 using MarrowVale.Business.Entities.Entities;
 using MarrowVale.Data.Contracts;
+using MarrowVale.Data.Seeder;
+using System;
 using System.Threading;
 
 namespace MarrowVale.Business.Services
@@ -12,15 +14,23 @@ namespace MarrowVale.Business.Services
         private readonly IDrawingRepository _drawingRepository;
         private readonly IDrawingService _drawingService;
         private readonly IGameRepository _gameRepository;
+        private readonly IEntityGenerator _entityGenerator;
+        private readonly IDialogueService _dialogueService;
+        private readonly IInputProcessingService _inputProcessingService;
+        private readonly IWorldContextService _worldContextService;
 
         public GameSetupService(ICharacterService characterService, IDrawingRepository drawingRepository, IPrintService printService,
-            IDrawingService drawingService, IGameRepository gameRepository)
+            IDrawingService drawingService, IGameRepository gameRepository, IEntityGenerator entityGenerator, IDialogueService dialogueService, IInputProcessingService inputProcessingService, IWorldContextService worldContextService)
         {
             _characterService = characterService;
             _printService = printService;
             _drawingRepository = drawingRepository;
             _drawingService = drawingService;
             _gameRepository = gameRepository;
+            _entityGenerator = entityGenerator;
+            _dialogueService = dialogueService;
+            _inputProcessingService = inputProcessingService;
+            _worldContextService = worldContextService;
         }
 
         public Player Setup()
@@ -32,9 +42,13 @@ namespace MarrowVale.Business.Services
             _printService.TypeCentered("Continue");
 
             var gameType = _printService.ReadInput();
-            
-            if(gameType.ToUpper() == "NEW GAME")
+
+            _entityGenerator.DefaultSettings().Wait();
+
+            if (gameType.ToUpper() == "NEW GAME")
             {
+                _entityGenerator.GenerateBuildings();
+                _entityGenerator.GenerateCharacters();
                 return newGame();
             }
             else if(gameType.ToUpper() == "CONTINUE")
@@ -52,10 +66,6 @@ namespace MarrowVale.Business.Services
         private Player newGame()
         {
             var player = _characterService.NewCharacter();
-            var game = new Game();
-            
-            _gameRepository.SaveGame(game, null, player.GameSaveName);
-
             return player;
         }
 
