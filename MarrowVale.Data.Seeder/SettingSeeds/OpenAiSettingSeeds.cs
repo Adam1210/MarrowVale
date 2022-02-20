@@ -1,12 +1,8 @@
-﻿using MarrowVale.Common.Constants;
+﻿using MarrowVale.Business.Entities.Entities;
+using MarrowVale.Common.Constants;
 using MarrowVale.Common.Evaluator;
-using MarrowVale.Data.Contracts;
 using OpenAI_API;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarrowVale.Data.Seeder
 {

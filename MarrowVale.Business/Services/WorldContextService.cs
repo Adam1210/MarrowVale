@@ -19,7 +19,7 @@ namespace MarrowVale.Business.Services
         private Random r = new Random();
         private readonly ITextGenerator _textGenerator;
         private readonly IGraphClient _graphClient;
-        private readonly IOpenAiProvider _openAiProvider;
+        private readonly IAiService _aiService;
         private readonly IPlayerRepository _playerRepository;
         private readonly IPromptService _promptService;
         private readonly ILocationRepository _locationRepository;
@@ -29,12 +29,12 @@ namespace MarrowVale.Business.Services
 
         public static List<GraphNode> ContextNodes = new List<GraphNode>();
 
-        public WorldContextService(ITextGenerator textGenerator, IGraphClient graphClient, IOpenAiProvider openAiProvider, IPlayerRepository playerRepository, IPromptService promptService, ILocationRepository locationRepository,
+        public WorldContextService(ITextGenerator textGenerator, IGraphClient graphClient, IAiService aiService, IPlayerRepository playerRepository, IPromptService promptService, ILocationRepository locationRepository,
                                     IBuildingRepository buildingRepository, INpcRepository npcRepository, IRoomRepository roomRepository)
         {
             _textGenerator = textGenerator;
             _graphClient = graphClient;
-            _openAiProvider = openAiProvider;
+            _aiService = aiService;
             _playerRepository = playerRepository;
             _promptService = promptService;
             _locationRepository = locationRepository;
@@ -52,7 +52,7 @@ namespace MarrowVale.Business.Services
         {
 
             var prompt = _promptService.GenerateDirectObjectPrompt(input, command);
-            var directObject = _openAiProvider.Complete(prompt.ToString()).Result;
+            var directObject = _aiService.Complete(prompt.ToString()).Result;
             return GetObjectLabelIdPair<T>(directObject, owner, input);
         }
 
@@ -73,7 +73,7 @@ namespace MarrowVale.Business.Services
             }
             var prompt = _promptService.GenerateSummaryDescription(input.ToString(), SummaryTypeEnum.Road);
 
-            return _openAiProvider.Complete(prompt).Result;
+            return _aiService.Complete(prompt).Result;
         }
 
         public string GenerateBuildingFlavorText(Location location)
@@ -81,7 +81,7 @@ namespace MarrowVale.Business.Services
             var building = _buildingRepository.Single(x => x.Id == location.Id).Result;
             var input = building.DescriptionPromptInput();
             var roomPrompt = _promptService.GenerateSummaryDescription(input.ToString(), SummaryTypeEnum.Building);
-            var roomOutput = _openAiProvider.Complete(roomPrompt).Result;
+            var roomOutput = _aiService.Complete(roomPrompt).Result;
 
             var peopleInsideRoom = _locationRepository.GetNpcsAtLocation(location);
             var npcInput = _promptService.GenerateSummaryDescription(input.ToString(), SummaryTypeEnum.Npcs);
@@ -90,7 +90,7 @@ namespace MarrowVale.Business.Services
                 npcInput.Input.Concat(npc.DescriptionPromptInput().ToString());
             }
             var npcPrompt = _promptService.GenerateSummaryDescription(npcInput.ToString(), SummaryTypeEnum.Npcs);
-            var npcOutput = _openAiProvider.Complete(roomPrompt).Result;
+            var npcOutput = _aiService.Complete(roomPrompt).Result;
 
 
             return roomOutput + npcOutput;
@@ -104,7 +104,7 @@ namespace MarrowVale.Business.Services
             ContextNodes.Add(room);
 
             var prompt = _promptService.GenerateSummaryDescription(input.ToString(), SummaryTypeEnum.Room);
-            var roomOutput = _openAiProvider.Complete(prompt).Result;
+            var roomOutput = _aiService.Complete(prompt).Result;
             var peopleInsideRoom = _locationRepository.GetNpcsAtLocation(location);
 
             var npcInput = new StringBuilder($"Location: {roomOutput}\n");
@@ -116,7 +116,7 @@ namespace MarrowVale.Business.Services
             }
 
             var npcPrompt = _promptService.GenerateSummaryDescription(npcInput.ToString(), SummaryTypeEnum.Npcs);
-            var npcOutput = _openAiProvider.Complete(npcPrompt).Result;
+            var npcOutput = _aiService.Complete(npcPrompt).Result;
 
             var connectingRooms = _locationRepository.GetConnectingRooms(location);
             var connectingRoomsInput = new StringBuilder();
@@ -127,7 +127,7 @@ namespace MarrowVale.Business.Services
                 connectingRoomsInput.Append(r.Description);
             }
             var connectingRoomPrompt = _promptService.GenerateSummaryDescription(connectingRoomsInput.ToString(), SummaryTypeEnum.ConnectingRooms);
-            var connectingRoomOutput = _openAiProvider.Complete(connectingRoomPrompt).Result;
+            var connectingRoomOutput = _aiService.Complete(connectingRoomPrompt).Result;
 
 
             return roomOutput + npcOutput + connectingRoomOutput;
@@ -220,7 +220,7 @@ namespace MarrowVale.Business.Services
                 prompt.Append($"Name:{localRoad.Name} | Description:{localRoad.Description}\n");
             }
             prompt.Append("Summary:");
-            return _openAiProvider.Complete(prompt.ToString()).Result;
+            return _aiService.Complete(prompt.ToString()).Result;
         }
 
 
@@ -229,7 +229,7 @@ namespace MarrowVale.Business.Services
             var contextDictionary = ContextNodes.ToDictionary(x => $"{x.Name}: {x.Description}",x => x);
             var documents = contextDictionary.Keys.ToArray();
             var query = $"{searchTerm}";
-            var resultKey = _openAiProvider.Search(query, documents).Result;
+            var resultKey = _aiService.Search(query, documents).Result;
             return contextDictionary[resultKey];
         }
 
@@ -241,7 +241,7 @@ namespace MarrowVale.Business.Services
             GetContextFromNode(knowledge, contextDictionary, "ARE", "YOU");
             var documents = contextDictionary.Keys.ToArray();
             var query = $"{searchTerm}";
-            var resultKey = _openAiProvider.Search(query, documents).Result;
+            var resultKey = _aiService.Search(query, documents).Result;
             return contextDictionary[resultKey];
         }
 

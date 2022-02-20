@@ -14,19 +14,17 @@ namespace MarrowVale.Business.Services
 {
     public class NpcActionService : INpcActionService
     {
-        private readonly IOpenAiProvider _openAiProvider;
-        private readonly IGraphClient _graphClient;
+        private readonly IAiService _aiService;
         private readonly IPromptService _promptService;
         private readonly IPrintService _printService;
         private readonly INpcRepository _npcRepository;
         private readonly IPlayerRepository _playerRepository;
         private readonly IWorldContextService _worldContextService;
 
-        public NpcActionService(IOpenAiProvider openAiProvider, IGraphClient graphClient, IPromptService promptService, IPrintService printService, INpcRepository npcRepository,
+        public NpcActionService(IAiService aiService, IPromptService promptService, IPrintService printService, INpcRepository npcRepository,
                                 IWorldContextService worldContextService, IPlayerRepository playerRepository)
         {
-            _openAiProvider = openAiProvider;
-            _graphClient = graphClient;
+            _aiService = aiService;
             _promptService = promptService;
             _printService = printService;
             _npcRepository = npcRepository;
@@ -79,11 +77,11 @@ namespace MarrowVale.Business.Services
             {
                 var items = _npcRepository.MerchantInventory(seller);
                 if (items.Count() == 0 || items == null)
-                    _printService.Type($"You do not have any sellable items in your inventory:");
+                    _printService.Type($"{seller?.FullName} does not have any sellable items in their inventory:");
 
                 else
                 {
-                    _printService.Type($"{seller.Name} has the following goods for sale:");
+                    _printService.Type($"{seller?.FullName} has the following goods for sale:");
                     foreach (var item in items)
                     {
                         _printService.Print($"{item.Name} : {item.BaseWorth} bronze");

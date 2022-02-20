@@ -4,22 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarrowVale.Common.Evaluator
+namespace MarrowVale.Business.Entities.Entities
 {
-    public class PromptType
+    public class PromptType : GraphNode
     {
         public PromptType()
         {
-
+            this.EntityLabel = "PromptType";
+            this.Labels = new List<string>() { EntityLabel };
         }
+
         public PromptType(string type)
         {
             this.Name = type;
         }
 
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public DateTimeOffset LastUpdated { get; set; }
     }
 }

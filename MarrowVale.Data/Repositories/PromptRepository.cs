@@ -1,26 +1,17 @@
 ﻿using MarrowVale.Business.Entities.Entities;
-using MarrowVale.Common.Contracts;
 using MarrowVale.Data.Contracts;
-using Microsoft.Extensions.Logging;
 using Neo4jClient;
 using Neo4jClient.Cypher;
-using Newtonsoft.Json;
 using OpenAI_API;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MarrowVale.Data.Repositories
 {
-    public class PromptRepository : IPromptRepository
+    public class PromptRepository : BaseRepository<PromptType>, IPromptRepository
     {
-        private readonly IGraphClient _graphClient;
-        public PromptRepository(IGraphClient graphClient)
-        {
-            _graphClient = graphClient;
-        }
+        public PromptRepository(IGraphClient graphClient) : base(graphClient){}
 
         public async Task CreateDefaultPromptSetting(string promptType, string subPromptType, CompletionRequest request)
         {
@@ -56,10 +47,28 @@ namespace MarrowVale.Data.Repositories
             throw new NotImplementedException();
         }
 
-        private ICypherFluentQuery devToolDatabase()
+        public async Task EnsurePromptCreated(PromptType promptType, PromptSubType promptSubType)
         {
-            return _graphClient.Cypher
-                .WithDatabase("devToolBox");
+            await devToolDatabase()
+            .Merge("(promptType:PromptType { Name: $name })")
+            .OnCreate()
+            .Set("promptType = $promptType")
+            .WithParams(new
+            {
+                name = promptType.Name,
+                promptType
+            })
+            .ExecuteWithoutResultsAsync();
+
+            await devToolDatabase()
+            .Match("(promptType:PromptType { Name: $promptType })")
+            .Merge("(promptType)-[:SUBCLASS]->(subPromptType:SubPromptType{ Name: $subPromptType })")
+            .WithParams(new
+            {
+                promptType = promptType.Name,
+                subPromptType = promptSubType.Name
+            }).ExecuteWithoutResultsAsync();
         }
+
     }
 }

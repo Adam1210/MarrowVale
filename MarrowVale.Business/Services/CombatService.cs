@@ -19,20 +19,20 @@ namespace MarrowVale.Business.Services
         private readonly IPrintService _printService;
         private readonly INpcRepository _npcRepository;
         private readonly IPromptService _promptService;
-        private readonly IOpenAiProvider _openAiProvider;
+        private readonly IAiService _aiService;
         private readonly IPlayerRepository _playerRepository;
         private readonly IDialogueService _dialogueService;
         private readonly IDivineInterventionService _divineInterventionService;
 
         public string Name { get; set; }
         public CombatService(ILoggerFactory loggerFactory, IPrintService printService, INpcRepository npcRepository, IPromptService promptService, 
-            IOpenAiProvider openAiProvider, IPlayerRepository playerRepository, IDialogueService dialogueService, IDivineInterventionService divineInterventionService)
+            IAiService aiService, IPlayerRepository playerRepository, IDialogueService dialogueService, IDivineInterventionService divineInterventionService)
         {
             _logger = loggerFactory.CreateLogger<CombatService>();
             _printService = printService;
             _npcRepository = npcRepository;
             _promptService = promptService;
-            _openAiProvider = openAiProvider;
+            _aiService = aiService;
             _playerRepository = playerRepository;
             _dialogueService = dialogueService;
             _divineInterventionService = divineInterventionService;
@@ -42,6 +42,10 @@ namespace MarrowVale.Business.Services
         {            
             var enemies = new List<Npc>();
             enemies.Add(npc);
+
+            //
+            //var otherNpcReactions = _npcActionService();
+
             while (player.IsAlive() && enemies.Any(x => x.IsAlive))
             {
                 var (playerAction, text) = getPlayerAction(player);
@@ -109,7 +113,7 @@ namespace MarrowVale.Business.Services
             var input = $"{weapon.CombatDescription()}\n${enemy.CombatDescription()}";
             var severity = calculateSeverity(player.CurrentHealth, player.MaxHealth, weapon.Damage);
             var prompt = _promptService.GenerateDefenseDescription(input, CombatActionEnum.Melee, severity);
-            var resultDescription = _openAiProvider.Complete(prompt).Result;
+            var resultDescription = _aiService.Complete(prompt).Result;
 
             _printService.Type(resultDescription);
             _playerRepository.Update(player);
@@ -122,7 +126,7 @@ namespace MarrowVale.Business.Services
                 Console.WriteLine();
                 var action = _printService.ReadInput();
                 var prompt = _promptService.GenerateCombatIntentPrompt(action);
-                var responseType = _openAiProvider.Complete(prompt).Result?.Trim();
+                var responseType = _aiService.Complete(prompt).Result?.Trim();
 
                 var isValidEnum = CombatActionEnum.TryParse(responseType, out CombatActionEnum combatStatus);
 
@@ -150,7 +154,7 @@ namespace MarrowVale.Business.Services
             var input = $"{weapon.CombatDescription()}\n{target.CombatDescription()}\nAttempted Action: {text}";
             var severity = calculateSeverity(target.CurrentHealth, target.MaxHealth, weapon.Damage);
             var prompt = _promptService.GenerateAttackDescription(input, CombatActionEnum.Melee, severity);
-            var resultDescription = _openAiProvider.Complete(prompt).Result;
+            var resultDescription = _aiService.Complete(prompt).Result;
 
             _printService.Type(resultDescription);
             _npcRepository.Update(target);

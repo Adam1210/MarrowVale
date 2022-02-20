@@ -15,7 +15,7 @@ namespace MarrowVale.Business.Services
 {
     public class DialogueService : IDialogueService
     {
-        private readonly IOpenAiProvider _openAiProvider;
+        private readonly IAiService _aiService;
         private readonly IGraphClient _graphClient;
         private readonly IPromptService _promptService;
         private readonly IPrintService _printService;
@@ -23,10 +23,10 @@ namespace MarrowVale.Business.Services
         private readonly IWorldContextService _worldContextService;
         private readonly INpcActionService _npcActionService;
 
-        public DialogueService(IOpenAiProvider openAiProvider, IGraphClient graphClient, IPromptService promptService, IPrintService printService, INpcRepository npcRepository,
+        public DialogueService(IAiService aiService, IGraphClient graphClient, IPromptService promptService, IPrintService printService, INpcRepository npcRepository,
                                 IWorldContextService worldContextService, INpcActionService npcActionService)
         {
-            _openAiProvider = openAiProvider;
+            _aiService = aiService;
             _graphClient = graphClient;
             _promptService = promptService;
             _printService = printService;
@@ -83,7 +83,7 @@ namespace MarrowVale.Business.Services
         private DialogueResopnseTypeEnum DetermineReponseType(string text)
         {
             var prompt = _promptService.GenerateDialogueIntentPrompt(text, DialogueTypeEnum.InterpretIntent);
-            var responseType = _openAiProvider.Complete(prompt).Result?.Trim()?.ToUpper();
+            var responseType = _aiService.Complete(prompt).Result?.Trim()?.ToUpper();
 
             if (responseType == DialogueResopnseTypeEnum.Question.ToString().ToUpper())
                 return DialogueResopnseTypeEnum.Answer;
@@ -121,14 +121,14 @@ namespace MarrowVale.Business.Services
             input.Append(conversation);
             var dialoguePrompt = _promptService.GenerateDialoguePrompt(input.ToString(), responseType, $"{character.FullName}:");
 
-            return _openAiProvider.Complete(dialoguePrompt).Result;
+            return _aiService.Complete(dialoguePrompt).Result;
 
         }
 
         private string summarizeConverstion(string conversation, Npc Character)
         {
             var summary = _promptService.GenerateDialogueSummaryPrompt(conversation);
-            return _openAiProvider.Complete(summary).Result;
+            return _aiService.Complete(summary).Result;
         }
 
         private string memoryOfPlayer(Npc c)

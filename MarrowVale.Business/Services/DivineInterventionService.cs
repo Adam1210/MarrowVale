@@ -16,17 +16,17 @@ namespace MarrowVale.Business.Services
     {
         private readonly ILogger _logger;
         private readonly IPrintService _printService;
-        private readonly IOpenAiProvider _openAiProvider;
+        private readonly IAiService _aiService;
         private readonly IWorldContextService _worldContextService;
         private readonly IPromptService _promptService;
         private readonly IDeityRepository _deityRepository;
 
-        public DivineInterventionService(ILoggerFactory logger, IPrintService printService, IOpenAiProvider openAiProvider,
+        public DivineInterventionService(ILoggerFactory logger, IPrintService printService, IAiService aiService,
             IWorldContextService worldContextService, IPromptService promptService, IDeityRepository deityRepository)
         {
             _logger = logger.CreateLogger<InputProcessingService>();
             _printService = printService;
-            _openAiProvider = openAiProvider;
+            _aiService = aiService;
             _worldContextService = worldContextService;
             _promptService = promptService;
             _deityRepository = deityRepository;
@@ -39,7 +39,7 @@ namespace MarrowVale.Business.Services
             promptInput.AppendNewLine($"Error: {error}");
 
             var divinePrompt = _promptService.GenerateDivineText(promptInput.ToString());
-            var divineResponse = _openAiProvider.Complete(divinePrompt);
+            var divineResponse = _aiService.Complete(divinePrompt);
             return divineResponse.Result;
         }
 
@@ -54,7 +54,7 @@ namespace MarrowVale.Business.Services
             promptInput.AppendNewLine($"Character: {character.FullName}");
 
             var divinePrompt = _promptService.GenerateSmiteText(promptInput.ToString());
-            var divineResponse = _openAiProvider.Complete(divinePrompt).Result;
+            var divineResponse = _aiService.Complete(divinePrompt).Result;
 
             _printService.PrintDivineText(divineResponse);
 

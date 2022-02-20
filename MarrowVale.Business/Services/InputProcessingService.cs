@@ -18,17 +18,17 @@ namespace MarrowVale.Business.Services
     {
         private readonly ILogger _logger;
         private readonly IPrintService _printService;
-        private readonly IOpenAiProvider _openAiProvider;
+        private readonly IAiService _aiService;
         private readonly IWorldContextService _worldContextService;
         private readonly IPromptService _promptService;
         private readonly IDivineInterventionService _divineInterventionService;
 
-        public InputProcessingService(ILoggerFactory logger, IPrintService printService, IOpenAiProvider openAiProvider, 
+        public InputProcessingService(ILoggerFactory logger, IPrintService printService, IAiService aiService, 
             IWorldContextService worldContextService, IPromptService promptService, IDivineInterventionService divineInterventionService)
         {
             _logger = logger.CreateLogger<InputProcessingService>();
             _printService = printService;
-            _openAiProvider = openAiProvider;
+            _aiService = aiService;
             _worldContextService = worldContextService;
             _promptService = promptService;
             _divineInterventionService = divineInterventionService;
@@ -37,7 +37,7 @@ namespace MarrowVale.Business.Services
         public Command ProcessInput(string input, string context, Player player)
         {
             var prompt = _promptService.CommandTypePrompt(input);
-            var commandName = _openAiProvider.Complete(prompt).Result;
+            var commandName = _aiService.Complete(prompt).Result;
             var isValidEnum = CommandEnum.TryParse(commandName, out CommandEnum commandEnum);
 
             if (!isValidEnum)
@@ -80,7 +80,7 @@ namespace MarrowVale.Business.Services
                 try
                 {
                     var prompt = _promptService.GenerateDirectObjectPrompt(input, command);
-                    var directObject = _openAiProvider.Complete(prompt.ToString()).Result;
+                    var directObject = _aiService.Complete(prompt.ToString()).Result;
                     var node = _worldContextService.GetObjectLabelIdPair(directObject, player, input);
                     if (string.IsNullOrWhiteSpace(node?.Id))
                     {

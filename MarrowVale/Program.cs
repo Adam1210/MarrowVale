@@ -87,9 +87,9 @@ namespace MarrowVale
                 logLevel = LogLevel.Information;
             #elif DEVELOPMENT
                 logLevel = LogLevel.Information;
-            #elif RELEASE
+#elif RELEASE
                 logLevel = LogLevel.Error;
-            #endif
+#endif
 
 
             //add services to service collection
@@ -109,7 +109,9 @@ namespace MarrowVale
                 .AddTransient<ICommandProcessingService, CommandProcessingService>()
                 .AddTransient<IPromptService, PromptService>()
                 .AddTransient<INpcActionService, NpcActionService>()
-                .AddTransient<IDivineInterventionService, DivineInterventionService>();
+                .AddTransient<IDivineInterventionService, DivineInterventionService>()
+                .AddTransient<IAiService, AiService>()
+                .AddTransient<IAiEvaluationService, AiEvaluationService>();
         }
 
         private static void ConfigureRepositories(IServiceCollection services)
@@ -123,11 +125,13 @@ namespace MarrowVale
                 .AddSingleton<IGameRepository, GameRepository>()
                 .AddSingleton<IPlayerRepository, PlayerRepository>()
                 .AddSingleton<ILocationRepository, LocationRepository>()
-                .AddSingleton<IBuildingRepository, BuildingRepository>()
+                .AddSingleton<IBuildingRepository, BuildingRepository>() 
                 .AddSingleton<IRoomRepository, RoomRepository>()
                 .AddSingleton<INpcRepository, NpcRepository>()
                 .AddSingleton<IDeityRepository, DeityRepository>()
-                .AddSingleton<IOpenAiSettingRepository, OpenAiSettingRepository>();
+                .AddSingleton<IOpenAiSettingRepository, OpenAiSettingRepository>()
+                .AddSingleton<IOpenAiEvaluationRepository, OpenAiEvaluationRepository>()
+                .AddSingleton<IPromptRepository, PromptRepository>();
         }
 
         private static void ConfigureProviders(IServiceCollection services)
@@ -136,7 +140,6 @@ namespace MarrowVale
             services.AddTransient<IAppSettingsProvider, AppSettingsProvider>()
                 .AddSingleton<IGlobalItemsProvider, GlobalItemsProvider>()
                 .AddSingleton<IOpenAiProvider, OpenAiProvider>()
-                .AddSingleton<IAiEvaluator, AiEvaluator>()
                 .AddSingleton<IGraphClient>(context =>
                 {
                     var graphClient = new GraphClient(new Uri("http://localhost:7474"),"test","test");

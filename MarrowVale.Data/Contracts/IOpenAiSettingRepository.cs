@@ -1,14 +1,10 @@
-﻿using MarrowVale.Common.Evaluator;
-using OpenAI_API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MarrowVale.Business.Entities.Entities;
+using MarrowVale.Common.Evaluator;
 using System.Threading.Tasks;
 
 namespace MarrowVale.Data.Contracts
 {
-    public interface IOpenAiSettingRepository
+    public interface IOpenAiSettingRepository : IBaseRepository<OpenAiSettings>
     {
         Task CreateSetting(string promptType, OpenAiSettings settings, string subPromptType = null);
         OpenAiSettings GetSetting(string promptType, string promptSubType);

@@ -43,14 +43,6 @@ namespace MarrowVale.Data.Repositories
             return results.FirstOrDefault();
         }
 
-        public virtual async Task Insert(T obj)
-        {
-            await _graphClient.Cypher
-                .Create($"(newNode:{_entityLabel} $newNode)")
-                .WithParam("newNode", obj)
-                .ExecuteWithoutResultsAsync();
-        }
-
         public virtual async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> query)
         {
             string name = query.Parameters[0].Name;
@@ -316,6 +308,15 @@ namespace MarrowVale.Data.Repositories
                 .Delete("r")
                 .ExecuteWithoutResultsAsync();
         }
+
+
+
+        public ICypherFluentQuery devToolDatabase()
+        {
+            return _graphClient.Cypher
+                .WithDatabase("devToolBox");
+        }
+
 
     }
 }

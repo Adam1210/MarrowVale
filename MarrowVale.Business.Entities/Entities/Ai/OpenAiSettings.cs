@@ -1,4 +1,5 @@
-﻿using OpenAI_API;
+﻿using MarrowVale.Business.Entities.Entities;
+using OpenAI_API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace MarrowVale.Common.Evaluator
 {
-    public class OpenAiSettings
+    public class OpenAiSettings : GraphNode
     {
         public OpenAiSettings()
         {
-
+            this.EntityLabel = "SubPromptType";
+            this.Labels = new List<string>() { EntityLabel };
         }
         public OpenAiSettings(int? max_tokens = null, double? temperature = null, string engineName = null, double? top_p = null, int? numOutputs = null, double? presencePenalty = null, double? frequencyPenalty = null, int? logProbs = null, bool? echo = null, params string[] stopSequences)
         {

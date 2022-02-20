@@ -12,11 +12,11 @@ namespace MarrowVale.Business.Services
 {
     public class TextGenerator : ITextGenerator
     {
-        private readonly IOpenAiProvider _openAiProvider;
+        private readonly IAiService _aiService;
 
-        public TextGenerator(IOpenAiProvider openAiProvider)
+        public TextGenerator(IAiService aiService)
         {
-            _openAiProvider = openAiProvider;
+            _aiService = aiService;
         }
 
         public string GenerateCharacterDescription(Npc person)
@@ -27,7 +27,7 @@ namespace MarrowVale.Business.Services
             sb.Append($"Gender:{person.Gender}");
             sb.Append($"Occupation:{person.Occupation}");
             sb.Append($"Description:");
-            return _openAiProvider.Complete(sb.ToString(), 8, .5).Result;
+            return _aiService.Complete(sb.ToString()).Result;
         }
 
         public string GenerateCharacterName(Npc person)
@@ -38,7 +38,7 @@ namespace MarrowVale.Business.Services
             sb.Append($"Race:{person.Race.ToString()}");
             sb.Append($"Gender:{person.Gender}");
             sb.Append($"Name:");
-            return _openAiProvider.Complete(sb.ToString(), 2, .5).Result;
+            return _aiService.Complete(sb.ToString()).Result;
         }
 
         public string GenerateCityDescription()

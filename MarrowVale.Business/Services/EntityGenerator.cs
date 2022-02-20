@@ -6,11 +6,9 @@ using MarrowVale.Data.Contracts;
 using MarrowVale.Data.Seeder;
 using MarrowVale.Data.Seeder.Npcs;
 using Neo4jClient;
-using OpenAI_API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MarrowVale.Business.Services

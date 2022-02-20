@@ -1,29 +1,28 @@
-﻿using MarrowVale.Business.Entities.Prompts;
+﻿using MarrowVale.Business.Contracts;
+using MarrowVale.Business.Entities.Entities;
 using MarrowVale.Common.Contracts;
 using MarrowVale.Common.Prompts;
+using MarrowVale.Data.Contracts;
 using Neo4jClient;
 using Neo4jClient.Cypher;
 using OpenAI_API;
-using OpenAiEvaluation;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MarrowVale.Common.Evaluator
 {
-    public class AiEvaluator : IAiEvaluator
+    public class AiEvaluationService : IAiEvaluationService
     {
-        //TODO move this and OpenAiProvider out of Common Project
-
-        private readonly IGraphClient _graphClient;
         private readonly IAppSettingsProvider _appSettingsProvider;
-        private readonly string[] stopOn = new string[] { "\n" };
-        public AiEvaluator(IGraphClient graphClient, IAppSettingsProvider appSettingsProvider)
+        private readonly IPromptRepository _promptRepository;
+        private readonly IOpenAiEvaluationRepository _openAiEvaluationRepository;
+        public AiEvaluationService(IAppSettingsProvider appSettingsProvider, 
+                                   IPromptRepository promptRepository, IOpenAiEvaluationRepository openAiEvaluationRepository)
         {
-            _graphClient = graphClient;
             _appSettingsProvider = appSettingsProvider;
+            _promptRepository = promptRepository;
+            _openAiEvaluationRepository = openAiEvaluationRepository;
         }
 
         public async Task<Evaluation> CreateEvaluation(CompletionResult result, string apiName, StandardPrompt prompt, OpenAiSettings settings)
@@ -36,7 +35,6 @@ namespace MarrowVale.Common.Evaluator
                 Prompt = prompt.ToString(),
                 Response = result.ToString(),
                 ResponseTime = result.ProcessingTime,
-
                 FrequencyPenalty = settings.FrequencyPenalty,
                 MaxTokens = settings.MaxTokens,
                 MultipleStopSequences = settings.MultipleStopSequences,
@@ -52,48 +50,16 @@ namespace MarrowVale.Common.Evaluator
             evaluation.Rating = ratePrompt(prompt, result);
 
 
-
             var promptType = new PromptType { Name = prompt.Type };
-            var promptSubType = new PromptType { Name = prompt.SubType };
-
-            await devToolDatabase()
-                .Merge("(promptType:PromptType { Name: $name })")
-                .OnCreate()
-                .Set("promptType = $promptType")
-                .WithParams(new
-                {
-                    name = promptType.Name,
-                    promptType
-                })
-                .ExecuteWithoutResultsAsync();
-
-            await devToolDatabase()
-                .Match("(promptType:PromptType { Name: $promptType })")
-                .Merge("(promptType)-[:SUBCLASS]->(subPromptType:SubPromptType{ Name: $subPromptType })")
-                .WithParams(new
-                {
-                    promptType = promptType.Name,
-                    subPromptType = promptSubType.Name
-                })
-                .ExecuteWithoutResultsAsync();
+            var promptSubType = new PromptSubType { Name = prompt.SubType };
+            await _promptRepository.EnsurePromptCreated(promptType, promptSubType);
+            await _openAiEvaluationRepository.CreateEvaluation(promptType, promptSubType, evaluation);
 
 
-            await devToolDatabase()
-                .Match("(x:PromptType)-[:SUBCLASS]->(y:SubPromptType)")
-                .Where((PromptType x) => x.Name == promptType.Name)
-                .AndWhere((PromptSubType y) => y.Name == promptSubType.Name)
-                .Create("(y)-[:INSTANCE]->(evaluation:Evaluation $evaluation)")
-                .WithParam("evaluation", evaluation)
-                .ExecuteWithoutResultsAsync();
 
             return evaluation;
         }
 
-        private ICypherFluentQuery devToolDatabase()
-        {
-            return _graphClient.Cypher
-                .WithDatabase("devToolBox");
-        }
 
         private int estimateTokens(Evaluation evaluation)
         {
@@ -140,38 +106,6 @@ namespace MarrowVale.Common.Evaluator
             return ratingNumber;
         }
 
-        public OpenAiSettings GetSetting(string promptType, string promptSubType)
-        {
-            var defaultSetting = devToolDatabase()
-                .Match("(promptType:PromptType { Name: $promptType })-[:SUBCLASS]->(subPromptType:SubPromptType { Name: $subPromptType })-[:DEFAULT]->(setting:Setting)")
-                .WithParams(new
-                {
-                    promptType = promptType,
-                    subPromptType = promptSubType,
-                })
-                .Return(setting => setting.As<OpenAiSettings>())
-                .ResultsAsync.Result.FirstOrDefault();
-
-            if (defaultSetting == null)
-            {
-                defaultSetting = devToolDatabase()
-                    .Match("(promptType:PromptType { Name: $promptType })-[:DEFAULT]->(setting:Setting)")
-                    .WithParams(new
-                    {
-                        promptType = promptType,
-                    })
-                    .Return(setting => setting.As<OpenAiSettings>())
-                    .ResultsAsync.Result.FirstOrDefault();
-            }
-            defaultSetting.MultipleStopSequences = stopOn;
-
-            return defaultSetting;
-        }
-
-        public Task UpdateDefaultPromptSetting()
-        {
-            throw new NotImplementedException();
-        }
 
     }
 }

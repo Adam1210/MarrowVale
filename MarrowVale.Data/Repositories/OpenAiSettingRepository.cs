@@ -1,22 +1,21 @@
-﻿using MarrowVale.Common.Evaluator;
+﻿using MarrowVale.Business.Entities.Entities;
+using MarrowVale.Common.Evaluator;
 using MarrowVale.Data.Contracts;
 using Neo4jClient;
 using Neo4jClient.Cypher;
-using OpenAI_API;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MarrowVale.Data.Repositories
 {
-    public class OpenAiSettingRepository : IOpenAiSettingRepository
+    public class OpenAiSettingRepository : BaseRepository<OpenAiSettings>, IOpenAiSettingRepository
     {
-        private readonly IGraphClient _graphClient;
-        public OpenAiSettingRepository(IGraphClient graphClient)
+        private readonly string[] stopOn = new string[] { "\n" };
+
+        public OpenAiSettingRepository(IGraphClient graphClient) : base(graphClient)
         {
-            _graphClient = graphClient;
+
         }
 
         public async Task CreateSetting(string promptType, OpenAiSettings settings, string subPromptType = null)
@@ -77,11 +76,14 @@ namespace MarrowVale.Data.Repositories
                     .Return(setting => setting.As<OpenAiSettings>())
                     .ResultsAsync.Result.FirstOrDefault();
             }
+            defaultSetting.MultipleStopSequences = stopOn;
+
             return defaultSetting;
         }
 
         public async Task CreatePrompts(PromptType promptType, string subType = null)
         {
+
             await devToolDatabase()
             .Merge("(promptType:PromptType { Name: $name })")
             .OnCreate()
@@ -92,16 +94,6 @@ namespace MarrowVale.Data.Repositories
                 promptType
             })
             .ExecuteWithoutResultsAsync();
-
-            //await devToolDatabase()
-            //    .Match("(promptType:PromptType { Name: $promptType })")
-            //    .Merge("(promptType)-[:SUBCLASS]->(subPromptType:SubPromptType{ Name: $subPromptType })")
-            //    .WithParams(new
-            //    {
-            //        promptType = promptType.Name,
-            //        subPromptType = promptSubType.Name
-            //    })
-            //    .ExecuteWithoutResultsAsync();
         }
 
 
@@ -110,10 +102,5 @@ namespace MarrowVale.Data.Repositories
             throw new NotImplementedException();
         }
 
-        private ICypherFluentQuery devToolDatabase()
-        {
-            return _graphClient.Cypher
-                .WithDatabase("devToolBox");
-        }
     }
 }
