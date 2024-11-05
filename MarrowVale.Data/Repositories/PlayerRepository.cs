@@ -24,7 +24,6 @@ namespace MarrowVale.Data.Repositories
             _logger = logger.CreateLogger<PlayerRepository>();
             _appSettingsProvider = appSettingsProvider;
             var file = Path.Combine(_appSettingsProvider.DataFilesLocation, "PlayerList.json");
-            //PlayerFilePath = $"{_appSettingsProvider.DataFilesLocation}\\PlayerList.json";
             PlayerFilePath = file;
 
             Settings = new JsonSerializerSettings()

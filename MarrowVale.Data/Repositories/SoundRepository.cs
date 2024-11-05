@@ -11,13 +11,14 @@ namespace MarrowVale.Data.Repositories
     {
         private readonly ILogger _logger;
         private readonly IAppSettingsProvider _appSettingsProvider;
+        private Audio CurrentAudio;
         public SoundRepository(ILoggerFactory logger, IAppSettingsProvider appSettingsProvider)
         {
             _logger = logger.CreateLogger<SoundRepository>();
             _appSettingsProvider = appSettingsProvider;
         }
 
-        public Audio GetMusic(string fileName)
+        public void PlayMusic(string fileName)
         {
             var file = Path.Combine(_appSettingsProvider.SoundFilesLocation, fileName);
             var audioFile = new AudioFileReader(file);
@@ -32,10 +33,10 @@ namespace MarrowVale.Data.Repositories
                 Output = outputDevice
             };
 
-            return audio;       
+            CurrentAudio = audio;
         }
 
-        public Audio GetMusicLooping(string fileName)
+        public void PlayMusicLooping(string fileName)
         {
             var file = Path.Combine(_appSettingsProvider.SoundFilesLocation, fileName);
             
@@ -52,14 +53,14 @@ namespace MarrowVale.Data.Repositories
                 Output = outputDevice
             };
 
-            return audio;
+            CurrentAudio = audio;
         }
 
-        public void DisposeMusic(Audio audio)
+        public void DisposeMusic()
         {
-            audio.Output.Stop();
-            audio.Output.Dispose();
-            audio.Reader.Dispose();
+            CurrentAudio.Output.Stop();
+            CurrentAudio.Output.Dispose();
+            CurrentAudio.Reader.Dispose();
         }
     }
 }

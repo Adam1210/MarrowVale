@@ -48,16 +48,16 @@ namespace MarrowVale.Business.Services
             while (true)
             {
                 var playerInput = _printService.ReadInput();
-                var command = _inputProcessingService.ProcessInput(playerInput)?.ToUpper();
 
-                if (command == "QUIT")
+                if (playerInput.ToUpper() == "QUIT")
                 {
                     break;
-                }else if(command == "SAVE")
+                }else if(playerInput.ToUpper() == "SAVE")
                 {
                     saveGame(clockCancellationToken);
                 }
 
+                var command = _inputProcessingService.ProcessInput(playerInput)?.ToUpper();
             }
         }
 

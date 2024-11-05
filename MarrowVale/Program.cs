@@ -26,26 +26,18 @@ namespace MarrowVale
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            //var inputProcessor = serviceProvider.GetService<IInputProcessingService>();
-
-            //inputProcessor.ProcessInput("Hello");
-
-            //var soundRepo = serviceProvider.GetService<ISoundRepository>();
+            var soundRepo = serviceProvider.GetService<ISoundRepository>();
                      
-            //var audio = soundRepo.GetMusicLooping("Title.wav");
+            soundRepo.PlayMusicLooping("Title.wav");
 
             var gameService = serviceProvider.GetService<IGameService>();
             gameService.Start();
             
             //var artRepo = serviceProvider.GetService<IDrawingRepository>();
+            //var drawingService = serviceProvider.GetService<IDrawingService>();
             //var title = artRepo.GetTitleArt();
-            //artRepo.PrintArtCentered(title);
+            //drawingService.PrintArtCentered(title);
 
-            //var commandRepo = serviceProvider.GetService<ICommandListRepository>();
-            //commandRepo.PrintCommands();
-
-            //var classRepo = serviceProvider.GetService<IClassRepository>();
-            //classRepo.GetClasses();
 
             //soundRepo.DisposeMusic(audio);
 
